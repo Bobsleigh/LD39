@@ -17,10 +17,8 @@ class BombBossAI:
 
     def choose_state(self):
         if self.counter.value % 20 == 0:
-            if self.counter.value > 1200:
-                if random.randint(1, 4) == 1:
-                    self.sprite.Dash()
-                    self.counter.reset()
+            if self.counter.value > 2400:
+                self.counter.value = 480
             if self.counter.value != 0:
                 if self.counter.value % 300 == 0:
                     self.sprite.Boom()

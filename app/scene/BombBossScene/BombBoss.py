@@ -1,6 +1,7 @@
 import pygame
 import os
 import random
+import math
 from app.settings import *
 from ldLib.collision.collisionMask import CollisionMask
 from ldLib.tools.ImageBox import ImageBox
@@ -110,14 +111,14 @@ class BombBoss(pygame.sprite.Sprite):
         self.collisionMask.rect.x = self.x
         for rule in self.collisionRules:
             rule.onMoveX(self)
-        self.speedx *= 0.98
+        self.speedx -= 0.2
 
     def moveY(self):
         self.y += self.speedy
         self.collisionMask.rect.y = self.y
         for rule in self.collisionRules:
             rule.onMoveY(self)
-        self.speedy *= 0.98
+        self.speedy -= 0.2
 
     def capSpeed(self):
         if self.speedx > 0 and self.speedx > self.maxSpeedx:
@@ -157,10 +158,9 @@ class BombBoss(pygame.sprite.Sprite):
         desiredX = target_position[0]
         desiredY = target_position[1]
 
-        boom_bomb = BoomBomb(desiredX, desiredY,self.rect.x, self.rect.y, self.mapData)
+        boom_bomb = BoomBomb(desiredX, desiredY, self.rect.x, self.rect.y, self.mapData)
         self.mapData.allSprites.add(boom_bomb)
         self.mapData.camera.add(boom_bomb)
-        print("I want to throw a BOOM bomb to " + str(desiredX) + "/" + str(desiredY))
 
     def Zap(self):
         zapBehaviors = ["aimForPlayer", "aimForPlates", "aimForEntrance"]
@@ -182,17 +182,21 @@ class BombBoss(pygame.sprite.Sprite):
         zap_bomb = ZapBomb(desiredX, desiredY, self.rect.x, self.rect.y, self.mapData)
         self.mapData.allSprites.add(zap_bomb)
         self.mapData.camera.add(zap_bomb)
-        print("I want to throw a ZAP bomb to " + str(desiredX) + "/" + str(desiredY))
+        if TAG_MAGNAN == 1:
+            print("I want to throw a ZAP bomb to " + str(desiredX) + "/" + str(desiredY))
 
     def Dash(self):
+        x = self.mapData.player.rect.centerx - self.rect.centerx
+        y = self.mapData.player.rect.y - self.rect.centery
+        angle = math.atan2(y, x)
 
-        self.speedx = (self.mapData.player.rect.x + 16 - self.rect.x)/20
-        self.speedy = (self.mapData.player.rect.y + 16 - self.rect.y)/20
+        self.speedx = 10*math.cos(angle)
+        self.speedy = 10*math.sin(angle)
 
     def aim_for_player(self):
         target_position = [0, 0]
-        target_position[0] = (self.mapData.player.rect.x + 16 + (20*self.mapData.player.speedx))
-        target_position[1] = (self.mapData.player.rect.y + 32 + (20*self.mapData.player.speedy))
+        target_position[0] = (self.mapData.player.rect.x + 16 + (20 * self.mapData.player.speedx))
+        target_position[1] = (self.mapData.player.rect.y + 32 + (20 * self.mapData.player.speedy))
 
         if target_position[0] < 64:
             target_position[0] = 64
@@ -205,21 +209,23 @@ class BombBoss(pygame.sprite.Sprite):
 
         return target_position
 
-    def onCollision(self, collidedWith, sideOfCollision,limit=0):
+    def onCollision(self, collidedWith, sideOfCollision, limit=0):
         if collidedWith == SOLID:
             if sideOfCollision == RIGHT:
-                #On colle le player sur le mur à droite
+                # On colle le player sur le mur à droite
                 self.x = self.previousX
                 self.rect.x = self.x
                 self.updateCollisionMask()
                 self.speedx = 0
-                self.rect.right += self.mapData.tmxData.tilewidth - (self.collisionMask.rect.right % self.mapData.tmxData.tilewidth) - 1
+                self.rect.right += self.mapData.tmxData.tilewidth - (
+                    self.collisionMask.rect.right % self.mapData.tmxData.tilewidth) - 1
             if sideOfCollision == LEFT:
                 self.x = self.previousX
                 self.rect.x = self.x
                 self.updateCollisionMask()
                 self.speedx = 0
-                self.rect.left -= (self.collisionMask.rect.left % self.mapData.tmxData.tilewidth)  # On colle le player sur le mur de gauche
+                self.rect.left -= (
+                    self.collisionMask.rect.left % self.mapData.tmxData.tilewidth)  # On colle le player sur le mur de gauche
             if sideOfCollision == DOWN:
                 self.y = self.previousY
                 self.rect.y = self.y
@@ -231,14 +237,14 @@ class BombBoss(pygame.sprite.Sprite):
                 self.updateCollisionMask()
                 self.speedy = 0
 
-    # def notify(self, event):
-    #     self.nextState = self.state.handleInput(self, event)
+                # def notify(self, event):
+                #     self.nextState = self.state.handleInput(self, event)
 
-        # if self.nextState != None:
-        #     self.state.exit(self)
-        #     self.state = self.nextState
-        #     self.state.enter(self)
-        #     self.nextState = None
+                # if self.nextState != None:
+                #     self.state.exit(self)
+                #     self.state = self.nextState
+                #     self.state.enter(self)
+                #     self.nextState = None
 
     # @property
     # def state(self):
