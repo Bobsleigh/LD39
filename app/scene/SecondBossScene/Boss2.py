@@ -1,4 +1,4 @@
-import pygame
+import pygame, os
 
 from app.scene.SecondBossScene.Boss2AI import Boss2AI
 from app.settings import *
@@ -15,7 +15,7 @@ class Boss2(pygame.sprite.Sprite):
 
         self.name = "Boss2"
 
-        self.imageBase = ImageBox().rectSurface((32, 32), BLUE, 3)
+        self.imageBase = pygame.image.load(os.path.join('img', 'laser-boss.png'))
         self.imageBase.set_colorkey(COLORKEY)
 
         self.imageShapeLeft = None

@@ -61,7 +61,7 @@ class PlayerCorridor(pygame.sprite.Sprite):
         self.accy = 2
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
-        self.hp = 10;
+        self.hp = 10
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
