@@ -14,11 +14,13 @@ class ShootingLaserState(EnemyState):
 
     def update(self, sprite, mapData):
         if self.isRightLeft:
+            self.laser.rect.x = sprite.rect.x
             self.laser.rect.y = sprite.rect.y
         else:
             self.laser.rect.x = sprite.rect.x
 
     def enter(self, sprite):
+        self.sceneData.laserGroup.add(self.laser)
         self.sceneData.allSprites.add(self.laser)
         self.sceneData.camera.add(self.laser)
 

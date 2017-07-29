@@ -14,6 +14,7 @@ class Boss2AI:
         self.mapData = mapData
 
         self.counter = Counter()
+        self.laserCounter = Counter()
         self._state = IdleState()
         self.state = IdleState()
         self._laserState = ShootingLaserState(self.sprite ,True, self.mapData)
@@ -41,8 +42,11 @@ class Boss2AI:
 
     def update(self):
         self.counter.value += 1
+        self.laserCounter.value += 1
         self.chooseState()
+
         self.state.update(self.sprite, self.mapData)
+        self.updateLaser()
         self.laserState.update(self.sprite, self.mapData)
 
     def chooseState(self):
@@ -58,6 +62,14 @@ class Boss2AI:
             self.state = MoveLeftState()
         elif self.counter.value == 240:
             self.counter.reset()
+
+    def updateLaser(self):
+        if self.laserCounter.value == 1:
+            self.laserState = ShootingLaserState(self.sprite ,True, self.mapData)
+        elif self.laserCounter.value == 200:
+            self.laserState = IdleState()
+        elif self.laserCounter.value == 310:
+            self.laserCounter.reset()
 
     def vectorNorm(self,x,y):
         result = math.sqrt(x**2+y**2)
