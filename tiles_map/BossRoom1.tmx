@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="25" height="19" tilewidth="32" tileheight="32" nextobjectid="5">
- <tileset firstgid="1" source="../../LDEngine/tiles_map/terrainSet.tsx"/>
+ <tileset firstgid="1" source="../../LD39/tiles_map/terrainSet.tsx"/>
  <tileset firstgid="51" source="CollisionMap.tsx"/>
  <tileset firstgid="101" source="VieuxSprites.tsx"/>
  <layer name="Collision_TL" width="25" height="19">
