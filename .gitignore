@@ -29,3 +29,4 @@ pip-log.txt
 # local code
 *_local
 *_local.*
+/tiles_map/img/Thumbs.db
