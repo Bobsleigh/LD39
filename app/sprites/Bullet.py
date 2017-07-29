@@ -43,7 +43,6 @@ class Bullet(Enemy):
 
         self.collisionRules.append(CollisionWithSolidDetonate())  # Gotta be first in the list to work properly
 
-
     def update(self):
 
         self.moveX()
@@ -70,9 +69,10 @@ class Bullet(Enemy):
     def detonate(self):
         self.kill()
 
-
 class PlayerBullet(Bullet):
     def __init__(self, x, y, speedx, speedy, sceneData):
         super().__init__(x, y, speedx, speedy, sceneData)
+
+        self.image = pygame.image.load(os.path.join('img', 'lutecia-bullet.png'))
 
         self.attackDMG = PLAYER_BULLET_DAMAGE

@@ -36,8 +36,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.image = imageIdle[0]
         self.facingSide = RIGHT
 
-        self.imageTransparent = pygame.Surface((1, 1))
-        self.imageTransparent.set_colorkey(COLORKEY)
+        self.imageTransparent = pygame.Surface((1, 1),pygame.SRCALPHA)
 
         self.rect = self.image.get_rect()  # Position centrée du player
         self.x = x
@@ -56,7 +55,6 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.accy = 2
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
-        self.hp = 10
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
@@ -86,11 +84,24 @@ class PlayerPlateform(pygame.sprite.Sprite):
         # To shoot
         self.target = Target(0, 0)
         self.mapData.camera.add(self.target)
-
         self.gunCooldown = Cooldown(PLAYER_BULLET_COOLDOWN)
 
         self.soundShootGun = pygame.mixer.Sound(os.path.join('music', 'Laser_Shoot.wav'))
         self.soundShootGun.set_volume(.15)
+
+        self.maxEnergy = PLAYER_MAX_ENERGY
+        self.currentEnergy = self.maxEnergy
+
+        # Life bar
+        self.maxHealth = PLAYER_MAX_LIFE
+        self.currentHealth = self.maxHealth
+
+        self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
+        self.hurtSound.set_volume(.25)
+
+        self.invincibleCooldown = Cooldown(60)
+        self.flashduration = 8
+
 
     def update(self):
         self.capSpeed()
@@ -118,6 +129,11 @@ class PlayerPlateform(pygame.sprite.Sprite):
         else:
             targetSide=RIGHT
         self.image = self.animation.update(targetSide)
+
+        # Replace make visual flash in invincible mode.
+        if not self.invincibleCooldown.isZero:
+            if self.flashduration-3 <= self.invincibleCooldown.value % self.flashduration:
+                self.image = self.imageTransparent
 
         self.updateCollisionMask()
         self.updatePressedKeys()
@@ -234,19 +250,31 @@ class PlayerPlateform(pygame.sprite.Sprite):
     def updateCooldowns(self):
         self.gunCooldown.update()
 
+        # For invincibitlity
+        self.invincibleCooldown.update()
+
     def shootBullet(self):
-        if self.gunCooldown.isZero:
+        if self.gunCooldown.isZero and self.currentEnergy>0:
             self.soundShootGun.play()
 
-            bullet = PlayerBullet(self.rect.centerx, self.rect.centery, self.target.powerx*PLAYER_BULLET_SPEED, self.target.powery*PLAYER_BULLET_SPEED,self.mapData)
+            bullet = PlayerBullet(self.target.rect.centerx, self.target.rect.centery, self.target.powerx*PLAYER_BULLET_SPEED, self.target.powery*PLAYER_BULLET_SPEED,self.mapData)
             self.mapData.camera.add(bullet)
             self.mapData.allSprites.add(bullet)
             self.mapData.friendlyBullets.add(bullet)
             self.gunCooldown.start()
+            self.currentEnergy -= 1
 
     def hurt(self, damage):
-        self.hp -= damage
+        if self.invincibleCooldown.isZero:
+            self.currentHealth -= damage
+            self.hurtSound.play()
 
-        if self.hp <= 0:
+            self.checkIfIsAlive()
+            self.invincibleOnHit()
+
+    def checkIfIsAlive(self):
+        if self.currentHealth <= 0:
             self.dead()
 
+    def invincibleOnHit(self):
+        self.invincibleCooldown.start()

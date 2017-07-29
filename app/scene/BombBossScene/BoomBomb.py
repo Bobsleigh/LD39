@@ -12,7 +12,7 @@ from ldLib.tools.Counter import Counter
 
 
 class BoomBomb(pygame.sprite.Sprite):
-    def __init__(self, x, y, sceneData, max_health=10):
+    def __init__(self, destination_x, destination_y, initial_x, initial_y, sceneData, max_health=10):
         super().__init__()
 
         self.name = "BoomBomb"
@@ -30,12 +30,14 @@ class BoomBomb(pygame.sprite.Sprite):
         self.imageTransparent.set_colorkey(COLORKEY)
 
         self.rect = self.image.get_rect()  # Position centrée du player
-        self.x = x
-        self.y = y
-        self.rect.x = x
-        self.rect.y = y
-        self.previousX = x
-        self.previousY = y
+        self.x = initial_x
+        self.x_destination = destination_x
+        self.y = initial_y
+        self.y_destination = destination_y
+        self.rect.x = initial_x
+        self.rect.y = initial_y
+        self.previousX = initial_x
+        self.previousY = initial_y
 
         self.speedx = 0
         self.speedy = 0
@@ -148,9 +150,13 @@ class BoomBomb(pygame.sprite.Sprite):
 
     def dead(self):
         self.isAlive = False
+        self.kill()
 
     def Boom(self):
-        self.isAlive = True
+        distance = math.hypot(self.x - self.mapData.player.x, self.y - self.mapData.player.y)
+        if distance < 64:
+            self.mapData.player.hurt(15)
+        self.dead()
 
     def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID:

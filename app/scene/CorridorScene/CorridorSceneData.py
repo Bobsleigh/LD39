@@ -1,8 +1,9 @@
 import pygame
 
 from app.settings import *
+from app.sprites.LevelHUD import LevelHUD
+from app.sprites.PlayerPlateform import PlayerPlateform
 from ldLib.scene.SceneDataTMX import SceneDataTMX
-from app.scene.corridorScene.PlayerPlateform import PlayerPlateform
 
 
 class CorridorSceneData(SceneDataTMX):
@@ -23,3 +24,5 @@ class CorridorSceneData(SceneDataTMX):
 
         self.player = PlayerPlateform(playerInitx, playerInity, self)
         self.camera.add(self.player)
+
+        LevelHUD(self,self.player)

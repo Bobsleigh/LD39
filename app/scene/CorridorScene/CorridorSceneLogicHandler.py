@@ -19,6 +19,9 @@ class CorridorSceneLogicHandler(LogicHandler):
             if self.isPlayerIsInZone(player, obj) == True:
                 if obj.name == "OutZone":
                     self.sceneData.nextScene = self.sceneData.nextLevel
+                elif TAG_MARIE==1:
+                    if obj.name == "HurtZone":
+                        self.sceneData.player.hurt(int(obj.damage))
 
     def isPlayerIsInZone(self, player, zone):
         if player.rect.centerx >= zone.x and \

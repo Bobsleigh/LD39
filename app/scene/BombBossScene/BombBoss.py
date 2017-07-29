@@ -91,6 +91,10 @@ class BombBoss(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
+        # Life bar
+        self.maxHealth = 100
+        self.currentHealth = 100
+
         if self.speedx > 0:
             self.image = self.imageShapeRight
             self.facingSide = RIGHT
@@ -153,7 +157,7 @@ class BombBoss(pygame.sprite.Sprite):
         desiredX = target_position[0]
         desiredY = target_position[1]
 
-        boom_bomb = BoomBomb(desiredX, desiredY, self.mapData)
+        boom_bomb = BoomBomb(desiredX, desiredY,self.rect.x, self.rect.y, self.mapData)
         self.mapData.allSprites.add(boom_bomb)
         self.mapData.camera.add(boom_bomb)
         print("I want to throw a BOOM bomb to " + str(desiredX) + "/" + str(desiredY))
