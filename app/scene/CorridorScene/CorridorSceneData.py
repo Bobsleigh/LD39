@@ -2,7 +2,7 @@ import pygame
 
 from app.settings import *
 from app.sprites.PlayerPlateform import PlayerPlateform
-from ldLib.GUI.Peanut import LifeBar
+from ldLib.GUI.LifeBar import LifeBar
 from ldLib.scene.SceneDataTMX import SceneDataTMX
 
 
