@@ -11,8 +11,21 @@ class CorridorSceneLogicHandler(LogicHandler):
     def handle(self):
         super().handle()
         self.physics.update()
+        self.handleZoneCollision()
 
+    def handleZoneCollision(self):
+        player = self.sceneData.player
+        for obj in self.sceneData.tmxData.objects:
+            if self.isPlayerIsInZone(player, obj) == True:
+                if obj.name == "OutZone":
+                    self.sceneData.nextScene = self.sceneData.nextLevel
 
-    def handleCollision(self):
-        for sprite in self.gameData.sceneData.allSprites:
-            collisionNotifySprite(sprite, SOLID, self.gameData.sceneData)
+    def isPlayerIsInZone(self, player, zone):
+
+        if player.rect.centerx >= zone.x and \
+                        player.rect.centerx <= zone.x + zone.width and \
+                        player.rect.centery >= zone.y and \
+                        player.rect.centery <= zone.y + zone.height:
+            return True
+        else:
+            return False

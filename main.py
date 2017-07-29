@@ -1,13 +1,9 @@
-from app.scene.corridorScene.CorridorSceneData import CorridorSceneData
-from app.scene.corridorScene.CorridorSceneLogicHandler import CorridorSceneLogicHandler
+from app.SceneHandler import SceneHandler
 
 import os
 import sys
 
 import pygame
-
-from ldLib.scene.Scene import Scene
-from ldLib.scene.GameData import GameData
 from app.settings import *
 
 
@@ -33,8 +29,5 @@ if __name__ == '__main__':
     # pygame.mouse.set_visible(False)
 
     # Create the test scene
-    gameData = GameData()
-    gameData.sceneData = CorridorSceneData()
-    logicHandler = CorridorSceneLogicHandler(gameData)
-    corridorScene = Scene(screen, gameData, logicHandler)
-    corridorScene.run()
+    sceneHandler = SceneHandler(screen)
+    sceneHandler.mainLoop()
