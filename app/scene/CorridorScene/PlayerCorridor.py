@@ -1,6 +1,9 @@
+import os
+
 import pygame
 
 from app.settings import *
+from ldLib.animation.Animation import Animation
 from ldLib.collision.collisionMask import CollisionMask
 from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
@@ -14,14 +17,29 @@ class PlayerCorridor(pygame.sprite.Sprite):
 
         self.name = "player"
 
-        self.imageBase = ImageBox().rectSurface((32, 32), BLUE, 3)
-        self.imageBase.set_colorkey(COLORKEY)
+        # Code for idle animation
+        imageIdleLeft = [pygame.image.load(os.path.join('img', 'lutecia-left.png')),
+                         pygame.image.load(os.path.join('img', 'lutecia-up.png'))]
+        imageIdleRight = list()
+        for item in imageIdleLeft:
+            imageIdleRight.append(pygame.transform.flip(item, True, False))
 
-        self.imageShapeLeft = None
-        self.imageShapeRight = None
+        self.animationIdleLeft = Animation(imageIdleLeft, 60, True)
+        self.animationIdleRight = Animation(imageIdleRight, 60, True)
+        self.animation = self.animationIdleRight
 
-        self.setShapeImage()
-        self.image = self.imageShapeRight
+        # Code for walking animation
+        imageWalkLeft = [pygame.image.load(os.path.join('img', 'lutecia-left.png')),
+                         pygame.image.load(os.path.join('img', 'lutecia-up.png'))]
+        imageWalkRight = list()
+        for item in imageWalkLeft:
+            imageWalkRight.append(pygame.transform.flip(item, True, False))
+
+        self.image = imageIdleRight[0]
+        self.facingSide = RIGHT
+
+        self.animationWalkLeft = Animation(imageWalkLeft, 60, True)
+        self.animationWalkRight = Animation(imageWalkRight, 60, True)
 
         self.imageTransparent = ImageBox().rectSurface((32, 32), WHITE, 3)
         self.imageTransparent.set_colorkey(COLORKEY)
@@ -46,7 +64,6 @@ class PlayerCorridor(pygame.sprite.Sprite):
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
-        self.facingSide = RIGHT
         self.friendly = True
 
         self.rightPressed = False
@@ -70,10 +87,6 @@ class PlayerCorridor(pygame.sprite.Sprite):
         self._state = IdleState()
         # self.nextState = None
 
-    def setShapeImage(self):
-        self.imageShapeLeft = pygame.transform.flip(self.imageBase, True, False)
-        self.imageShapeRight = self.imageBase
-
     def update(self):
         self.capSpeed()
 
@@ -86,11 +99,21 @@ class PlayerCorridor(pygame.sprite.Sprite):
         self.rect.y = self.y
 
         if self.speedx > 0:
-            self.image = self.imageShapeRight
+            self.animation = self.animationWalkRight
             self.facingSide = RIGHT
-        if self.speedx < 0:
-            self.image = self.imageShapeLeft
+        elif self.speedx < 0:
+            self.animation = self.animationWalkLeft
             self.facingSide = LEFT
+        elif self.speedy != 0:
+            if self.facingSide == RIGHT:
+                self.animation = self.animationWalkRight
+            elif self.facingSide == LEFT:
+                self.animation = self.animationWalkLeft
+        else: # The player is not moving
+            if self.facingSide == RIGHT:
+                self.animation = self.animationIdleRight
+            elif self.facingSide == LEFT:
+                self.animation = self.animationIdleLeft
 
         self.updateCollisionMask()
         self.updatePressedKeys()

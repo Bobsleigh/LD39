@@ -1,19 +1,21 @@
 import pygame
+import os
+import math
 
-from app.scene.SecondBossScene.Boss2AI import Boss2AI
 from app.settings import *
 from ldLib.collision.collisionMask import CollisionMask
 from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
 from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
 from ldLib.Sprites.Player.IdleState import IdleState
+from ldLib.AI.Boss2AI import Boss2AI
 
 
-class Boss2(pygame.sprite.Sprite):
+class BombBoss(pygame.sprite.Sprite):
     def __init__(self, x, y, sceneData, max_health=10):
         super().__init__()
 
-        self.name = "Boss2"
+        self.name = "BombBoss"
 
         self.imageBase = ImageBox().rectSurface((32, 32), BLUE, 3)
         self.imageBase.set_colorkey(COLORKEY)
@@ -69,7 +71,7 @@ class Boss2(pygame.sprite.Sprite):
         self.collisionRules.append(CollisionWithSolid())
 
         self._state = IdleState()
-        self.AI = Boss2AI(self, self.mapData)
+        self.AI = Boss1AI(self, self.mapData)
         # self.nextState = None
 
     def setShapeImage(self):
@@ -97,9 +99,6 @@ class Boss2(pygame.sprite.Sprite):
 
         self.updateCollisionMask()
         self.updatePressedKeys()
-
-    def shootLaser(self):
-        self.mapData.camera.add()
 
     def moveX(self):
         self.x += self.speedx
@@ -146,8 +145,14 @@ class Boss2(pygame.sprite.Sprite):
     def dead(self):
         self.isAlive = False
 
-    def onSpike(self):
-        self.kill()
+    def Boom(self):
+        self.isAlive = True
+
+    def Zap(self):
+        self.isAlive = True
+
+    def Charge(self):
+        self.isAlive = True
 
     def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID:

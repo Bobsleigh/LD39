@@ -8,7 +8,7 @@ class IdleState(EnemyState):
     def __init__(self):
         super().__init__()
 
-    def update(self, sprite, mapData):
+    def update(self, sprite, event):
         pass
 
     def enter(self, sprite):
