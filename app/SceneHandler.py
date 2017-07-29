@@ -1,3 +1,7 @@
+from app.scene.titleScene.CreditSceneData import CreditSceneData
+from app.scene.titleScene.InstructionSceneData import InstructionSceneData
+from app.scene.titleScene.TitleSceneData import TitleSceneData
+from app.scene.titleScene.TitleSceneLogicHandler import TitleSceneLogicHandler
 from app.settings import *
 from app.scene.corridorScene.CorridorSceneData import CorridorSceneData
 from app.scene.corridorScene.CorridorLevel1SceneData import CorridorLevel1SceneData
@@ -34,14 +38,14 @@ class SceneHandler:
             secondBossScene = Scene(self.screen, self.gameData, logicHandler)
             secondBossScene.run()
 
-        elif TAG_MARIE == 1:
-            self.gameData.sceneData = BombBossSceneData()
-            logic_handler = BombBossSceneLogicHandler(self.gameData)
-            bomb_boss_scene = Scene(self.screen, self.gameData, logic_handler)
-            bomb_boss_scene.run()
+        # elif TAG_MARIE == 1:
+        #     self.gameData.sceneData = BombBossSceneData()
+        #     logic_handler = BombBossSceneLogicHandler(self.gameData)
+        #     bomb_boss_scene = Scene(self.screen, self.gameData, logic_handler)
+        #     bomb_boss_scene.run()
 
-        self.gameData.sceneData = CorridorSceneData()
-        self.runningScene = Scene(self.screen, self.gameData, CorridorSceneLogicHandler(self.gameData))
+        self.gameData.sceneData = TitleSceneData()
+        self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData))
 
     def mainLoop(self):
         self.handlerRunning = True
@@ -51,16 +55,15 @@ class SceneHandler:
 
     def getNextScene(self):
         # When we exit the scene, this code executes
-
         if self.runningScene.nextScene == TITLE_SCENE:
+            self.gameData.sceneData = TitleSceneData()
+            self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData))
+        elif self.runningScene.nextScene == INSTRUCTION_SCENE:
+            self.gameData.sceneData = InstructionSceneData()
+            self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData))
+        elif self.runningScene.nextScene == CREDIT_SCENE:
+            self.gameData.sceneData = CreditSceneData()
+            self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData))
+        elif self.runningScene.nextScene == TEST_TMX_SCENE:
             self.gameData.sceneData = CorridorSceneData()
-            self.runningScene = Scene(self.screen, self.gameData, CorridorSceneLogicHandler(self.gameData))
-        # elif self.runningScene.nextScene == INSTRUCTION_SCENE:
-        #     self.gameData.data = InstructionSceneData()
-        #     self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData))
-        # elif self.runningScene.nextScene == CREDIT_SCENE:
-        #     self.gameData.data = CreditSceneData()
-        #     self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData))
-        elif self.runningScene.nextScene == CORRIDOR_LEVEL_1:
-            self.gameData.sceneData = CorridorLevel1SceneData()
             self.runningScene = Scene(self.screen, self.gameData, CorridorSceneLogicHandler(self.gameData))

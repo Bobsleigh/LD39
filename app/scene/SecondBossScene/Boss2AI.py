@@ -9,7 +9,7 @@ from ldLib.Sprites.SecondBoss.MoveLeftState import MoveLeftState
 from ldLib.Sprites.SecondBoss.MoveRandomState import MoveRandomState
 from ldLib.Sprites.SecondBoss.MoveXTowardPlayer import MoveXTowardPlayer
 from ldLib.Sprites.SecondBoss.MoveYTowardPlayer import MoveYTowardPlayer
-from ldLib.Sprites.SecondBoss.MoveToMapCenterState import MoveTopMapCenterState
+from ldLib.Sprites.SecondBoss.MoveToMapCenterState import MoveToMapCenterState
 from ldLib.Sprites.SecondBoss.ShootingLaserState import ShootingLaserState
 
 class Boss2AI:
@@ -18,12 +18,16 @@ class Boss2AI:
         self.mapData = mapData
 
         self.counter = Counter()
+        self.returnCenterCounter = Counter()
         self.laserCounter = Counter()
         self._state = IdleState()
         self.state = IdleState()
-        self._laserState = ShootingLaserState(self.sprite ,True, self.mapData)
-        self.laserState = ShootingLaserState(self.sprite ,True, self.mapData)
+        self._laserState = IdleState()
+        self.laserState = IdleState()
         self.randomMoveTime = random.randint(60, 480)
+        self.lastFrameHealth = sprite.currentHealth
+
+        self.wasHurt = False
 
     @property
     def state(self):
@@ -48,6 +52,8 @@ class Boss2AI:
     def update(self):
         self.counter.value += 1
         self.laserCounter.value += 1
+        if isinstance(self.state, MoveToMapCenterState):
+            self.returnCenterCounter.value += 1
         self.chooseState()
 
         self.state.update(self.sprite, self.mapData)
@@ -61,30 +67,31 @@ class Boss2AI:
             rnd = random.randint(0,1)
             if rnd == 0:
                 self.state = MoveXTowardPlayer(self.mapData)
+                self.laserState = ShootingLaserState(self.sprite , False, self.mapData)
             else:
                 self.state = MoveYTowardPlayer(self.mapData)
+                self.laserState = ShootingLaserState(self.sprite , True, self.mapData)
 
-
-        # if self.counter.value == 1:
-        #     self.state = IdleState()
-        # elif self.counter.value == 10:
-        #     self.state = MoveRandomState(10, 5)
-        # elif self.counter.value == 120:
-        #     self.state = MoveRightState()
-        # elif self.counter.value == 160:
-        #     self.state = MoveDownState()
-        # elif self.counter.value == 200:
-        #     self.state = MoveLeftState()
-        # elif self.counter.value == 240:
-        #     self.counter.reset()
+        if self.counter.value > self.randomMoveTime and not isinstance(self.state, MoveToMapCenterState):
+            if self.wasHurt:
+                self.wasHurt = False
+                self.state = MoveToMapCenterState()
+                self.laserState = IdleState()
+        elif self.counter.value > self.randomMoveTime and self.returnCenterCounter.value > 120:
+            self.counter.reset()
+            self.returnCenterCounter.reset()
+        else:
+            if self.wasHurt:
+                self.wasHurt = False
 
     def updateLaser(self):
-        if self.laserCounter.value == 1:
-            self.laserState = ShootingLaserState(self.sprite , random.choice([True,False]), self.mapData)
-        elif self.laserCounter.value == 200:
-            self.laserState = IdleState()
-        elif self.laserCounter.value == 310:
-            self.laserCounter.reset()
+        pass
+        # if self.laserCounter.value == 1:
+        #     self.laserState = ShootingLaserState(self.sprite , random.choice([True,False]), self.mapData)
+        # elif self.laserCounter.value == 200:
+        #     self.laserState = IdleState()
+        # elif self.laserCounter.value == 310:
+        #     self.laserCounter.reset()
 
     def vectorNorm(self,x,y):
         result = math.sqrt(x**2+y**2)

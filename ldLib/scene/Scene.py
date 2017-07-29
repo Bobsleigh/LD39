@@ -2,6 +2,7 @@ import pygame
 
 from ldLib.scene.EventHandler import EventHandler
 from ldLib.scene.Drawer import Drawer
+from app.settings import *
 
 
 class Scene:
@@ -39,6 +40,7 @@ class Scene:
             else:
                 self.drawer.draw(self.screen, self.sceneData.camera, self.sceneData.spritesHUD, self.sceneData.spritesBackGround, self.player)
             self.nextScene = self.sceneData.nextScene
+
             if self.nextScene != None:
                 self.sceneRunning = False
 

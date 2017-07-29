@@ -4,7 +4,7 @@ import pygame
 from ldLib.Sprites.SecondBoss.EnemyState import EnemyState
 from app.settings import *
 
-class MoveTopMapCenterState(EnemyState):
+class MoveToMapCenterState(EnemyState):
     def __init__(self):
         super().__init__()
 
@@ -18,7 +18,7 @@ class MoveTopMapCenterState(EnemyState):
         if sprite.rect.centerx < (mapData.tmxData.width * mapData.tmxData.tilewidth)/2:
             sprite.updateSpeedRight()
     def enter(self, sprite):
-        pass
+        print("MoveToMapCenterState")
 
     def exit(self, sprite):
         pass
