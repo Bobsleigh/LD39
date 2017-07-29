@@ -7,6 +7,7 @@ from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
 from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
 from ldLib.Sprites.Player.IdleState import IdleState
+from ldLib.tools.Cooldown import Cooldown
 
 
 class Boss2(pygame.sprite.Sprite):
@@ -21,11 +22,10 @@ class Boss2(pygame.sprite.Sprite):
         self.imageShapeLeft = None
         self.imageShapeRight = None
 
+        self.imageTransparent = pygame.Surface((1, 1),pygame.SRCALPHA)
+
         self.setShapeImage()
         self.image = self.imageShapeRight
-
-        self.imageTransparent = ImageBox().rectSurface((32, 32), WHITE, 3)
-        self.imageTransparent.set_colorkey(COLORKEY)
 
         self.rect = self.image.get_rect()  # Position centrée du player
         self.x = x
@@ -38,12 +38,14 @@ class Boss2(pygame.sprite.Sprite):
         self.speedx = 0
         self.speedy = 0
         self.maxSpeedx = 1
-        self.maxSpeedyUp = 1
-        self.maxSpeedyDown = 1
-        self.accx = 1
-        self.accy = 1
+        self.maxSpeedy = 1
+        self.accx = 2
+        self.accy = 2
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
+        # Life bar
+        self.maxHealth = 200
+        self.currentHealth = 200
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
@@ -65,12 +67,16 @@ class Boss2(pygame.sprite.Sprite):
 
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
         self.collisionRules = []
-        self.collisionRules.append(CollisionWithNothing())  # Gotta be first in the list to work properly
         self.collisionRules.append(CollisionWithSolid())
 
         self._state = IdleState()
         self.AI = Boss2AI(self, self.mapData)
-        # self.nextState = None
+
+        self.invincibleCooldown = Cooldown(60)
+        self.flashduration = 8
+
+        self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
+        self.hurtSound.set_volume(.25)
 
     def setShapeImage(self):
         self.imageShapeLeft = pygame.transform.flip(self.imageBase, True, False)
@@ -95,8 +101,18 @@ class Boss2(pygame.sprite.Sprite):
             self.image = self.imageShapeLeft
             self.facingSide = LEFT
 
+        # Replace make visual flash in invincible mode.
+        # if not self.invincibleCooldown.isZero:
+        #     if self.flashduration-3 <= self.invincibleCooldown.value % self.flashduration:
+        #         self.image = self.imageTransparent
+
         self.updateCollisionMask()
         self.updatePressedKeys()
+        self.updateCooldowns()
+
+    def updateCooldowns(self):
+        # For invincibitlity
+        self.invincibleCooldown.update()
 
     def shootLaser(self):
         self.mapData.camera.add()
@@ -118,10 +134,10 @@ class Boss2(pygame.sprite.Sprite):
             self.speedx = self.maxSpeedx
         if self.speedx < 0 and self.speedx < -self.maxSpeedx:
             self.speedx = -self.maxSpeedx
-        if self.speedy > 0 and self.speedy > self.maxSpeedyDown:
-            self.speedy = self.maxSpeedyDown
-        if self.speedy < 0 and self.speedy < -self.maxSpeedyUp:
-            self.speedy = -self.maxSpeedyUp
+        if self.speedy > 0 and self.speedy > self.maxSpeedy:
+            self.speedy = self.maxSpeedy
+        if self.speedy < 0 and self.speedy < -self.maxSpeedy:
+            self.speedy = -self.maxSpeedy
 
     def updateSpeedRight(self):
         self.speedx += self.accx
@@ -139,61 +155,20 @@ class Boss2(pygame.sprite.Sprite):
         self.collisionMask.rect.x = self.rect.x
         self.collisionMask.rect.y = self.rect.y
 
-    def stop(self):
-        self.speedx = 0
-        self.speedy = 0
-
     def dead(self):
         self.isAlive = False
 
     def onSpike(self):
         self.kill()
 
-    def onCollision(self, collidedWith, sideOfCollision,limit=0):
-        if collidedWith == SOLID:
-            if sideOfCollision == RIGHT:
-                #On colle le player sur le mur à droite
-                self.x = self.previousX
-                self.rect.x = self.x
-                self.updateCollisionMask()
-                self.speedx = 0
-                self.rect.right += self.mapData.tmxData.tilewidth - (self.collisionMask.rect.right % self.mapData.tmxData.tilewidth) - 1
-            if sideOfCollision == LEFT:
-                self.x = self.previousX
-                self.rect.x = self.x
-                self.updateCollisionMask()
-                self.speedx = 0
-                self.rect.left -= (self.collisionMask.rect.left % self.mapData.tmxData.tilewidth)  # On colle le player sur le mur de gauche
-            if sideOfCollision == DOWN:
-                self.y = self.previousY
-                self.rect.y = self.y
-                self.updateCollisionMask()
-                self.speedy = 0
-            if sideOfCollision == UP:
-                self.y = self.previousY
-                self.rect.y = self.y
-                self.updateCollisionMask()
-                self.speedy = 0
+    def hurt(self, damage):
+        if self.invincibleCooldown.isZero:
+            self.currentHealth -= damage
+            self.AI.wasHurt = True
+            self.hurtSound.play()
 
-    # def notify(self, event):
-    #     self.nextState = self.state.handleInput(self, event)
-
-        # if self.nextState != None:
-        #     self.state.exit(self)
-        #     self.state = self.nextState
-        #     self.state.enter(self)
-        #     self.nextState = None
-
-    # @property
-    # def state(self):
-    #     return self._state
-    #
-    # @state.setter
-    # def state(self, value):
-    #     self._state.exit(self)
-    #     self._state = value
-    #     self._state.enter(self)
-
+            self.checkIfIsAlive()
+            self.invincibleOnHit()
 
     def updatePressedKeys(self):
         if self.rightPressed:
@@ -215,3 +190,10 @@ class Boss2(pygame.sprite.Sprite):
 
     def jump(self):
         self.speedy = -self.jumpSpeed
+
+    def invincibleOnHit(self):
+        self.invincibleCooldown.start()
+
+    def checkIfIsAlive(self):
+        if self.currentHealth <= 0:
+            self.kill()

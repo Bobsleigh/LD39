@@ -15,9 +15,16 @@ class SecondBossSceneLogicHandler(LogicHandler):
     def handle(self):
         super().handle()
         self.handleLaserCollision()
+        self.handleFriendlyBulletCollision()
         self.physics.update()
 
     def handleLaserCollision(self):
         collisionList = pygame.sprite.spritecollide(self.sceneData.player, self.sceneData.laserGroup, False)
         for laser in collisionList:
             self.sceneData.player.hurt(laser.damage)
+
+    def handleFriendlyBulletCollision(self):
+        collisionDict = pygame.sprite.groupcollide(self.sceneData.enemyGroup, self.sceneData.friendlyBullets, False, True)
+        for boss in collisionDict:
+            for bullet in collisionDict[boss]:
+                boss.hurt(bullet.attackDMG)

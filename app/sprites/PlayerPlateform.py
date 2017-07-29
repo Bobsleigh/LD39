@@ -191,12 +191,6 @@ class PlayerPlateform(pygame.sprite.Sprite):
     def notify(self, event):
         self.nextState = self.state.handleInput(self, event)
 
-        # if self.nextState != None:
-        #     self.state.exit(self)
-        #     self.state = self.nextState
-        #     self.state.enter(self)
-        #     self.nextState = None
-
     @property
     def state(self):
         return self._state

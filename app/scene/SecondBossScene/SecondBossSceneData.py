@@ -10,6 +10,7 @@ class SecondBossSceneData(SceneDataTMX):
         super().__init__("TestTmxData", "InZone_01")
 
         self.laserGroup = pygame.sprite.Group()
+        self.enemyGroup = pygame.sprite.Group()
 
         playerInitx = 50
         playerInity = 50
@@ -23,5 +24,6 @@ class SecondBossSceneData(SceneDataTMX):
         self.camera.add(self.player)
 
         self.boss = Boss2(200, 200, self)
+        self.enemyGroup.add(self.boss)
         self.allSprites.add(self.boss)
         self.camera.add(self.boss)
