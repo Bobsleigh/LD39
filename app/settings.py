@@ -112,7 +112,9 @@ MOUSE_RIGHT = 3
 # If you add a Tag for debugging, you MUST set it here at 0 for everyone
 # You can turn your tag on in your own settings_local.py for personal use
 
+TAG_ALEX = 0
 TAG_BP = 0
+TAG_MAGNAN = 0
 TAG_MARIE = 0
 TAG_PHIL = 0
 
