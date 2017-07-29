@@ -44,6 +44,7 @@ class Laser(pygame.sprite.Sprite):
         self.accy = 1
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
+        self.damage = 1;
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
@@ -59,23 +60,6 @@ class Laser(pygame.sprite.Sprite):
         self.imageShapeRight = self.imageBase
 
     def update(self):
-        self.capSpeed()
-
-        self.previousX = self.x
-        self.previousY = self.y
-
-        self.moveX()
-        self.moveY()
-        self.rect.x = self.x
-        self.rect.y = self.y
-
-        if self.speedx > 0:
-            self.image = self.imageShapeRight
-            self.facingSide = RIGHT
-        if self.speedx < 0:
-            self.image = self.imageShapeLeft
-            self.facingSide = LEFT
-
         self.updateCollisionMask()
 
     def moveX(self):

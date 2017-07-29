@@ -1,47 +1,45 @@
 import os
-
 import pygame
+import math
 
 from app.settings import *
+from app.sprites.Bullet import PlayerBullet
+from app.sprites.Target import Target
+
 from ldLib.animation.Animation import Animation
 from ldLib.collision.collisionMask import CollisionMask
-from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
 from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
 from ldLib.Sprites.Player.IdleState import IdleState
+from ldLib.tools.Cooldown import Cooldown
 
 
-class PlayerCorridor(pygame.sprite.Sprite):
+class PlayerPlateform(pygame.sprite.Sprite):
     def __init__(self, x, y, sceneData):
         super().__init__()
 
         self.name = "player"
 
         # Code for idle animation
-        imageIdleLeft = [pygame.image.load(os.path.join('img', 'lutecia-left.png')),
-                         pygame.image.load(os.path.join('img', 'lutecia-up.png'))]
-        imageIdleRight = list()
-        for item in imageIdleLeft:
-            imageIdleRight.append(pygame.transform.flip(item, True, False))
+        frameAnimationSpeed=10
 
-        self.animationIdleLeft = Animation(imageIdleLeft, 60, True)
-        self.animationIdleRight = Animation(imageIdleRight, 60, True)
-        self.animation = self.animationIdleRight
+        imageIdle = [pygame.image.load(os.path.join('img', 'lutecia-left.png')),
+                         pygame.image.load(os.path.join('img', 'lutecia-up.png'))]
+
+        self.animationIdle = Animation(imageIdle, frameAnimationSpeed, LEFT, True)
+        self.animation = self.animationIdle
 
         # Code for walking animation
-        imageWalkLeft = [pygame.image.load(os.path.join('img', 'lutecia-left.png')),
-                         pygame.image.load(os.path.join('img', 'lutecia-up.png'))]
-        imageWalkRight = list()
-        for item in imageWalkLeft:
-            imageWalkRight.append(pygame.transform.flip(item, True, False))
+        imageWalk = [pygame.image.load(os.path.join('img', 'lutecia-left-walk1.png')),
+                         pygame.image.load(os.path.join('img', 'lutecia-left-walk2.png'))]
+        self.animationWalk = Animation(imageWalk, frameAnimationSpeed, True)
 
-        self.image = imageIdleRight[0]
+        self.image = imageIdle[0]
         self.facingSide = RIGHT
 
-        self.animationWalkLeft = Animation(imageWalkLeft, 60, True)
-        self.animationWalkRight = Animation(imageWalkRight, 60, True)
+        imageIdle
 
-        self.imageTransparent = ImageBox().rectSurface((32, 32), WHITE, 3)
+        self.imageTransparent = pygame.Surface((1, 1))
         self.imageTransparent.set_colorkey(COLORKEY)
 
         self.rect = self.image.get_rect()  # Position centrée du player
@@ -54,13 +52,14 @@ class PlayerCorridor(pygame.sprite.Sprite):
 
         self.speedx = 0
         self.speedy = 0
-        self.maxSpeedx = 5
-        self.maxSpeedyUp = 10
-        self.maxSpeedyDown = 10
+        self.maxSpeedx = 3
+        self.maxSpeedyUp = 3
+        self.maxSpeedyDown = 3
         self.accx = 2
         self.accy = 2
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
+        self.hp = 10;
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
@@ -87,6 +86,15 @@ class PlayerCorridor(pygame.sprite.Sprite):
         self._state = IdleState()
         # self.nextState = None
 
+        # To shoot
+        self.target = Target(0, 0)
+        self.mapData.camera.add(self.target)
+
+        self.gunCooldown = Cooldown(PLAYER_BULLET_COOLDOWN)
+
+        self.soundShootGun = pygame.mixer.Sound(os.path.join('music', 'Laser_Shoot.wav'))
+        self.soundShootGun.set_volume(.15)
+
     def update(self):
         self.capSpeed()
 
@@ -99,24 +107,21 @@ class PlayerCorridor(pygame.sprite.Sprite):
         self.rect.y = self.y
 
         if self.speedx > 0:
-            self.animation = self.animationWalkRight
             self.facingSide = RIGHT
         elif self.speedx < 0:
-            self.animation = self.animationWalkLeft
             self.facingSide = LEFT
-        elif self.speedy != 0:
-            if self.facingSide == RIGHT:
-                self.animation = self.animationWalkRight
-            elif self.facingSide == LEFT:
-                self.animation = self.animationWalkLeft
-        else: # The player is not moving
-            if self.facingSide == RIGHT:
-                self.animation = self.animationIdleRight
-            elif self.facingSide == LEFT:
-                self.animation = self.animationIdleLeft
+
+        if ((self.speedx!=0) or (self.speedy!=0)):
+            self.animation = self.animationWalk
+        else:
+            self.animation = self.animationIdle
+
+        self.image = self.animation.update(direction=self.facingSide)
 
         self.updateCollisionMask()
         self.updatePressedKeys()
+        self.updateTarget()
+        self.updateCooldowns()
 
     def moveX(self):
         self.x += self.speedx
@@ -162,6 +167,7 @@ class PlayerCorridor(pygame.sprite.Sprite):
 
     def dead(self):
         self.isAlive = False
+        self.kill()
 
     def onSpike(self):
         self.kill()
@@ -222,7 +228,7 @@ class PlayerCorridor(pygame.sprite.Sprite):
         if self.downPressed:
             self.updateSpeedDown()
         if self.leftMousePressed:
-            pass
+            self.shootBullet()
         if self.rightMousePressed:
             pass
         if self.leftShiftPressed:
@@ -230,5 +236,41 @@ class PlayerCorridor(pygame.sprite.Sprite):
         if self.spacePressed:
             pass
 
-    def jump(self):
-        self.speedy = -self.jumpSpeed
+
+    def updateTarget(self):
+        mousePos = pygame.mouse.get_pos()
+
+        diffx = mousePos[0] + self.mapData.cameraPlayer.view_rect.x - self.rect.centerx
+        diffy = mousePos[1] + self.mapData.cameraPlayer.view_rect.y - self.rect.centery
+
+        self.target.rect.centerx = TARGET_DISTANCE * (diffx) / self.vectorNorm(diffx, diffy) + self.rect.centerx
+        self.target.rect.centery = TARGET_DISTANCE * (diffy) / self.vectorNorm(diffx, diffy) + self.rect.centery
+
+        self.target.powerx = (diffx) / self.vectorNorm(diffx, diffy)
+        self.target.powery = (diffy) / self.vectorNorm(diffx, diffy)
+
+        angleRad = math.atan2(diffy, diffx)
+        self.target.image = pygame.transform.rotate(self.target.imageOrig, -angleRad / math.pi * 180)
+
+
+    def vectorNorm(self, x, y):
+        return math.sqrt(x ** 2 + y ** 2 + EPS)
+
+    def updateCooldowns(self):
+        self.gunCooldown.update()
+
+    def shootBullet(self):
+        if self.gunCooldown.isZero:
+            self.soundShootGun.play()
+
+            bullet = PlayerBullet(self.rect.centerx, self.rect.centery, self.target.powerx*PLAYER_BULLET_SPEED, self.target.powery*PLAYER_BULLET_SPEED)
+            self.mapData.camera.add(bullet)
+            self.mapData.allSprites.add(bullet)
+            self.gunCooldown.start()
+
+    def hurt(self, damage):
+        self.hp -= damage
+
+        if self.hp <= 0:
+            self.dead()
+

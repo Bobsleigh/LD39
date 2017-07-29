@@ -1,11 +1,14 @@
+import pygame
 from app.scene.SecondBossScene.Boss2 import Boss2
 from ldLib.scene.SceneDataTMX import SceneDataTMX
-from app.scene.corridorScene.PlayerCorridor import PlayerCorridor
+from app.scene.corridorScene.PlayerPlateform import PlayerPlateform
 
 
 class SecondBossSceneData(SceneDataTMX):
     def __init__(self):
         super().__init__("TestTmxData", "InZone_01")
+
+        self.laserGroup = pygame.sprite.Group()
 
         playerInitx = 50
         playerInity = 50
@@ -15,9 +18,9 @@ class SecondBossSceneData(SceneDataTMX):
         except AttributeError:
             pass
 
-        self.player = PlayerCorridor(playerInitx, playerInity, self)
+        self.player = PlayerPlateform(playerInitx, playerInity, self)
         self.camera.add(self.player)
 
-        self.boss = Boss2(playerInitx, playerInity, self)
+        self.boss = Boss2(200, 200, self)
         self.allSprites.add(self.boss)
         self.camera.add(self.boss)

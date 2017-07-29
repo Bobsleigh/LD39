@@ -1,9 +1,6 @@
 import math
 from app.settings import *
 from ldLib.tools.Counter import Counter
-from ldLib.Sprites.BombBoss.Dash import Dash
-from ldLib.Sprites.BombBoss.Boom import Boom
-from ldLib.Sprites.BombBoss.Zap import Zap
 import random
 
 
@@ -29,6 +26,8 @@ class BombBossAI:
                     self.sprite.Boom()
                 if self.counter.value > 480 and self.counter.value % 180 == 0:
                     self.sprite.Zap()
+                if self.counter.value % 50 == 0:
+                    self.sprite.Dash()
 
     def vectorNorm(self,x,y):
         result = math.sqrt(x**2+y**2)

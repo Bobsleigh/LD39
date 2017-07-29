@@ -1,6 +1,6 @@
 from app.settings import *
 from ldLib.scene.SceneDataTMX import SceneDataTMX
-from app.scene.corridorScene.PlayerCorridor import PlayerCorridor
+from app.scene.corridorScene.PlayerPlateform import PlayerPlateform
 
 
 class CorridorLevel1SceneData(SceneDataTMX):
@@ -15,7 +15,7 @@ class CorridorLevel1SceneData(SceneDataTMX):
         except AttributeError:
             pass
 
-        self.player = PlayerCorridor(playerInitx, playerInity, self)
+        self.player = PlayerPlateform(playerInitx, playerInity, self)
         self.camera.add(self.player)
 
         self.nextLevel = TITLE_SCENE

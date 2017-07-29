@@ -1,14 +1,13 @@
 import pygame
 import os
-import math
-
+import random
 from app.settings import *
 from ldLib.collision.collisionMask import CollisionMask
 from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
 from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
 from ldLib.Sprites.Player.IdleState import IdleState
-from ldLib.AI.Boss2AI import Boss2AI
+from app.scene.BombBossScene.BombBossAI import BombBossAI
 
 
 class BombBoss(pygame.sprite.Sprite):
@@ -39,15 +38,15 @@ class BombBoss(pygame.sprite.Sprite):
 
         self.speedx = 0
         self.speedy = 0
-        self.maxSpeedx = 1
-        self.maxSpeedyUp = 1
-        self.maxSpeedyDown = 1
+        self.maxSpeedx = 600
+        self.maxSpeedyUp = 600
+        self.maxSpeedyDown = 600
         self.accx = 1
         self.accy = 1
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
 
-        self.isFrictionApplied = True
+        #self.isFrictionApplied = True
         self.isCollisionApplied = True
         self.facingSide = RIGHT
         self.friendly = True
@@ -71,7 +70,7 @@ class BombBoss(pygame.sprite.Sprite):
         self.collisionRules.append(CollisionWithSolid())
 
         self._state = IdleState()
-        self.AI = Boss1AI(self, self.mapData)
+        self.AI = BombBossAI(self, self.mapData)
         # self.nextState = None
 
     def setShapeImage(self):
@@ -146,13 +145,39 @@ class BombBoss(pygame.sprite.Sprite):
         self.isAlive = False
 
     def Boom(self):
-        self.isAlive = True
+        desiredX = (self.mapData.player.rect.x + self.mapData.player.speedx)
+        desiredY = (self.mapData.player.rect.y + self.mapData.player.speedy)
+        print("I want to throw a BOOM bomb to " + str(desiredX) + "/" + str(desiredY))
 
     def Zap(self):
-        self.isAlive = True
+        zapBehaviors = ["aimForPlayer", "aimForPlates", "aimForEntrance"]
+        chosenAction = random.choice(zapBehaviors)
 
-    def Charge(self):
-        self.isAlive = True
+        if chosenAction == "aimForPlayer":
+            target_position = self.aim_for_player()
+            desiredX = target_position[0]
+            desiredY = target_position[1]
+
+        elif chosenAction == "aimForPlates":
+            desiredX = 400
+            desiredY = 300
+
+        else:
+            desiredX = 400
+            desiredY = 560
+        print("I want to throw a ZAP bomb to " + str(desiredX) + "/" + str(desiredY))
+
+    def Dash(self):
+
+        self.speedx = (self.mapData.player.rect.x - self.rect.x)/30
+        self.speedy = (self.mapData.player.rect.y - self.rect.y)/30
+
+    def aim_for_player(self):
+        target_position = [0, 0]
+        target_position[0] = (self.mapData.player.rect.x + self.mapData.player.speedx)
+        target_position[1] = (self.mapData.player.rect.y + self.mapData.player.speedy)
+
+        return target_position
 
     def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID:
