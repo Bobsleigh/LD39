@@ -59,6 +59,7 @@ class PlayerCorridor(pygame.sprite.Sprite):
         self.accy = 2
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
+        self.hp = 10;
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
@@ -166,6 +167,7 @@ class PlayerCorridor(pygame.sprite.Sprite):
 
     def dead(self):
         self.isAlive = False
+        self.kill()
 
     def onSpike(self):
         self.kill()
@@ -265,3 +267,10 @@ class PlayerCorridor(pygame.sprite.Sprite):
             self.mapData.camera.add(bullet)
             self.mapData.allSprites.add(bullet)
             self.gunCooldown.start()
+
+    def hurt(self, damage):
+        self.hp -= damage
+
+        if self.hp <= 0:
+            self.dead()
+
