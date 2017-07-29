@@ -7,12 +7,15 @@ BLUE = (0, 0, 255)
 YELLOW = (160, 0, 160)
 GREY = (100, 100, 100)
 
-#Main font
+# Main font
 FONT_NAME = 'arial'
 
 FPS = 60
 
-#DIMENSION
+#EPSILON
+EPS = 0.000001
+
+# DIMENSION
 # http://gamedevelopment.tutsplus.com/articles/quick-tip-what-is-the-best-screen-resolution-for-your-game--gamedev-14723
 SCREEN_WIDTH = 800
 SCREEN_HEIGHT = 600
@@ -24,66 +27,66 @@ DEV_MODE = 1
 OPT_MODE = 0
 MODE = DEV_MODE
 
-#Scenes self.nextScene commands, used to tell SceneHandler what next scene to run after this one ends
+# Scenes self.nextScene commands, used to tell SceneHandler what next scene to run after this one ends
 TITLE_SCENE = 0
 CORRIDOR_LEVEL_1 = 1
 
 # Sprite Layer
 SPRITE_LAYER = 4
 
-#Facing Sides
+# Facing Sides
 RIGHT = 0
 LEFT = 1
 UP = 2
 DOWN = 3
 
-#Collisions
+# Collisions
 COLLISION_LAYER = 0
-SOLID = 1 #Booléen de GID pour collision
+SOLID = 1  # Booléen de GID pour collision
 SPIKE = 2
 SPRING = 3
 LADDER = 4
-NONE = 0 #Pour identifier qu'il n'y a eu aucune collision
+NONE = 0  # Pour identifier qu'il n'y a eu aucune collision
 
-#Player jump states
+# Player jump states
 GROUNDED = 0
 JUMP = 1
-CLIMBING = 2 #When on a ladder
+CLIMBING = 2  # When on a ladder
 
-#Physics
+# Physics
 GRAVITY = 1
 FRICTION = 1
 
-#Projectiles
-GRENADE_SPEEDX = 2
-GRENADE_SPEEDY = 2
-TARGET_DISTANCE = 50
-POWER_CAP = 9
-RATIO = 5
+# Projectiles
+TARGET_DISTANCE = 40
+
+PLAYER_BULLET_DAMAGE = 10
+PLAYER_BULLET_SPEED = 10
+PLAYER_BULLET_COOLDOWN = 10
 
 # Dimension tile base for icon
 TILEDIMX = 32
 TILEDIMY = 32
 
-#GUI settings
+# GUI settings
 DIALOG_TEXT_SIZE = 20
 INPUT_BOX_FONT = "Arial"
 INPUT_BOX_TEXT_SIZE = 20
 MENU_FONT = "Arial"
 MENU_FONT_COLOR = BLUE
-COLOR_POWER_BAR = (100,50,138)
-COLOR_POWER_BAR_EMPTY = (0,0,0,1)
+COLOR_POWER_BAR = (100, 50, 138)
+COLOR_POWER_BAR_EMPTY = (0, 0, 0, 1)
 
-BACKGROUND_COLOR = (255,255,255)
+BACKGROUND_COLOR = (255, 255, 255)
 
-COLOR_MENU_1 = (0,0,0)
+COLOR_MENU_1 = (0, 0, 0)
 COLOR_MENU_2 = (0, 0, 0)
 COLOR_MENU_FONTS = (0, 0, 0)
 COLOR_MENU_SELECTOR = (0, 0, 0)
 
 COLOR_MENU_SELECT_1 = (255, 102, 0)
 COLOR_MENU_SELECT_2 = (255, 255, 255)
-COLOR_MENU_FONTS_SELECT = (255,255,255)
+COLOR_MENU_FONTS_SELECT = (255, 255, 255)
 COLORKEY = (1, 1, 1)
 
 HUD_FONT_COLOR = COLOR_MENU_FONTS
@@ -95,7 +98,6 @@ HUD_COLOR_2 = COLOR_MENU_2
 # To get which mouse button is pressed.
 MOUSE_LEFT = 1
 MOUSE_RIGHT = 3
-
 
 # If you add a Tag for debugging, you MUST set it here at 0 for everyone
 # You can turn your tag on in your own settings_local.py for personal use

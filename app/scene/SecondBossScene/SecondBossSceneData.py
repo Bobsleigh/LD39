@@ -1,6 +1,6 @@
 from app.scene.SecondBossScene.Boss2 import Boss2
 from ldLib.scene.SceneDataTMX import SceneDataTMX
-from app.scene.corridorScene.PlayerCorridor import PlayerCorridor
+from app.scene.corridorScene.PlayerPlateform import PlayerCorridor
 
 
 class SecondBossSceneData(SceneDataTMX):
