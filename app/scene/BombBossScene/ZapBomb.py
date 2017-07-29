@@ -9,6 +9,7 @@ from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
 from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
 from ldLib.Sprites.Player.IdleState import IdleState
 from ldLib.tools.Counter import Counter
+from app.sprites.Bullet import Bullet
 
 
 class ZapBomb(pygame.sprite.Sprite):
@@ -153,6 +154,12 @@ class ZapBomb(pygame.sprite.Sprite):
         self.kill()
 
     def Boom(self):
+        directions = [(2, 0), (1, -1), (0, -2), (-1, -1), (-2, 0), (-1, 1), (0, 2), (1, 1)]
+        for i in directions:
+            bullet = Bullet(self.rect.centerx, self.rect.centery, i[0], i[1], self.mapData)
+            self.mapData.camera.add(bullet)
+            self.mapData.enemyProjectiles.add(bullet)
+            self.mapData.allSprites.add(bullet)
         self.dead()
 
     def onCollision(self, collidedWith, sideOfCollision,limit=0):

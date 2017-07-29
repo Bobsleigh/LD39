@@ -24,9 +24,9 @@ class BombBossAI:
             if self.counter.value != 0:
                 if self.counter.value % 300 == 0:
                     self.sprite.Boom()
-                if self.counter.value > 480 and self.counter.value % 180 == 0:
+                if self.counter.value > 480 and self.counter.value % 70 == 0:
                     self.sprite.Zap()
-                if self.counter.value % 50 == 0:
+                if self.counter.value % 140 == 0:
                     self.sprite.Dash()
 
     def vectorNorm(self,x,y):
