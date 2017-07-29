@@ -111,14 +111,14 @@ class BombBoss(pygame.sprite.Sprite):
         self.collisionMask.rect.x = self.x
         for rule in self.collisionRules:
             rule.onMoveX(self)
-        self.speedx *= 0.98
+        self.speedx -= 0.2
 
     def moveY(self):
         self.y += self.speedy
         self.collisionMask.rect.y = self.y
         for rule in self.collisionRules:
             rule.onMoveY(self)
-        self.speedy *= 0.98
+        self.speedy -= 0.2
 
     def capSpeed(self):
         if self.speedx > 0 and self.speedx > self.maxSpeedx:
@@ -161,7 +161,6 @@ class BombBoss(pygame.sprite.Sprite):
         boom_bomb = BoomBomb(desiredX, desiredY, self.rect.x, self.rect.y, self.mapData)
         self.mapData.allSprites.add(boom_bomb)
         self.mapData.camera.add(boom_bomb)
-        print("I want to throw a BOOM bomb to " + str(desiredX) + "/" + str(desiredY))
 
     def Zap(self):
         zapBehaviors = ["aimForPlayer", "aimForPlates", "aimForEntrance"]
@@ -183,15 +182,14 @@ class BombBoss(pygame.sprite.Sprite):
         zap_bomb = ZapBomb(desiredX, desiredY, self.rect.x, self.rect.y, self.mapData)
         self.mapData.allSprites.add(zap_bomb)
         self.mapData.camera.add(zap_bomb)
-        print("I want to throw a ZAP bomb to " + str(desiredX) + "/" + str(desiredY))
 
     def Dash(self):
         x = self.mapData.player.rect.centerx - self.rect.centerx
         y = self.mapData.player.rect.y - self.rect.centery
         angle = math.atan2(y, x)
 
-        self.speedx = 20*math.cos(angle)
-        self.speedy = 20*math.sin(angle)
+        self.speedx = 10*math.cos(angle)
+        self.speedy = 10*math.sin(angle)
 
     def aim_for_player(self):
         target_position = [0, 0]
