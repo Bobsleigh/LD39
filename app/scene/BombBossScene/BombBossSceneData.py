@@ -22,6 +22,7 @@ class BombBossSceneData(SceneDataTMX):
 
         self.boss = BombBoss(playerInitx, 300, self)
         self.allSprites.add(self.boss)
+        self.enemyProjectiles.add(self.boss)
         self.camera.add(self.boss)
 
         LevelHUD(self,self.player)

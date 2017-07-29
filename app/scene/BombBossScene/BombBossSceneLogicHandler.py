@@ -16,6 +16,7 @@ class BombBossSceneLogicHandler(LogicHandler):
     def handle(self):
         super().handle()
         self.physics.update()
+        self.handleBulletCollision()
 
     def handleCollision(self):
         for sprite in self.gameData.sceneData.allSprites:
@@ -25,6 +26,11 @@ class BombBossSceneLogicHandler(LogicHandler):
         collisionList = pygame.sprite.spritecollide(self.sceneData.player, self.sceneData.enemyProjectiles, False)
         for bullet in collisionList:
             self.sceneData.player.hurt(10)
+
+    def handleFriendlyBulletCollision(self):
+        collisionList = pygame.sprite.spritecollide(self.sceneData.boss, self.sceneData.friendlyBullets, False)
+        for bullet in collisionList:
+            self.sceneData.boss.hurt(10)
 
     def explodingBombCollision(self):
         collisionList = pygame.sprite.spritecollide(self.sceneData.player, self.sceneData.laserGroup, False)
