@@ -7,6 +7,7 @@ from app.sprites.Bullet import PlayerBullet
 from app.sprites.Target import Target
 
 from ldLib.animation.Animation import Animation
+from ldLib.collision.CollisionRules.CollisionWithEnergyCharge import CollisionWithEnergyCharge
 from ldLib.collision.collisionMask import CollisionMask
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
 from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
@@ -77,6 +78,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.collisionRules = []
         self.collisionRules.append(CollisionWithNothing())  # Gotta be first in the list to work properly
         self.collisionRules.append(CollisionWithSolid())
+        self.collisionRules.append(CollisionWithEnergyCharge())
 
         self._state = IdleState()
         # self.nextState = None
@@ -91,6 +93,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
 
         self.maxEnergy = PLAYER_MAX_ENERGY
         self.currentEnergy = self.maxEnergy
+        self.rechargeCooldown = Cooldown(PLAYER_RECHARGE_COOLDOWN)
 
         # Life bar
         self.maxHealth = PLAYER_MAX_LIFE
@@ -249,6 +252,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
 
     def updateCooldowns(self):
         self.gunCooldown.update()
+        self.rechargeCooldown.update()
 
         # For invincibitlity
         self.invincibleCooldown.update()
@@ -278,3 +282,8 @@ class PlayerPlateform(pygame.sprite.Sprite):
 
     def invincibleOnHit(self):
         self.invincibleCooldown.start()
+
+    def charge(self):
+        if self.rechargeCooldown.isZero and self.currentEnergy < self.maxEnergy:
+            self.currentEnergy += 1
+            self.rechargeCooldown.start()
