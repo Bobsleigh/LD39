@@ -7,9 +7,7 @@ class Target(pygame.sprite.Sprite):
     def __init__(self, x, y):
         super().__init__()
 
-        self.imageOrig = pygame.image.load(os.path.join('img', 'Bullet.png'))
-        self.imageOrig = pygame.transform.scale(self.imageOrig, (16, 16))
-        self.imageOrig = pygame.transform.rotate(self.imageOrig, -45)
+        self.imageOrig = pygame.image.load(os.path.join('img', 'lutecia-arrow.png'))
         self.image = self.imageOrig
         self.name = "target"
 
