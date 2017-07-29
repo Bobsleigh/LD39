@@ -84,19 +84,20 @@ class PlayerPlateform(pygame.sprite.Sprite):
         # To shoot
         self.target = Target(0, 0)
         self.mapData.camera.add(self.target)
-
         self.gunCooldown = Cooldown(PLAYER_BULLET_COOLDOWN)
-
 
         self.soundShootGun = pygame.mixer.Sound(os.path.join('music', 'Laser_Shoot.wav'))
         self.soundShootGun.set_volume(.15)
 
-        self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
-        self.hurtSound.set_volume(.25)
+        self.maxEnergy = PLAYER_MAX_ENERGY
+        self.currentEnergy = self.maxEnergy
 
         # Life bar
-        self.maxHealth = 10
-        self.currentHealth = 10
+        self.maxHealth = PLAYER_MAX_LIFE
+        self.currentHealth = self.maxHealth
+
+        self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
+        self.hurtSound.set_volume(.25)
 
         self.invincibleCooldown = Cooldown(60)
         self.flashduration = 8
@@ -253,14 +254,15 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.invincibleCooldown.update()
 
     def shootBullet(self):
-        if self.gunCooldown.isZero:
+        if self.gunCooldown.isZero and self.currentEnergy>0:
             self.soundShootGun.play()
 
-            bullet = PlayerBullet(self.rect.centerx, self.rect.centery, self.target.powerx*PLAYER_BULLET_SPEED, self.target.powery*PLAYER_BULLET_SPEED,self.mapData)
+            bullet = PlayerBullet(self.target.rect.centerx, self.target.rect.centery, self.target.powerx*PLAYER_BULLET_SPEED, self.target.powery*PLAYER_BULLET_SPEED,self.mapData)
             self.mapData.camera.add(bullet)
             self.mapData.allSprites.add(bullet)
             self.mapData.friendlyBullets.add(bullet)
             self.gunCooldown.start()
+            self.currentEnergy -= 1
 
     def hurt(self, damage):
         if self.invincibleCooldown.isZero:
