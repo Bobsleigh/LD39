@@ -188,7 +188,7 @@
 </data>
  </layer>
  <objectgroup name="IOZone_OL">
-  <object id="2" name="InZone" type="InZone" x="383" y="544" width="34" height="30">
+  <object id="2" name="InZone" type="InZone" x="383" y="480" width="34" height="30">
    <properties>
     <property name="StartPoint" value="InZone_01"/>
    </properties>

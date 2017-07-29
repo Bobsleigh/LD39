@@ -21,7 +21,6 @@ class CorridorSceneLogicHandler(LogicHandler):
                     self.sceneData.nextScene = self.sceneData.nextLevel
 
     def isPlayerIsInZone(self, player, zone):
-
         if player.rect.centerx >= zone.x and \
                         player.rect.centerx <= zone.x + zone.width and \
                         player.rect.centery >= zone.y and \
