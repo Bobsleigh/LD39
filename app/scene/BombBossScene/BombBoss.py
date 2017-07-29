@@ -9,14 +9,13 @@ from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNot
 from ldLib.Sprites.Player.IdleState import IdleState
 from app.scene.BombBossScene.BombBossAI import BombBossAI
 
-
 class BombBoss(pygame.sprite.Sprite):
     def __init__(self, x, y, sceneData, max_health=10):
         super().__init__()
 
         self.name = "BombBoss"
 
-        self.imageBase = ImageBox().rectSurface((32, 32), BLUE, 3)
+        self.imageBase = pygame.image.load(os.path.join('img', 'canon-boss-closed.png'))
         self.imageBase.set_colorkey(COLORKEY)
 
         self.imageShapeLeft = None
@@ -46,7 +45,7 @@ class BombBoss(pygame.sprite.Sprite):
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
 
-        #self.isFrictionApplied = True
+        self.isFrictionApplied = False
         self.isCollisionApplied = True
         self.facingSide = RIGHT
         self.friendly = True
@@ -104,12 +103,14 @@ class BombBoss(pygame.sprite.Sprite):
         self.collisionMask.rect.x = self.x
         for rule in self.collisionRules:
             rule.onMoveX(self)
+        self.speedx *= 0.95
 
     def moveY(self):
         self.y += self.speedy
         self.collisionMask.rect.y = self.y
         for rule in self.collisionRules:
             rule.onMoveY(self)
+        self.speedy *= 0.95
 
     def capSpeed(self):
         if self.speedx > 0 and self.speedx > self.maxSpeedx:
@@ -145,8 +146,8 @@ class BombBoss(pygame.sprite.Sprite):
         self.isAlive = False
 
     def Boom(self):
-        desiredX = (self.mapData.player.rect.x + self.mapData.player.speedx)
-        desiredY = (self.mapData.player.rect.y + self.mapData.player.speedy)
+        desiredX = (self.mapData.player.rect.x + 16 + self.mapData.player.speedx)
+        desiredY = (self.mapData.player.rect.y + 32 + self.mapData.player.speedy)
         print("I want to throw a BOOM bomb to " + str(desiredX) + "/" + str(desiredY))
 
     def Zap(self):
@@ -169,8 +170,8 @@ class BombBoss(pygame.sprite.Sprite):
 
     def Dash(self):
 
-        self.speedx = (self.mapData.player.rect.x - self.rect.x)/30
-        self.speedy = (self.mapData.player.rect.y - self.rect.y)/30
+        self.speedx = (self.mapData.player.rect.x + 16 - self.rect.x)/15
+        self.speedy = (self.mapData.player.rect.y + 32 - self.rect.y)/15
 
     def aim_for_player(self):
         target_position = [0, 0]

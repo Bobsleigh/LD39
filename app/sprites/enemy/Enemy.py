@@ -20,11 +20,9 @@ class Enemy(pygame.sprite.Sprite):
 
         self.frames = [self.imageEnemy]
         self.animation = Animation(self.frames, 100)
-
         self.rect = self.image.get_rect()
         self.rect.x = x
         self.rect.y = y
-
 
         self.isPhysicsApplied = False
         self.isCollisionApplied = False
@@ -32,7 +30,6 @@ class Enemy(pygame.sprite.Sprite):
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
         self.collisionRules = []
         self.collisionRules.append(CollisionWithNothing())  # Gotta be first in the list to work properly
-        self.collisionRules.append(CollisionWithSolid())
 
         self.soundDead = None
 
@@ -49,8 +46,25 @@ class Enemy(pygame.sprite.Sprite):
         self.mapData = mapData
 
     def update(self):
+        self.moveX()
+        self.moveY()
+
         self.animation.update(self)
         self.updateCollisionMask()
+
+
+    def moveX(self):
+        self.x += self.speedx
+        self.collisionMask.rect.x = self.x
+        for rule in self.collisionRules:
+            rule.onMoveX(self)
+
+
+    def moveY(self):
+        self.y += self.speedy
+        self.collisionMask.rect.y = self.y
+        for rule in self.collisionRules:
+            rule.onMoveY(self)
 
     def applyAI(self):
         pass

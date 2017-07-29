@@ -20,7 +20,6 @@ class Animation:
         self.isRunning = False
         self.timer = 0
         self.currentImage = imageList[0]
-        self.defaultImage = imageList[0]
         self.timerMax = delay * len(self.imageListLeft)
 
     def update(self, direction=LEFT):
@@ -40,10 +39,10 @@ class Animation:
                     self.timer = 0
                 else:
                     self.stop()
-            return self.defaultImage
+            return imageList[0]
 
         else:
-            return self.defaultImage
+            return imageList[0]
 
     def start(self):
         self.isRunning = True
