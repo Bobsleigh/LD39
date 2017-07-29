@@ -6,7 +6,7 @@ from app.scene.corridorScene.PlayerPlateform import PlayerPlateform
 class BombBossSceneData(SceneDataTMX):
     def __init__(self):
         super().__init__("BossRoom1", "InZone_01")
-        super().
+        #super().cameraPlayer.
 
         playerInitx = 50
         playerInity = 50

@@ -150,9 +150,10 @@ class ZapBomb(pygame.sprite.Sprite):
 
     def dead(self):
         self.isAlive = False
+        self.kill()
 
     def Boom(self):
-        self.isAlive = True
+        self.dead()
 
     def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID:
