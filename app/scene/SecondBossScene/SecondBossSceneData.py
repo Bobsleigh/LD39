@@ -1,6 +1,7 @@
 import pygame
 
 from app.scene.SecondBossScene.Boss2 import Boss2
+from app.sprites.LevelHUD import LevelHUD
 from app.sprites.PlayerPlateform import PlayerPlateform
 from ldLib.scene.SceneDataTMX import SceneDataTMX
 
@@ -25,3 +26,5 @@ class SecondBossSceneData(SceneDataTMX):
         self.boss = Boss2(200, 200, self)
         self.allSprites.add(self.boss)
         self.camera.add(self.boss)
+
+        LevelHUD(self,self.player)
