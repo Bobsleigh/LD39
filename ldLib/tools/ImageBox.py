@@ -18,7 +18,8 @@ class ImageBox:
     def blackAndWhiteBorderBox(self, width, height, border):
         surface = pygame.Surface((width,height),pygame.SRCALPHA)
         surface.convert_alpha()
-        surface.blit(self.borderOnly(width,height,border),[0,0])
+        surface.blit(self.borderOnly(width,height,border,WHITE),[0,0])
+        surface.blit(self.borderOnly(width-border*2, height-border*2, border), [border, border])
 
         return surface
 
@@ -32,22 +33,22 @@ class ImageBox:
 
         # top line
         topLine = pygame.Surface([width, border])
-        topLine.fill(WHITE)
+        topLine.fill(color)
         surface.blit(topLine, [0, 0])
 
         # bottom line
         bottomLine = pygame.Surface([width, border])
-        bottomLine.fill(WHITE)
+        bottomLine.fill(color)
         surface.blit(bottomLine, [0, height - border])
 
         # left line
         leftLine = pygame.Surface([border, height])
-        leftLine.fill(WHITE)
+        leftLine.fill(color)
         surface.blit(leftLine, [0, 0])
 
         # right line
         rightLine = pygame.Surface([border, height])
-        rightLine.fill(WHITE)
+        rightLine.fill(color)
         surface.blit(rightLine, [width - border, 0])
 
         return surface

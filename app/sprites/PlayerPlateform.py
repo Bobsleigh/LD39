@@ -36,8 +36,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.image = imageIdle[0]
         self.facingSide = RIGHT
 
-        self.imageTransparent = pygame.Surface((1, 1))
-        self.imageTransparent.set_colorkey(COLORKEY)
+        self.imageTransparent = pygame.Surface((1, 1),pygame.SRCALPHA)
 
         self.rect = self.image.get_rect()  # Position centrée du player
         self.x = x
