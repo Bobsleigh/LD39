@@ -17,10 +17,13 @@ class MoveXTowardPlayer(EnemyState):
             sprite.updateSpeedRight()
 
     def enter(self, ai):
+        ai.sprite.maxSpeedx = ai.sprite.maxSpeedx * 4
         if self.mapData.player.rect.x < ai.sprite.rect.x:
             self.direction = LEFT
         else:
             self.direction = RIGHT
 
-    def exit(self, sprite):
-        pass
+        print("MoveXTowardPlayer")
+
+    def exit(self, ai):
+        ai.sprite.maxSpeedx = ai.sprite.maxSpeedx / 4
