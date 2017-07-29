@@ -6,6 +6,9 @@ from app.scene.corridorScene.CorridorSceneLogicHandler import CorridorSceneLogic
 from app.scene.SecondBossScene.SecondBossSceneData import SecondBossSceneData
 from app.scene.SecondBossScene.SecondBossSceneLogicHandler import SecondBossSceneLogicHandler
 
+from app.scene.BombBossScene.BombBossSceneData import BombBossSceneData
+from app.scene.BombBossScene.BombBossSceneLogicHandler import BombBossSceneLogicHandler
+
 from ldLib.scene.GameData import GameData
 
 from ldLib.scene.Scene import Scene
@@ -19,7 +22,13 @@ class SceneHandler:
         self.screen = screen
         self.gameData = GameData()
 
-        if TAG_PHIL == 1:
+        if TAG_MAGNAN == 1:
+            self.gameData.sceneData = BombBossSceneData()
+            logic_handler = BombBossSceneLogicHandler(self.gameData)
+            bomb_boss_scene = Scene(self.screen, self.gameData, logic_handler)
+            bomb_boss_scene.run()
+
+        elif TAG_PHIL == 1:
             self.gameData.sceneData = SecondBossSceneData()
             logicHandler = SecondBossSceneLogicHandler(self.gameData)
             secondBossScene = Scene(self.screen, self.gameData, logicHandler)
