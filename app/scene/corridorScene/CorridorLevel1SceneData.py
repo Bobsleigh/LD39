@@ -1,6 +1,6 @@
 from app.settings import *
+from app.sprites.PlayerPlateform import PlayerPlateform
 from ldLib.scene.SceneDataTMX import SceneDataTMX
-from app.scene.corridorScene.PlayerPlateform import PlayerPlateform
 
 
 class CorridorLevel1SceneData(SceneDataTMX):

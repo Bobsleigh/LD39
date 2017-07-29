@@ -1,11 +1,12 @@
 from app.scene.BombBossScene.BombBoss import BombBoss
+from app.sprites.PlayerPlateform import PlayerPlateform
 from ldLib.scene.SceneDataTMX import SceneDataTMX
-from app.scene.corridorScene.PlayerPlateform import PlayerPlateform
 
 
 class BombBossSceneData(SceneDataTMX):
     def __init__(self):
         super().__init__("BossRoom1", "InZone_01")
+        #super().cameraPlayer.
 
         playerInitx = 50
         playerInity = 50

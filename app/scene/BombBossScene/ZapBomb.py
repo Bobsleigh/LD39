@@ -1,24 +1,23 @@
 import pygame
 import os
 import random
+import math
 from app.settings import *
 from ldLib.collision.collisionMask import CollisionMask
 from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
 from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
 from ldLib.Sprites.Player.IdleState import IdleState
-from app.scene.BombBossScene.BombBossAI import BombBossAI
-from app.scene.BombBossScene.BoomBomb import BoomBomb
-from app.scene.BombBossScene.ZapBomb import ZapBomb
+from ldLib.tools.Counter import Counter
 
 
-class BombBoss(pygame.sprite.Sprite):
-    def __init__(self, x, y, sceneData, max_health=10):
+class ZapBomb(pygame.sprite.Sprite):
+    def __init__(self, destination_x, destination_y, initial_x, initial_y, sceneData, max_health=10):
         super().__init__()
 
-        self.name = "BombBoss"
+        self.name = "ZapBomb"
 
-        self.imageBase = pygame.image.load(os.path.join('img', 'canon-boss-closed.png'))
+        self.imageBase = pygame.image.load(os.path.join('img', 'bomb-zap.png'))
         self.imageBase.set_colorkey(COLORKEY)
 
         self.imageShapeLeft = None
@@ -31,12 +30,14 @@ class BombBoss(pygame.sprite.Sprite):
         self.imageTransparent.set_colorkey(COLORKEY)
 
         self.rect = self.image.get_rect()  # Position centrée du player
-        self.x = x
-        self.y = y
-        self.rect.x = x
-        self.rect.y = y
-        self.previousX = x
-        self.previousY = y
+        self.x = initial_x
+        self.x_destination = destination_x
+        self.y = initial_y
+        self.y_destination = destination_y
+        self.rect.x = initial_x
+        self.rect.y = initial_y
+        self.previousX = initial_x
+        self.previousY = initial_y
 
         self.speedx = 0
         self.speedy = 0
@@ -65,6 +66,7 @@ class BombBoss(pygame.sprite.Sprite):
         self.mapData = sceneData
 
         self.isAlive = True
+        self.lifespan = random.randint(50, 80)
 
         self.collisionMask = CollisionMask(self.rect.x, self.rect.y, self.rect.width, self.rect.height)
         self.collisionRules = []
@@ -72,7 +74,7 @@ class BombBoss(pygame.sprite.Sprite):
         self.collisionRules.append(CollisionWithSolid())
 
         self._state = IdleState()
-        self.AI = BombBossAI(self, self.mapData)
+        self.counter = Counter()
         # self.nextState = None
 
     def setShapeImage(self):
@@ -80,7 +82,6 @@ class BombBoss(pygame.sprite.Sprite):
         self.imageShapeRight = self.imageBase
 
     def update(self):
-        self.AI.update()
         self.capSpeed()
 
         self.previousX = self.x
@@ -101,19 +102,21 @@ class BombBoss(pygame.sprite.Sprite):
         self.updateCollisionMask()
         self.updatePressedKeys()
 
+        self.counter.value += 1
+        if self.counter.value > self.lifespan:
+            self.Boom()
+
     def moveX(self):
-        self.x += self.speedx
+        self.x = math.floor((7 * self.x + self.x_destination)/8)
         self.collisionMask.rect.x = self.x
         for rule in self.collisionRules:
             rule.onMoveX(self)
-        self.speedx *= 0.98
 
     def moveY(self):
-        self.y += self.speedy
+        self.y = math.floor((7 * self.y + self.y_destination)/8)
         self.collisionMask.rect.y = self.y
         for rule in self.collisionRules:
             rule.onMoveY(self)
-        self.speedy *= 0.98
 
     def capSpeed(self):
         if self.speedx > 0 and self.speedx > self.maxSpeedx:
@@ -147,59 +150,10 @@ class BombBoss(pygame.sprite.Sprite):
 
     def dead(self):
         self.isAlive = False
+        self.kill()
 
     def Boom(self):
-        target_position = self.aim_for_player()
-        desiredX = target_position[0]
-        desiredY = target_position[1]
-
-        boom_bomb = BoomBomb(desiredX, desiredY,self.rect.x, self.rect.y, self.mapData)
-        self.mapData.allSprites.add(boom_bomb)
-        self.mapData.camera.add(boom_bomb)
-        print("I want to throw a BOOM bomb to " + str(desiredX) + "/" + str(desiredY))
-
-    def Zap(self):
-        zapBehaviors = ["aimForPlayer", "aimForPlates", "aimForEntrance"]
-        chosenAction = random.choice(zapBehaviors)
-
-        if chosenAction == "aimForPlayer":
-            target_position = self.aim_for_player()
-            desiredX = target_position[0] + random.randint(-32, 32)
-            desiredY = target_position[1] + random.randint(-32, 32)
-
-        elif chosenAction == "aimForPlates":
-            desiredX = 390
-            desiredY = 300
-
-        else:
-            desiredX = 390
-            desiredY = 532
-
-        zap_bomb = ZapBomb(desiredX, desiredY, self.rect.x, self.rect.y, self.mapData)
-        self.mapData.allSprites.add(zap_bomb)
-        self.mapData.camera.add(zap_bomb)
-        print("I want to throw a ZAP bomb to " + str(desiredX) + "/" + str(desiredY))
-
-    def Dash(self):
-
-        self.speedx = (self.mapData.player.rect.x + 16 - self.rect.x)/20
-        self.speedy = (self.mapData.player.rect.y + 16 - self.rect.y)/20
-
-    def aim_for_player(self):
-        target_position = [0, 0]
-        target_position[0] = (self.mapData.player.rect.x + 16 + (20*self.mapData.player.speedx))
-        target_position[1] = (self.mapData.player.rect.y + 32 + (20*self.mapData.player.speedy))
-
-        if target_position[0] < 64:
-            target_position[0] = 64
-        elif target_position[0] > 732:
-            target_position[0] = 732
-        if target_position[1] < 64:
-            target_position[1] = 64
-        elif target_position[1] > 532:
-            target_position[1] = 53
-
-        return target_position
+        self.dead()
 
     def onCollision(self, collidedWith, sideOfCollision,limit=0):
         if collidedWith == SOLID:

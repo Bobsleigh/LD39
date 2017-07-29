@@ -43,7 +43,6 @@ class Bullet(Enemy):
 
         self.collisionRules.append(CollisionWithSolidDetonate())  # Gotta be first in the list to work properly
 
-
     def update(self):
 
         self.moveX()
