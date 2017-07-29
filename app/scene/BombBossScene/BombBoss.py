@@ -161,7 +161,8 @@ class BombBoss(pygame.sprite.Sprite):
         boom_bomb = BoomBomb(desiredX, desiredY, self.rect.x, self.rect.y, self.mapData)
         self.mapData.allSprites.add(boom_bomb)
         self.mapData.camera.add(boom_bomb)
-        print("I want to throw a BOOM bomb to " + str(desiredX) + "/" + str(desiredY))
+        if TAG_MAGNAN==1:
+            print("I want to throw a BOOM bomb to " + str(desiredX) + "/" + str(desiredY))
 
     def Zap(self):
         zapBehaviors = ["aimForPlayer", "aimForPlates", "aimForEntrance"]
@@ -183,7 +184,8 @@ class BombBoss(pygame.sprite.Sprite):
         zap_bomb = ZapBomb(desiredX, desiredY, self.rect.x, self.rect.y, self.mapData)
         self.mapData.allSprites.add(zap_bomb)
         self.mapData.camera.add(zap_bomb)
-        print("I want to throw a ZAP bomb to " + str(desiredX) + "/" + str(desiredY))
+        if TAG_MAGNAN == 1:
+            print("I want to throw a ZAP bomb to " + str(desiredX) + "/" + str(desiredY))
 
     def Dash(self):
         x = self.mapData.player.rect.centerx - self.rect.centerx

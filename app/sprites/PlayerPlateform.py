@@ -187,6 +187,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
 
     def dead(self):
         self.isAlive = False
+        self.target.kill()
         self.kill()
 
     def onSpike(self):
