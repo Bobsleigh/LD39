@@ -1,8 +1,9 @@
 import pygame
 
 from app.settings import *
+from app.sprites.PlayerPlateform import PlayerPlateform
+from ldLib.GUI.Peanut import LifeBar
 from ldLib.scene.SceneDataTMX import SceneDataTMX
-from app.scene.corridorScene.PlayerPlateform import PlayerPlateform
 
 
 class CorridorSceneData(SceneDataTMX):
@@ -23,3 +24,9 @@ class CorridorSceneData(SceneDataTMX):
 
         self.player = PlayerPlateform(playerInitx, playerInity, self)
         self.camera.add(self.player)
+
+        self.addHUD()
+
+    def addHUD(self):
+        lifeBar = LifeBar(self.player,20,20,SCREEN_WIDTH/5,SCREEN_HEIGHT/30)
+        self.spritesHUD.add(lifeBar)

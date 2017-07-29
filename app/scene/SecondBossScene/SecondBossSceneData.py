@@ -1,7 +1,8 @@
 import pygame
+
 from app.scene.SecondBossScene.Boss2 import Boss2
+from app.sprites.PlayerPlateform import PlayerPlateform
 from ldLib.scene.SceneDataTMX import SceneDataTMX
-from app.scene.corridorScene.PlayerPlateform import PlayerPlateform
 
 
 class SecondBossSceneData(SceneDataTMX):
