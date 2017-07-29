@@ -91,6 +91,10 @@ class BombBoss(pygame.sprite.Sprite):
         self.rect.x = self.x
         self.rect.y = self.y
 
+        # Life bar
+        self.maxHealth = 100
+        self.currentHealth = 100
+
         if self.speedx > 0:
             self.image = self.imageShapeRight
             self.facingSide = RIGHT

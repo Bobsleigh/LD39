@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="25" height="19" tilewidth="32" tileheight="32" nextobjectid="5">
- <tileset firstgid="1" source="../../LD39/tiles_map/terrainSet.tsx"/>
+ <tileset firstgid="1" source="terrainSet.tsx"/>
  <tileset firstgid="51" source="CollisionMap.tsx"/>
  <tileset firstgid="101" source="VieuxSprites.tsx"/>
  <layer name="Collision_TL" width="25" height="19">
@@ -51,7 +51,7 @@
  </layer>
  <layer name="Terrain_TL" width="25" height="19">
   <data encoding="csv">
-117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,117,
+117,21,21,21,22,21,21,21,21,21,21,21,22,21,21,21,21,21,21,21,22,21,21,21,117,
 117,6,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,8,117,
 117,11,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,13,117,
 117,11,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,12,13,117,

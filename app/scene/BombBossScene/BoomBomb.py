@@ -153,6 +153,9 @@ class BoomBomb(pygame.sprite.Sprite):
         self.kill()
 
     def Boom(self):
+        distance = math.hypot(self.x - self.mapData.player.x, self.y - self.mapData.player.y)
+        if distance < 64:
+            self.mapData.player.hurt(15)
         self.dead()
 
     def onCollision(self, collidedWith, sideOfCollision,limit=0):
