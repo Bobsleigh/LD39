@@ -6,6 +6,10 @@ from ldLib.Sprites.SecondBoss.MoveUpState import MoveUpState
 from ldLib.Sprites.SecondBoss.MoveDownState import MoveDownState
 from ldLib.Sprites.SecondBoss.MoveRightState import MoveRightState
 from ldLib.Sprites.SecondBoss.MoveLeftState import MoveLeftState
+from ldLib.Sprites.SecondBoss.MoveRandomState import MoveRandomState
+from ldLib.Sprites.SecondBoss.MoveXTowardPlayer import MoveXTowardPlayer
+from ldLib.Sprites.SecondBoss.MoveYTowardPlayer import MoveYTowardPlayer
+from ldLib.Sprites.SecondBoss.MoveToMapCenterState import MoveTopMapCenterState
 from ldLib.Sprites.SecondBoss.ShootingLaserState import ShootingLaserState
 
 class Boss2AI:
@@ -19,6 +23,7 @@ class Boss2AI:
         self.state = IdleState()
         self._laserState = ShootingLaserState(self.sprite ,True, self.mapData)
         self.laserState = ShootingLaserState(self.sprite ,True, self.mapData)
+        self.randomMoveTime = random.randint(60, 480)
 
     @property
     def state(self):
@@ -51,17 +56,27 @@ class Boss2AI:
 
     def chooseState(self):
         if self.counter.value == 1:
-            self.state = IdleState()
-        elif self.counter.value == 80:
-            self.state = MoveUpState()
-        elif self.counter.value == 120:
-            self.state = MoveRightState()
-        elif self.counter.value == 160:
-            self.state = MoveDownState()
-        elif self.counter.value == 200:
-            self.state = MoveLeftState()
-        elif self.counter.value == 240:
-            self.counter.reset()
+            self.state = MoveRandomState(60,20)
+        if self.counter.value == self.randomMoveTime:
+            rnd = random.randint(0,1)
+            if rnd == 0:
+                self.state = MoveXTowardPlayer(self.mapData)
+            else:
+                self.state = MoveYTowardPlayer(self.mapData)
+
+
+        # if self.counter.value == 1:
+        #     self.state = IdleState()
+        # elif self.counter.value == 10:
+        #     self.state = MoveRandomState(10, 5)
+        # elif self.counter.value == 120:
+        #     self.state = MoveRightState()
+        # elif self.counter.value == 160:
+        #     self.state = MoveDownState()
+        # elif self.counter.value == 200:
+        #     self.state = MoveLeftState()
+        # elif self.counter.value == 240:
+        #     self.counter.reset()
 
     def updateLaser(self):
         if self.laserCounter.value == 1:
