@@ -44,13 +44,13 @@ DOWN = 3
 UPDOWN_LASER = 0
 RIGHTLEFT_LASER = 1
 
-# Collisions
+#Collisions
 COLLISION_LAYER = 0
-SOLID = 1  # Booléen de GID pour collision
+SOLID = 1 #Booléen de GID pour collision
 SPIKE = 2
 SPRING = 3
-LADDER = 4
-NONE = 0  # Pour identifier qu'il n'y a eu aucune collision
+ENERGY_CHARGE = 4
+NONE = 0 #Pour identifier qu'il n'y a eu aucune collision
 
 # Player jump states
 GROUNDED = 0
@@ -70,6 +70,7 @@ PLAYER_BULLET_COOLDOWN = 10
 
 PLAYER_MAX_LIFE = 10
 PLAYER_MAX_ENERGY = 40
+PLAYER_RECHARGE_COOLDOWN = 10
 
 # Dimension tile base for icon
 TILEDIMX = 32
