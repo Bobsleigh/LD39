@@ -3,7 +3,7 @@ from app.scene.corridorScene.PlayerCorridor import PlayerCorridor
 
 class CorridorSceneData(SceneDataTMX):
     def __init__(self):
-        super().__init__("TestTmXData", "InZone_01")
+        super().__init__("TestTmxData", "InZone_01")
 
         playerInitx = 50
         playerInity = 50

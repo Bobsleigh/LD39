@@ -6,9 +6,6 @@ from app.settings import *
 from ldLib.collision.collisionMask import CollisionMask
 from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
-from ldLib.collision.CollisionRules.CollisionWithSpring import CollisionWithSpring
-from ldLib.collision.CollisionRules.CollisionWithSpike import CollisionWithSpike
-from ldLib.collision.CollisionRules.CollisionWithLadder import CollisionWithLadder
 from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
 from ldLib.Sprites.Player.IdleState import IdleState
 
@@ -41,7 +38,7 @@ class PlayerCorridor(pygame.sprite.Sprite):
         self.speedx = 0
         self.speedy = 0
         self.maxSpeedx = 5
-        self.maxSpeedyUp = 25
+        self.maxSpeedyUp = 10
         self.maxSpeedyDown = 10
         self.accx = 2
         self.accy = 2
@@ -49,7 +46,6 @@ class PlayerCorridor(pygame.sprite.Sprite):
         self.springJumpSpeed = 25
 
         self.isFrictionApplied = True
-        self.isGravityApplied = True
         self.isCollisionApplied = True
         self.facingSide = RIGHT
         self.friendly = True
@@ -72,9 +68,6 @@ class PlayerCorridor(pygame.sprite.Sprite):
         self.collisionRules = []
         self.collisionRules.append(CollisionWithNothing())  # Gotta be first in the list to work properly
         self.collisionRules.append(CollisionWithSolid())
-        self.collisionRules.append(CollisionWithSpring())
-        self.collisionRules.append(CollisionWithSpike())
-        self.collisionRules.append(CollisionWithLadder())
 
         self._state = IdleState()
         # self.nextState = None
@@ -171,7 +164,7 @@ class PlayerCorridor(pygame.sprite.Sprite):
                 self.y = self.previousY
                 self.rect.y = self.y
                 self.updateCollisionMask()
-                #self.speedy = 0
+                self.speedy = 0
             if sideOfCollision == UP:
                 self.y = self.previousY
                 self.rect.y = self.y
