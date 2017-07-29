@@ -2,8 +2,6 @@ __author__ = 'Bobsleigh'
 
 from ldLib.collision.collisionTile import collisionExclusivelyWithTile
 from app.settings import *
-from ldLib.Sprites.Player.IdleState import IdleState
-from ldLib.Sprites.Player.JumpState import JumpState
 from ldLib.collision.CollisionRules.CollisionRule import CollisionRule
 
 class CollisionWithNothing(CollisionRule):
