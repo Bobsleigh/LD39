@@ -1,4 +1,6 @@
 from app.SceneHandler import SceneHandler
+from app.scene.SecondBossScene.SecondBossSceneData import SecondBossSceneData
+from app.scene.SecondBossScene.SecondBossSceneLogicHandler import SecondBossSceneLogicHandler
 
 import os
 import sys
@@ -27,6 +29,8 @@ if __name__ == '__main__':
 
     # Hide the mouse
     # pygame.mouse.set_visible(False)
+
+
 
     # Create the test scene
     sceneHandler = SceneHandler(screen)
