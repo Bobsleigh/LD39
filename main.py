@@ -1,5 +1,7 @@
 from app.scene.corridorScene.CorridorSceneData import CorridorSceneData
 from app.scene.corridorScene.CorridorSceneLogicHandler import CorridorSceneLogicHandler
+from app.scene.SecondBossScene.SecondBossSceneData import SecondBossSceneData
+from app.scene.SecondBossScene.SecondBossSceneLogicHandler import SecondBossSceneLogicHandler
 
 import os
 import sys
@@ -31,6 +33,13 @@ if __name__ == '__main__':
 
     # Hide the mouse
     # pygame.mouse.set_visible(False)
+
+    if TAG_PHIL == 1:
+        gameData = GameData()
+        gameData.sceneData = SecondBossSceneData()
+        logicHandler = SecondBossSceneLogicHandler(gameData)
+        secondBossScene = Scene(screen, gameData, logicHandler)
+        secondBossScene.run()
 
     # Create the test scene
     gameData = GameData()

@@ -8,12 +8,13 @@ from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
 from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
 from ldLib.Sprites.Player.IdleState import IdleState
+from ldLib.AI.Boss2AI import Boss2AI
 
-class PlayerCorridor(pygame.sprite.Sprite):
+class Boss2(pygame.sprite.Sprite):
     def __init__(self, x, y, sceneData, max_health=10):
         super().__init__()
 
-        self.name = "player"
+        self.name = "Boss2"
 
         self.imageBase = ImageBox().rectSurface((32, 32), BLUE, 3)
         self.imageBase.set_colorkey(COLORKEY)
@@ -37,11 +38,11 @@ class PlayerCorridor(pygame.sprite.Sprite):
 
         self.speedx = 0
         self.speedy = 0
-        self.maxSpeedx = 5
-        self.maxSpeedyUp = 10
-        self.maxSpeedyDown = 10
-        self.accx = 2
-        self.accy = 2
+        self.maxSpeedx = 1
+        self.maxSpeedyUp = 1
+        self.maxSpeedyDown = 1
+        self.accx = 1
+        self.accy = 1
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
 
@@ -69,6 +70,7 @@ class PlayerCorridor(pygame.sprite.Sprite):
         self.collisionRules.append(CollisionWithSolid())
 
         self._state = IdleState()
+        self.AI = Boss2AI(self, self.mapData)
         # self.nextState = None
 
     def setShapeImage(self):
@@ -76,6 +78,7 @@ class PlayerCorridor(pygame.sprite.Sprite):
         self.imageShapeRight = self.imageBase
 
     def update(self):
+        self.AI.update()
         self.capSpeed()
 
         self.previousX = self.x
@@ -170,8 +173,8 @@ class PlayerCorridor(pygame.sprite.Sprite):
                 self.updateCollisionMask()
                 self.speedy = 0
 
-    def notify(self, event):
-        self.nextState = self.state.handleInput(self, event)
+    # def notify(self, event):
+    #     self.nextState = self.state.handleInput(self, event)
 
         # if self.nextState != None:
         #     self.state.exit(self)
@@ -179,15 +182,15 @@ class PlayerCorridor(pygame.sprite.Sprite):
         #     self.state.enter(self)
         #     self.nextState = None
 
-    @property
-    def state(self):
-        return self._state
-
-    @state.setter
-    def state(self, value):
-        self._state.exit(self)
-        self._state = value
-        self._state.enter(self)
+    # @property
+    # def state(self):
+    #     return self._state
+    #
+    # @state.setter
+    # def state(self, value):
+    #     self._state.exit(self)
+    #     self._state = value
+    #     self._state.enter(self)
 
 
     def updatePressedKeys(self):
