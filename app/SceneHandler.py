@@ -3,6 +3,9 @@ from app.scene.corridorScene.CorridorSceneData import CorridorSceneData
 from app.scene.corridorScene.CorridorLevel1SceneData import CorridorLevel1SceneData
 from app.scene.corridorScene.CorridorSceneLogicHandler import CorridorSceneLogicHandler
 
+from app.scene.SecondBossScene.SecondBossSceneData import SecondBossSceneData
+from app.scene.SecondBossScene.SecondBossSceneLogicHandler import SecondBossSceneLogicHandler
+
 from ldLib.scene.GameData import GameData
 
 from ldLib.scene.Scene import Scene
@@ -16,6 +19,12 @@ class SceneHandler:
         self.screen = screen
         self.gameData = GameData()
 
+        if TAG_PHIL == 1:
+            self.gameData.sceneData = SecondBossSceneData()
+            logicHandler = SecondBossSceneLogicHandler(self.gameData)
+            secondBossScene = Scene(self.screen, self.gameData, logicHandler)
+            secondBossScene.run()
+
         self.gameData.sceneData = CorridorSceneData()
         self.runningScene = Scene(self.screen, self.gameData, CorridorSceneLogicHandler(self.gameData))
 
@@ -27,6 +36,9 @@ class SceneHandler:
 
     def getNextScene(self):
         # When we exit the scene, this code executes
+
+
+
         if self.runningScene.nextScene == TITLE_SCENE:
             self.gameData.sceneData = CorridorSceneData()
             self.runningScene = Scene(self.screen, self.gameData, CorridorSceneLogicHandler(self.gameData))
