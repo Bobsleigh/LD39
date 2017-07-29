@@ -1,3 +1,5 @@
+import pygame
+
 from app.settings import *
 from ldLib.scene.SceneDataTMX import SceneDataTMX
 from app.scene.corridorScene.PlayerPlateform import PlayerPlateform
@@ -6,6 +8,9 @@ from app.scene.corridorScene.PlayerPlateform import PlayerPlateform
 class CorridorSceneData(SceneDataTMX):
     def __init__(self):
         super().__init__("TestTmxData", "InZone_01")
+
+        self.friendlyBullets = pygame.sprite.Group()
+
         playerInitx = 50
         playerInity = 50
         try:

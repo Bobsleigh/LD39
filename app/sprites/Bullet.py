@@ -3,10 +3,14 @@ import pygame
 
 from app.settings import *
 from app.sprites.enemy.Enemy import Enemy
+from ldLib.collision.CollisionRules.CollisionWithSolidDetonate import CollisionWithSolidDetonate
+
 
 class Bullet(Enemy):
-    def __init__(self, x, y, speedx, speedy, friendly=True):
+    def __init__(self, x, y, speedx, speedy, sceneData, friendly=True):
         super().__init__(x, y)
+
+        self.mapData = sceneData
 
         self.name = "bullet"
 
@@ -37,16 +41,19 @@ class Bullet(Enemy):
         self.friendly = friendly
         self.isCollisionApplied = True
 
+        self.collisionRules.append(CollisionWithSolidDetonate())  # Gotta be first in the list to work properly
+
+
     def update(self):
 
-        self.x += self.speedx
-        self.y += self.speedy
+        self.moveX()
+        self.moveY()
 
         self.rect.x = self.x
         self.rect.y = self.y
 
-        if self.animation is not None :
-           next(self.animation)
+        if self.animation is not None:
+            next(self.animation)
         self.updateCollisionMask()
 
     def updateCollisionMask(self):
@@ -57,15 +64,15 @@ class Bullet(Enemy):
         if collidedWith == SOLID:
             self.detonate()
 
-
     def hitEnemy(self):
         self.detonate()
 
     def detonate(self):
         self.kill()
 
+
 class PlayerBullet(Bullet):
-    def __init__(self, x, y, speedx, speedy):
-        super().__init__(x, y, speedx, speedy)
+    def __init__(self, x, y, speedx, speedy, sceneData):
+        super().__init__(x, y, speedx, speedy, sceneData)
 
         self.attackDMG = PLAYER_BULLET_DAMAGE

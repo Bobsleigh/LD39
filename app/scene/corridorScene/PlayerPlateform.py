@@ -23,8 +23,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
         # Code for idle animation
         frameAnimationSpeed=10
 
-        imageIdle = [pygame.image.load(os.path.join('img', 'lutecia-left.png')),
-                         pygame.image.load(os.path.join('img', 'lutecia-up.png'))]
+        imageIdle = [pygame.image.load(os.path.join('img', 'lutecia-left.png'))]
 
         self.animationIdle = Animation(imageIdle, frameAnimationSpeed, LEFT, True)
         self.animation = self.animationIdle
@@ -36,8 +35,6 @@ class PlayerPlateform(pygame.sprite.Sprite):
 
         self.image = imageIdle[0]
         self.facingSide = RIGHT
-
-        imageIdle
 
         self.imageTransparent = pygame.Surface((1, 1))
         self.imageTransparent.set_colorkey(COLORKEY)
@@ -59,7 +56,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.accy = 2
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
-        self.hp = 10;
+        self.hp = 10
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
@@ -116,7 +113,11 @@ class PlayerPlateform(pygame.sprite.Sprite):
         else:
             self.animation = self.animationIdle
 
-        self.image = self.animation.update(direction=self.facingSide)
+        if self.target.rect.centerx<self.rect.centerx:
+            targetSide = LEFT
+        else:
+            targetSide=RIGHT
+        self.image = self.animation.update(targetSide)
 
         self.updateCollisionMask()
         self.updatePressedKeys()
@@ -171,32 +172,6 @@ class PlayerPlateform(pygame.sprite.Sprite):
 
     def onSpike(self):
         self.kill()
-
-    def onCollision(self, collidedWith, sideOfCollision,limit=0):
-        if collidedWith == SOLID:
-            if sideOfCollision == RIGHT:
-                #On colle le player sur le mur à droite
-                self.x = self.previousX
-                self.rect.x = self.x
-                self.updateCollisionMask()
-                self.speedx = 0
-                self.rect.right += self.mapData.tmxData.tilewidth - (self.collisionMask.rect.right % self.mapData.tmxData.tilewidth) - 1
-            if sideOfCollision == LEFT:
-                self.x = self.previousX
-                self.rect.x = self.x
-                self.updateCollisionMask()
-                self.speedx = 0
-                self.rect.left -= (self.collisionMask.rect.left % self.mapData.tmxData.tilewidth)  # On colle le player sur le mur de gauche
-            if sideOfCollision == DOWN:
-                self.y = self.previousY
-                self.rect.y = self.y
-                self.updateCollisionMask()
-                self.speedy = 0
-            if sideOfCollision == UP:
-                self.y = self.previousY
-                self.rect.y = self.y
-                self.updateCollisionMask()
-                self.speedy = 0
 
     def notify(self, event):
         self.nextState = self.state.handleInput(self, event)
@@ -263,9 +238,10 @@ class PlayerPlateform(pygame.sprite.Sprite):
         if self.gunCooldown.isZero:
             self.soundShootGun.play()
 
-            bullet = PlayerBullet(self.rect.centerx, self.rect.centery, self.target.powerx*PLAYER_BULLET_SPEED, self.target.powery*PLAYER_BULLET_SPEED)
+            bullet = PlayerBullet(self.rect.centerx, self.rect.centery, self.target.powerx*PLAYER_BULLET_SPEED, self.target.powery*PLAYER_BULLET_SPEED,self.mapData)
             self.mapData.camera.add(bullet)
             self.mapData.allSprites.add(bullet)
+            self.mapData.friendlyBullets.add(bullet)
             self.gunCooldown.start()
 
     def hurt(self, damage):
