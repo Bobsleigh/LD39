@@ -1,4 +1,4 @@
-import math
+import math, random
 from app.settings import *
 from ldLib.tools.Counter import Counter
 from ldLib.Sprites.SecondBoss.IdleState import IdleState
@@ -65,7 +65,7 @@ class Boss2AI:
 
     def updateLaser(self):
         if self.laserCounter.value == 1:
-            self.laserState = ShootingLaserState(self.sprite ,True, self.mapData)
+            self.laserState = ShootingLaserState(self.sprite , random.choice([True,False]), self.mapData)
         elif self.laserCounter.value == 200:
             self.laserState = IdleState()
         elif self.laserCounter.value == 310:
