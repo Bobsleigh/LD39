@@ -21,8 +21,6 @@ class CollisionWithSolid(CollisionRule):
         if collisionWithTile(sprite, SOLID, sprite.mapData):
             if sprite.speedy > 0:
                 sprite.y = ((sprite.y + sprite.collisionMask.rect.height) // sprite.mapData.tmxData.tileheight) * sprite.mapData.tmxData.tileheight - sprite.collisionMask.rect.height
-                if not isinstance(sprite.state, IdleState):
-                    sprite.state = IdleState()
             else:
                 sprite.y = (sprite.y // sprite.mapData.tmxData.tileheight + 1) * sprite.mapData.tmxData.tileheight
             sprite.collisionMask.rect.y = sprite.y

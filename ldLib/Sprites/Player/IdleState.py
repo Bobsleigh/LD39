@@ -2,7 +2,6 @@ __author__ = 'Bobsleigh'
 
 import pygame
 from ldLib.Sprites.Player.PlayerState import PlayerState
-from ldLib.Sprites.Player.JumpState import JumpState
 from app.settings import *
 
 class IdleState(PlayerState):
@@ -20,10 +19,9 @@ class IdleState(PlayerState):
             elif event.key == pygame.K_DOWN or event.key == pygame.K_s:
                 sprite.updateSpeedDown()
                 sprite.downPressed = True
-            elif event.key == pygame.K_SPACE:
-                sprite.jump()
-                sprite.spacePressed = True
-                return JumpState()
+            elif event.key == pygame.K_UP or event.key == pygame.K_w:
+                sprite.updateSpeedUp()
+                sprite.upPressed = True
             elif event.key == pygame.K_LSHIFT:
                 sprite.leftShiftPressed = True
 

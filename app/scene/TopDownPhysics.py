@@ -6,7 +6,6 @@ class TopDownPhysics:
 
     def update(self):
         self.applyFriction(self.sceneData.allSprites)
-        self.applyGravity(self.sceneData.allSprites)
 
     def applyFriction(self, allSprites):
         for sprite in allSprites:
@@ -34,12 +33,3 @@ class TopDownPhysics:
                         sprite.speedy = 0
             except AttributeError:
                 pass
-
-    def applyGravity(self, allSprites):
-        for sprite in allSprites:
-            try:
-                if sprite.isGravityApplied:
-                    sprite.speedy += GRAVITY
-            except AttributeError:
-                pass
-

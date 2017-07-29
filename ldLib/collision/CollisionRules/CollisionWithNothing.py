@@ -14,6 +14,4 @@ class CollisionWithNothing(CollisionRule):
         pass
 
     def onMoveY(self, sprite):
-        if collisionExclusivelyWithTile(sprite, NONE, sprite.mapData):
-            if not isinstance(sprite.state, JumpState):
-                sprite.state = JumpState()
+        pass
