@@ -37,8 +37,6 @@ class SceneHandler:
     def getNextScene(self):
         # When we exit the scene, this code executes
 
-
-
         if self.runningScene.nextScene == TITLE_SCENE:
             self.gameData.sceneData = CorridorSceneData()
             self.runningScene = Scene(self.screen, self.gameData, CorridorSceneLogicHandler(self.gameData))

@@ -1,14 +1,13 @@
 import pygame
-import os
-import math
 
+from app.scene.SecondBossScene.Boss2AI import Boss2AI
 from app.settings import *
 from ldLib.collision.collisionMask import CollisionMask
 from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
 from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
 from ldLib.Sprites.Player.IdleState import IdleState
-from ldLib.AI.Boss2AI import Boss2AI
+
 
 class Boss2(pygame.sprite.Sprite):
     def __init__(self, x, y, sceneData, max_health=10):
@@ -98,6 +97,9 @@ class Boss2(pygame.sprite.Sprite):
 
         self.updateCollisionMask()
         self.updatePressedKeys()
+
+    def shootLaser(self):
+        self.mapData.camera.add()
 
     def moveX(self):
         self.x += self.speedx
