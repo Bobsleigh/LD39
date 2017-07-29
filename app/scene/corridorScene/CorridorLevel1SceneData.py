@@ -3,9 +3,10 @@ from ldLib.scene.SceneDataTMX import SceneDataTMX
 from app.scene.corridorScene.PlayerCorridor import PlayerCorridor
 
 
-class CorridorSceneData(SceneDataTMX):
+class CorridorLevel1SceneData(SceneDataTMX):
     def __init__(self):
-        super().__init__("TestTmxData", "InZone_01")
+        super().__init__("TestOut", "InZone_01")
+
         playerInitx = 50
         playerInity = 50
         try:
@@ -14,7 +15,7 @@ class CorridorSceneData(SceneDataTMX):
         except AttributeError:
             pass
 
-        self.nextLevel = CORRIDOR_LEVEL_1
-
         self.player = PlayerCorridor(playerInitx, playerInity, self)
         self.camera.add(self.player)
+
+        self.nextLevel = TITLE_SCENE

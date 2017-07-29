@@ -1,6 +1,4 @@
 import pygame
-import os
-import math
 
 from app.settings import *
 from ldLib.collision.collisionMask import CollisionMask
@@ -9,8 +7,9 @@ from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
 from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
 from ldLib.Sprites.Player.IdleState import IdleState
 
+
 class PlayerCorridor(pygame.sprite.Sprite):
-    def __init__(self, x, y, sceneData, max_health=10):
+    def __init__(self, x, y, sceneData):
         super().__init__()
 
         self.name = "player"
