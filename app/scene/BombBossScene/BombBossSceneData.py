@@ -1,6 +1,6 @@
 from app.scene.SecondBossScene.Boss2 import Boss2
 from ldLib.scene.SceneDataTMX import SceneDataTMX
-from app.scene.corridorScene.PlayerCorridor import PlayerCorridor
+from app.scene.corridorScene.PlayerPlateform import PlayerPlateform
 
 
 class BombBossSceneData(SceneDataTMX):
@@ -15,7 +15,7 @@ class BombBossSceneData(SceneDataTMX):
         except AttributeError:
             pass
 
-        self.player = PlayerCorridor(playerInitx, playerInity, self)
+        self.player = PlayerPlateform(playerInitx, playerInity, self)
         self.camera.add(self.player)
 
         self.boss = Boss2(playerInitx, playerInity, self)

@@ -1,6 +1,6 @@
 from app.settings import *
 from ldLib.scene.SceneDataTMX import SceneDataTMX
-from app.scene.corridorScene.PlayerPlateform import PlayerCorridor
+from app.scene.corridorScene.PlayerPlateform import PlayerPlateform
 
 
 class CorridorSceneData(SceneDataTMX):
@@ -16,5 +16,5 @@ class CorridorSceneData(SceneDataTMX):
 
         self.nextLevel = CORRIDOR_LEVEL_1
 
-        self.player = PlayerCorridor(playerInitx, playerInity, self)
+        self.player = PlayerPlateform(playerInitx, playerInity, self)
         self.camera.add(self.player)

@@ -14,7 +14,7 @@ from ldLib.Sprites.Player.IdleState import IdleState
 from ldLib.tools.Cooldown import Cooldown
 
 
-class PlayerCorridor(pygame.sprite.Sprite):
+class PlayerPlateform(pygame.sprite.Sprite):
     def __init__(self, x, y, sceneData):
         super().__init__()
 
