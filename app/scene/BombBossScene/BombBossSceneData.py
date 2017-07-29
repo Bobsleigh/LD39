@@ -7,7 +7,6 @@ from ldLib.scene.SceneDataTMX import SceneDataTMX
 class BombBossSceneData(SceneDataTMX):
     def __init__(self):
         super().__init__("BossRoom1", "InZone_01")
-        #super().cameraPlayer.
 
         playerInitx = 50
         playerInity = 50
