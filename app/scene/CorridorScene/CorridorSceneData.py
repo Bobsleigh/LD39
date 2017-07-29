@@ -28,5 +28,5 @@ class CorridorSceneData(SceneDataTMX):
         self.addHUD()
 
     def addHUD(self):
-        lifeBar = LifeBar(self.player,20,20,SCREEN_WIDTH/5,SCREEN_HEIGHT/30)
+        lifeBar = LifeBar(self.player,PLAYER_LIFE_X,PLAYER_LIFE_Y,PLAYER_LIFE_WIDTH,PLAYER_LIFE_HEIGHT)
         self.spritesHUD.add(lifeBar)
