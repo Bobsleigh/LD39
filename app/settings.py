@@ -40,6 +40,10 @@ LEFT = 1
 UP = 2
 DOWN = 3
 
+# Boss 2 States
+UPDOWN_LASER = 0
+RIGHTLEFT_LASER = 1
+
 # Collisions
 COLLISION_LAYER = 0
 SOLID = 1  # Booléen de GID pour collision
