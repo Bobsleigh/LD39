@@ -32,6 +32,8 @@ class EndingSceneData(SceneData):
         self.spritesHUD.add(self.backToTitleScreenButton)
         self.notifyGroup.add(self.backToTitleScreenButton)
 
+        self.musicName = "TitleScreen.wav"
+
     def createControlBox(self,x,y,width,height):
         self.textGoal = MessageBox(x,y,width,height,fontSize=15)
         self.textGoal.textList.append('Congratulations! You did it!')
