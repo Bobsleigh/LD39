@@ -15,7 +15,7 @@ class Boss2(pygame.sprite.Sprite):
     def __init__(self, x, y, sceneData, max_health=10):
         super().__init__()
 
-        self.name = "Boss2"
+        self.name = "Superadmiral Kleido"
 
         # Animation
         self.frameAnimationSpeed = 10
@@ -163,6 +163,7 @@ class Boss2(pygame.sprite.Sprite):
         self.isAlive = False
         for laser in self.mapData.laserGroup:
             laser.kill()
+        self.mapData.LaserBossIsDead()
         self.kill()
 
     def onSpike(self):

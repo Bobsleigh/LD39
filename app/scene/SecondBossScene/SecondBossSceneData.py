@@ -6,13 +6,16 @@ from app.scene.SecondBossScene.Boss2 import Boss2
 from app.scene.SecondBossScene.LaserTurret import LaserTurret
 from app.scene.SecondBossScene.ChargePad import ChargePad
 from app.sprites.PlayerPlateform import PlayerPlateform
+from app.scene.PlayerDeadFadeOut import PlayerDeadFadeOut
+from app.scene.BossDeadFadeOut import BossDeadFadeOut
+
 
 class SecondBossSceneData(LevelSceneData):
     def __init__(self):
         super().__init__("TestTmxData", "InZone_01")
 
         self.sceneName = LASER_BOSS_LEVEL
-        self.nextLevel = INSTRUCTION_SCENE
+        self.nextLevel = ENDING_SCENE
 
         self.laserGroup = pygame.sprite.Group()
         self.bossGroup = pygame.sprite.Group()
@@ -46,3 +49,14 @@ class SecondBossSceneData(LevelSceneData):
         self.camera.add(self.player)
 
         self.addHUD()
+
+    def LaserBossIsDead(self):
+        self.nextScene = self.nextLevel
+        self.endSceneCause = BOSS_DEAD
+
+    def beforeLeavingScene(self, screen):
+        if self.endSceneCause == BOSS_DEAD:
+            BossDeadFadeOut(screen)
+
+        if self.endSceneCause == PLAYER_DEAD:
+            PlayerDeadFadeOut(screen)
