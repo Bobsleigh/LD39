@@ -6,7 +6,7 @@ from app.settings import *
 class TextSprite(pygame.sprite.Sprite):
     def __init__(self, text,x,y,textColor=BLACK):
         super().__init__()
-        font = pygame.font.SysFont(FONT_NAME, DIALOG_TEXT_SIZE)
+        font = pygame.font.Font(FONT_NAME, DIALOG_TEXT_SIZE)
 
         self.printedLine = font.render(text, True, textColor)
         self.image = self.printedLine

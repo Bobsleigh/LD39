@@ -70,7 +70,7 @@ class SceneHandler:
             self.runningScene = Scene(self.screen, self.gameData, CorridorSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
         elif self.runningScene.nextScene == GUARD_BOSS_LEVEL:
             self.gameData.sceneData = GuardBossSceneData()
-            self.runningScene = Scene(self.screen, self.gameData, GuardBossSceneLogicHandler(self.gameData))
+            self.runningScene = Scene(self.screen, self.gameData, GuardBossSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
         elif self.runningScene.nextScene == BOMB_CORRIDOR_LEVEL:
             self.gameData.sceneData = CorridorBombSceneData()
             self.runningScene = Scene(self.screen, self.gameData, CorridorSceneLogicHandler(self.gameData), MusicHandler(self.gameData))

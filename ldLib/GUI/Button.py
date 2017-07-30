@@ -8,7 +8,7 @@ class Button(pygame.sprite.Sprite):
         self.method = callback
 
         self.fontSize = 24
-        self.buttonFont = pygame.font.SysFont(FONT_NAME, self.fontSize)
+        self.buttonFont = pygame.font.Font(FONT_NAME, self.fontSize)
 
         self.width = size[0]
         self.height = size[1]

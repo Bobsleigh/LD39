@@ -49,9 +49,9 @@ class Boss2AI:
 
     @laserState.setter
     def laserState(self, value):
-        self._laserState.exit(self)
+        self._laserState.exit(self.sprite)
         self._laserState = value
-        self._laserState.enter(self)
+        self._laserState.enter(self.sprite)
 
     def update(self):
         self.counter.value += 1

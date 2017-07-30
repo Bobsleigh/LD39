@@ -7,7 +7,7 @@ from app.scene.SecondBossScene.LaserTurret import LaserTurret
 from app.scene.SecondBossScene.ChargePad import ChargePad
 from app.sprites.PlayerPlateform import PlayerPlateform
 from app.scene.PlayerDeadFadeOut import PlayerDeadFadeOut
-from app.scene.BossDeadFadeOut import BossDeadFadeOut
+from app.scene.FinalBossDeadFadeOut import FinalBossDeadFadeOut
 
 
 class SecondBossSceneData(LevelSceneData):
@@ -59,7 +59,7 @@ class SecondBossSceneData(LevelSceneData):
 
     def beforeLeavingScene(self, screen):
         if self.endSceneCause == BOSS_DEAD:
-            BossDeadFadeOut(screen)
+            FinalBossDeadFadeOut(screen)
 
         if self.endSceneCause == PLAYER_DEAD:
             PlayerDeadFadeOut(screen)
