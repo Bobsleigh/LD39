@@ -17,3 +17,5 @@ class CorridorLaserSceneData(LevelSceneData):
 
         self.musicName = "BoxCat_Games_-_23_-_Trace_Route.wav"
 
+        self.addHUD()
+

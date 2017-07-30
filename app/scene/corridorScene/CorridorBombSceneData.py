@@ -16,3 +16,5 @@ class CorridorBombSceneData(LevelSceneData):
         self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "After all they've done, I should serve them both shocking justice."),False])
 
         self.musicName = "BoxCat_Games_-_23_-_Trace_Route.wav"
+
+        self.addHUD()
