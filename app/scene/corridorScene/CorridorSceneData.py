@@ -12,3 +12,5 @@ class CorridorSceneData(LevelSceneData):
         self.nextLevel = CORRIDOR_LEVEL_1
 
         self.addHUD()
+
+        self.musicName = "BoxCat_Games_-_23_-_Trace_Route.mp3"

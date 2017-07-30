@@ -22,6 +22,8 @@ class BombBossSceneData(LevelSceneData):
         self.camera.add(self.boss)
         self.addHUD()
 
+        self.musicName = "BoxCat_Games_-_25_-_Victory.mp3"
+
     def BombBossIsDead(self):
         self.nextScene = self.nextLevel
         self.endSceneCause = BOSS_DEAD
