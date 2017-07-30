@@ -2,6 +2,7 @@ import math
 import random
 from app.settings import *
 from ldLib.tools.Counter import Counter
+from ldLib.tools.Cooldown import Cooldown
 import random
 
 
@@ -11,10 +12,13 @@ class GuardBossAI:
         self.mapData = mapData
 
         self.counter = Counter()
+        self.cooldown = Cooldown(180)
         self.difficulty = 0
 
     def update(self):
-        self.counter.value += 1
+        self.cooldown.update()
+        if self.cooldown.isZero:
+            self.counter.value += 1
         self.update_difficulty()
         self.choose_state()
 
@@ -30,12 +34,18 @@ class GuardBossAI:
                 if self.counter.value > 2400:
                     self.difficulty = max(1, self.difficulty)
                     self.counter.reset()
-                #if self.counter.value != 0:
-                    #if self.counter.value % 600 == 0:
-                        #if self.difficulty == 0:
-                            #self.sprite.smallDash()
-                        #elif self.difficulty == 2:
-                            #self.sprite.prettyZap(1)
+                if self.counter.value != 0:
+                    if self.counter.value % 6 == 0:
+                        if self.difficulty == 2:
+                            self.sprite.prettyPattern(1)
+                            self.counter.value += 1
+                            self.cooldown.start()
+                        elif self.difficulty == 0:
+                            if TAG_MAGNAN == 1:
+                                print("hello")
+                            self.sprite.shoot_at_player()
+                    #if self_difficulty == 0:
+                        #if self.counter.value % 120:
                     #if self.counter.value % 300 == 0:
                         #self.sprite.Boom()
                     #if self.difficulty != 0 and self.counter.value % 80 == 0:
@@ -49,7 +59,7 @@ class GuardBossAI:
         else:
             if self.counter.value % 200 == 0:
                 pattern = random.randint(1, 2)
-                #self.sprite.prettyZap(pattern)
+                self.sprite.prettyPattern(pattern)
             #if self.counter.value % 300 == 0:
                 #self.sprite.Dash()
             #if self.counter.value % 400 == 0:

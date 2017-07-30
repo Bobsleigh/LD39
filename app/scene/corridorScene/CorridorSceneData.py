@@ -10,3 +10,5 @@ class CorridorSceneData(LevelSceneData):
         super().__init__("TestTmxData", "InZone_01")
         self.sceneName = TEST_TMX_SCENE
         self.nextLevel = CORRIDOR_LEVEL_1
+
+        self.addHUD()

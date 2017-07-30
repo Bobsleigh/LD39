@@ -52,6 +52,9 @@ class TitleSceneData(SceneData):
     def startGame(self):
         self.nextScene = BOMB_CORRIDOR_LEVEL
 
+        if TAG_MARIE ==1:
+            self.nextScene = GUARD_BOSS_LEVEL
+
     def goToInstruction(self):
         self.nextScene = INSTRUCTION_SCENE
 

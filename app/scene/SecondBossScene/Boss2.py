@@ -2,6 +2,7 @@ import pygame, os
 
 from app.scene.SecondBossScene.Boss2AI import Boss2AI
 from app.settings import *
+from ldLib.animation.Animation import Animation
 from ldLib.collision.collisionMask import CollisionMask
 from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
@@ -16,16 +17,20 @@ class Boss2(pygame.sprite.Sprite):
 
         self.name = "Boss2"
 
-        self.imageBase = pygame.image.load(os.path.join('img', 'laser-boss.png'))
-        self.imageBase.set_colorkey(COLORKEY)
+        # Animation
+        self.frameAnimationSpeed = 10
 
-        self.imageShapeLeft = None
-        self.imageShapeRight = None
+        imageBase = pygame.image.load(os.path.join('img', 'laser-boss.png'))
+        imageLaugh = pygame.image.load(os.path.join('img', 'laser-boss-laugh.png'))
+        self.imageIdle = [imageBase, imageBase, imageBase, imageLaugh, imageBase, imageLaugh]
 
-        self.imageTransparent = pygame.Surface((1, 1),pygame.SRCALPHA)
+        self.animationIdle = Animation(self.imageIdle, self.frameAnimationSpeed, RIGHT, True)
+        self.animation = self.animationIdle
 
-        self.setShapeImage()
-        self.image = self.imageShapeRight
+        self.image = self.imageIdle[0]
+        self.facingSide = RIGHT
+
+        self.imageTransparent = pygame.Surface((1, 1), pygame.SRCALPHA)
 
         self.rect = self.image.get_rect()  # Position centrée du player
         self.x = x
@@ -43,13 +48,13 @@ class Boss2(pygame.sprite.Sprite):
         self.accy = 2
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
+
         # Life bar
         self.maxHealth = 200
         self.currentHealth = 200
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
-        self.facingSide = RIGHT
         self.friendly = True
 
         self.rightPressed = False
@@ -80,10 +85,6 @@ class Boss2(pygame.sprite.Sprite):
 
         self.touchDamage = 10
 
-    def setShapeImage(self):
-        self.imageShapeLeft = pygame.transform.flip(self.imageBase, True, False)
-        self.imageShapeRight = self.imageBase
-
     def update(self):
         self.AI.update()
         self.capSpeed()
@@ -97,16 +98,17 @@ class Boss2(pygame.sprite.Sprite):
         self.rect.y = self.y
 
         if self.speedx > 0:
-            self.image = self.imageShapeRight
             self.facingSide = RIGHT
-        if self.speedx < 0:
-            self.image = self.imageShapeLeft
+        elif self.speedx < 0:
             self.facingSide = LEFT
 
-        # Replace make visual flash in invincible mode.
-        # if not self.invincibleCooldown.isZero:
-        #     if self.flashduration-3 <= self.invincibleCooldown.value % self.flashduration:
-        #         self.image = self.imageTransparent
+        # This Boss shouldn't be flipped.
+        self.image = self.animation.update(RIGHT)
+
+        # Replace to make visual flash in invincible mode.
+        if not self.invincibleCooldown.isZero:
+            if self.flashduration - 3 <= self.invincibleCooldown.value % self.flashduration:
+                self.image = self.imageTransparent
 
         self.updateCollisionMask()
         self.updatePressedKeys()

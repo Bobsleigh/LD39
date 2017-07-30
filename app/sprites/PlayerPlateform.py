@@ -169,7 +169,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
             targetSide=RIGHT
         self.image = self.animation.update(targetSide)
 
-        # Replace make visual flash in invincible mode.
+        # Replace to make visual flash in invincible mode.
         if not self.invincibleCooldown.isZero:
             if self.flashduration-3 <= self.invincibleCooldown.value % self.flashduration:
                 self.image = self.imageTransparent

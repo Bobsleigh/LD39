@@ -3,6 +3,7 @@ import os
 import random
 import math
 from app.settings import *
+from ldLib.animation.Animation import Animation
 from ldLib.collision.collisionMask import CollisionMask
 from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
@@ -20,19 +21,18 @@ class BombBoss(pygame.sprite.Sprite):
 
         self.name = "BombBoss"
 
-        self.imageBase = pygame.image.load(os.path.join('img', 'canon-boss-closed.png'))
-        self.imageBase.set_colorkey(COLORKEY)
+        # Animation
+        self.frameAnimationSpeed = 10
+        imageBase = pygame.image.load(os.path.join('img', 'canon-boss-closed.png'))
+        imageOpen = pygame.image.load(os.path.join('img', 'canon-boss-open.png'))
 
-        self.imageShapeLeft = None
-        self.imageShapeRight = None
+        self.imageIdle = [imageBase, imageBase, imageBase, imageOpen, imageOpen, imageBase, imageOpen]
+        self.animationIdle = Animation(self.imageIdle, self.frameAnimationSpeed, RIGHT, True)
+        self.animation = self.animationIdle
+        self.image = self.imageIdle[0]
+        self.facingSide = RIGHT
 
-        self.invincibleCooldown = Cooldown(5)
-
-        self.setShapeImage()
-        self.image = self.imageShapeRight
-
-        self.imageTransparent = ImageBox().rectSurface((32, 32), WHITE, 3)
-        self.imageTransparent.set_colorkey(COLORKEY)
+        self.imageTransparent = pygame.Surface((1, 1), pygame.SRCALPHA)
 
         self.rect = self.image.get_rect()  # Position centrée du player
         self.x = x
@@ -80,13 +80,15 @@ class BombBoss(pygame.sprite.Sprite):
         self.AI = BombBossAI(self, self.mapData)
         # self.nextState = None
 
-    def setShapeImage(self):
-        self.imageShapeLeft = pygame.transform.flip(self.imageBase, True, False)
-        self.imageShapeRight = self.imageBase
+        # For invincibility
+        self.invincibleCooldown = Cooldown(60)
+        self.flashduration = 8
+
+        self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
+        self.hurtSound.set_volume(.25)
 
     def update(self):
         self.AI.update()
-        self.updateCooldowns()
 
         self.previousX = self.x
         self.previousY = self.y
@@ -97,14 +99,20 @@ class BombBoss(pygame.sprite.Sprite):
         self.rect.y = self.y
 
         if self.speedx > 0:
-            self.image = self.imageShapeRight
             self.facingSide = RIGHT
-        if self.speedx < 0:
-            self.image = self.imageShapeLeft
+        elif self.speedx < 0:
             self.facingSide = LEFT
+
+        self.image = self.animation.update(self.facingSide)
+
+        # Replace to make visual flash in invincible mode.
+        if not self.invincibleCooldown.isZero:
+            if self.flashduration - 3 <= self.invincibleCooldown.value % self.flashduration:
+                self.image = self.imageTransparent
 
         self.updateCollisionMask()
         self.updatePressedKeys()
+        self.updateCooldowns()
 
     def moveX(self):
         self.x += self.speedx
@@ -219,19 +227,19 @@ class BombBoss(pygame.sprite.Sprite):
 
     def smallDash(self):
         x = self.mapData.player.rect.centerx - self.rect.centerx
-        y = self.mapData.player.rect.y - self.rect.centery
+        y = self.mapData.player.rect.centery - self.rect.centery
         angle = math.atan2(y, x)
 
-        self.speedx = 2*math.cos(angle)
-        self.speedy = 2*math.sin(angle)
+        self.speedx = 2 * math.cos(angle)
+        self.speedy = 2 * math.sin(angle)
 
     def Dash(self):
         x = self.mapData.player.rect.centerx - self.rect.centerx
-        y = self.mapData.player.rect.y - self.rect.centery
+        y = self.mapData.player.rect.centery - self.rect.centery
         angle = math.atan2(y, x)
 
-        self.speedx = 8*math.cos(angle)
-        self.speedy = 8*math.sin(angle)
+        self.speedx = 8 * math.cos(angle)
+        self.speedy = 8 * math.sin(angle)
 
     def aim_for_player(self):
         target_position = [0, 0]

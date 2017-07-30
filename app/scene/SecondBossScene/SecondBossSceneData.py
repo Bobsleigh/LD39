@@ -45,4 +45,4 @@ class SecondBossSceneData(LevelSceneData):
         self.player = PlayerPlateform(playerInitx, playerInity, self)
         self.camera.add(self.player)
 
-        LevelHUD(self, self.player,self.boss)
+        self.addHUD()

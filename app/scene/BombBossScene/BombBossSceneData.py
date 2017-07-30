@@ -11,6 +11,7 @@ class BombBossSceneData(LevelSceneData):
         self.sceneName = BOMB_BOSS_LEVEL
         self.nextLevel = INSTRUCTION_SCENE
 
+        self.boss = None
         # Spawn boss
         for obj in self.tmxData.objects:
             if obj.name == "BossInZone":
@@ -19,3 +20,4 @@ class BombBossSceneData(LevelSceneData):
         self.enemyProjectiles.add(self.boss)
         self.allSprites.add(self.boss)
         self.camera.add(self.boss)
+        self.addHUD()
