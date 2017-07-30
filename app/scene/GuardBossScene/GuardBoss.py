@@ -14,13 +14,13 @@ from app.scene.BombBossScene.BoomBomb import BoomBomb
 from app.scene.BombBossScene.ZapBomb import ZapBomb
 
 
-class BombBoss(pygame.sprite.Sprite):
+class GuardBoss(pygame.sprite.Sprite):
     def __init__(self, x, y, sceneData, max_health=10):
         super().__init__()
 
-        self.name = "BombBoss"
+        self.name = "GuardBoss"
 
-        self.imageBase = pygame.image.load(os.path.join('img', 'canon-boss-closed.png'))
+        self.imageBase = pygame.image.load(os.path.join('img', 'lutecia-left.png'))
         self.imageBase.set_colorkey(COLORKEY)
 
         self.imageShapeLeft = None
@@ -201,21 +201,16 @@ class BombBoss(pygame.sprite.Sprite):
             zap_bomb_1 = ZapBomb(390, 120, self.rect.x, self.rect.y, self.mapData)
             zap_bomb_2 = ZapBomb(201, 420, self.rect.x, self.rect.y, self.mapData)
             zap_bomb_3 = ZapBomb(610, 420, self.rect.x, self.rect.y, self.mapData)
-            self.mapData.allSprites.add(zap_bomb_3)
-            self.mapData.camera.add(zap_bomb_3)
-        elif pattern_id == 2:
+        else:
             zap_bomb_1 = ZapBomb(395, 420, self.rect.x, self.rect.y, self.mapData)
             zap_bomb_2 = ZapBomb(201, 120, self.rect.x, self.rect.y, self.mapData)
             zap_bomb_3 = ZapBomb(610, 120, self.rect.x, self.rect.y, self.mapData)
-            self.mapData.allSprites.add(zap_bomb_3)
-            self.mapData.camera.add(zap_bomb_3)
-        else:
-            zap_bomb_1 = ZapBomb(600, 300, self.rect.x, self.rect.y, self.mapData)
-            zap_bomb_2 = ZapBomb(200, 300, self.rect.x, self.rect.y, self.mapData)
         self.mapData.allSprites.add(zap_bomb_1)
         self.mapData.camera.add(zap_bomb_1)
         self.mapData.allSprites.add(zap_bomb_2)
         self.mapData.camera.add(zap_bomb_2)
+        self.mapData.allSprites.add(zap_bomb_3)
+        self.mapData.camera.add(zap_bomb_3)
 
     def smallDash(self):
         x = self.mapData.player.rect.centerx - self.rect.centerx
