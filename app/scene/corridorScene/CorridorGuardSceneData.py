@@ -12,7 +12,7 @@ class CorridorGuardSceneData(LevelSceneData):
         self.nextLevel = GUARD_BOSS_LEVEL
 
         self.messageBoxes = list()
-        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "I'm in! But I bet Dreetus won't let me reach Superadmiral Kleido this easily..."),False])
-        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "After all they've done, I should serve them both shocking justice."),False])
+        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "I've gone past the barbed fence. There's no going back."),False])
+        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "I hope no one's guarding the door. It would be a shame. For them."),False])
 
         self.musicName = "BoxCat_Games_-_23_-_Trace_Route.wav"
