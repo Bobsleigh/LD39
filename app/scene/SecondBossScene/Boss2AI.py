@@ -66,18 +66,18 @@ class Boss2AI:
         self.updateDifficulty()
 
     def updateDifficulty(self):
-        if (self.sprite.currentHealth/self.sprite.maxHealth) < 0.3:
+        if (self.sprite.currentHealth / self.sprite.maxHealth) < 0.3:
             self.difficulty = 3
             if self.numberOfTurretsDown == 2:
                 self.mapData.turret1.needToOpen = True
                 self.numberOfTurretsDown += 1
-        if (self.sprite.currentHealth/self.sprite.maxHealth) < 0.5:
+        if (self.sprite.currentHealth / self.sprite.maxHealth) < 0.5:
             self.difficulty = 2
             if self.numberOfTurretsDown == 1:
                 self.mapData.turret2.needToOpen = True
                 self.numberOfTurretsDown += 1
 
-        elif (self.sprite.currentHealth/self.sprite.maxHealth) < 0.7:
+        elif (self.sprite.currentHealth / self.sprite.maxHealth) < 0.7:
             self.difficulty = 1
             if self.numberOfTurretsDown == 0:
                 self.mapData.turret3.needToOpen = True
