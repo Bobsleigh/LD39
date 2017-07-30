@@ -17,16 +17,4 @@
  <tile id="17" terrain="0,,,"/>
  <tile id="18" terrain="0,,0,0"/>
  <tile id="19" terrain=",0,0,0"/>
- <tile id="31">
-  <animation>
-   <frame tileid="38" duration="100"/>
-   <frame tileid="31" duration="100"/>
-  </animation>
- </tile>
- <tile id="32">
-  <animation>
-   <frame tileid="32" duration="300"/>
-   <frame tileid="43" duration="100"/>
-  </animation>
- </tile>
 </tileset>
