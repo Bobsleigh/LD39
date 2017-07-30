@@ -18,8 +18,9 @@ class LaserTurret(pygame.sprite.Sprite):
         self.mapData = sceneData
 
         # Opening animation
-        self.frameAnimationSpeed = 20
+        self.frameAnimationSpeed = 30
         self.isOpened = False
+        self.isOpening = False
         self.needToOpen = False
 
         imageClosed = pygame.image.load(os.path.join('img', 'turret-tile1.png'))
@@ -131,13 +132,14 @@ class LaserTurret(pygame.sprite.Sprite):
         self.kill()
 
     def checkOpeningAnimation(self):
-        if self.needToOpen and not self.isOpened:
+        if self.needToOpen and not self.isOpening:
             if self.openingCooldown.isZero:
                 self.animation = self.openingAnimation
                 self.animation.start()
-                self.shootingCooldown.start()
-                self.isOpened = True
-        elif self.needToOpen and self.isOpened:
+                self.openingCooldown.start()
+                self.isOpening = True
+        elif self.needToOpen and self.isOpening and not self.isOpened:
             if self.openingCooldown.isZero:
                 self.needToOpen = False
                 self.animation = self.outAnimation
+                self.isOpened = True

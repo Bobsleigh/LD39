@@ -31,7 +31,7 @@ class CorridorSceneLogicHandler(LogicHandler):
                     self.sceneData.messageBoxes[int(obj.index)][1] = True
                 elif TAG_MARIE == 1:
                     if obj.name == "HurtZone":
-                        self.sceneData.player.hurt(int(obj.damage) * 40)
+                        self.sceneData.turret1.needToOpen=True
 
     def isPlayerIsInZone(self, player, zone):
         if player.rect.centerx >= zone.x and \
