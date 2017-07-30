@@ -18,7 +18,7 @@ class EndingSceneData(SceneData):
         # background
         self.background = pygame.sprite.Sprite()
         self.background.rect = pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.background.image = pygame.image.load(os.path.join('img', 'menu.png'))
+        self.background.image = pygame.image.load(os.path.join('img', 'menu-end.png'))
         self.background.rect = self.background.image.get_rect()
 
         self.spritesBackGround.add(self.background)
