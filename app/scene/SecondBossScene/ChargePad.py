@@ -67,8 +67,6 @@ class ChargePad(pygame.sprite.Sprite):
 
         # This sprite shouldn't be flipped.
         self.image = self.animation.update(LEFT)
-        if TAG_PHIL == 1:
-            print(self.moveCounter.value)
 
     def move(self):
         rnd = random.randint(0, 5)
