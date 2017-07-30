@@ -55,9 +55,6 @@ class TitleSceneData(SceneData):
         if TAG_MARIE ==1:
             self.nextScene = LASER_BOSS_LEVEL
 
-        if TAG_ALEX ==1:
-            self.nextScene = GUARD_BOSS_LEVEL
-
     def goToInstruction(self):
         self.nextScene = INSTRUCTION_SCENE
 
