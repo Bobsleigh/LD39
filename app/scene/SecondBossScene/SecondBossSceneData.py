@@ -28,12 +28,6 @@ class SecondBossSceneData(LevelSceneData):
         self.allSprites.add(self.chargePad)
         self.camera.add(self.chargePad)
 
-        self.boss = Boss2(200, 200, self)
-        self.bossGroup.add(self.boss)
-        self.enemyGroup.add(self.boss)
-        self.allSprites.add(self.boss)
-        self.camera.add(self.boss)
-
         self.turret1 = LaserTurret(600, 100, self)
         self.turretGroup.add(self.turret1)
         self.allSprites.add(self.turret1)
@@ -49,6 +43,12 @@ class SecondBossSceneData(LevelSceneData):
         self.allSprites.add(self.turret3)
         self.enemyGroup.add(self.turret3)
         self.camera.add(self.turret3)
+
+        self.boss = Boss2(200, 200, self)
+        self.bossGroup.add(self.boss)
+        self.enemyGroup.add(self.boss)
+        self.allSprites.add(self.boss)
+        self.camera.add(self.boss)
 
         # Hack to draw the player on top of the charge pad
         self.player.kill()

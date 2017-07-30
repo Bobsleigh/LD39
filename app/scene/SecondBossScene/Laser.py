@@ -16,7 +16,7 @@ class Laser(pygame.sprite.Sprite):
         self.name = "Laser"
 
         tempImage = pygame.image.load(os.path.join('img', 'laser.png'))
-        self.imageBase = pygame.transform.scale(tempImage, (600, 30))
+        self.imageBase = pygame.transform.scale(tempImage, (700, 30))
         self.imageBase.set_colorkey(COLORKEY)
 
         self.imageShapeLeft = None
@@ -51,7 +51,7 @@ class Laser(pygame.sprite.Sprite):
         self.accy = 1
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
-        self.damage = 10
+        self.damage = 8
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
