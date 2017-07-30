@@ -43,6 +43,7 @@ class Scene:
 
             if self.nextScene != None:
                 self.sceneRunning = False
+        self.sceneData.beforeLeavingScene(self.screen)
 
     def run(self):
         self.mainLoop()

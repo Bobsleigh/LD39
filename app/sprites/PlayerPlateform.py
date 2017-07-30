@@ -186,6 +186,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.speedy = 0
 
     def dead(self):
+        self.mapData.playerIsDead()
         self.isAlive = False
         self.target.kill()
         self.kill()
@@ -265,8 +266,11 @@ class PlayerPlateform(pygame.sprite.Sprite):
 
     def hurt(self, damage):
         if self.invincibleCooldown.isZero:
+
             self.currentHealth -= damage
             self.hurtSound.play()
+            if self.currentHealth<0:
+                self.currentHealth = 0
 
             self.checkIfIsAlive()
             self.invincibleOnHit()

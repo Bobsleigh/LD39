@@ -9,7 +9,7 @@ from ldLib.scene.SceneData import SceneData
 from app.settings import *
 
 class SceneDataTMX(SceneData):
-    def __init__(self, mapName="WorldMap", nameInZone="StartPointWorld", screenSize=(SCREEN_WIDTH,SCREEN_HEIGHT)):
+    def __init__(self, mapName, nameInZone, screenSize=(SCREEN_WIDTH,SCREEN_HEIGHT)):
         super().__init__()
 
         # Beginning MAP DATA

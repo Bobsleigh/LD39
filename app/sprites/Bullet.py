@@ -14,7 +14,7 @@ class Bullet(Enemy):
 
         self.name = "bullet"
 
-        self.image = pygame.image.load(os.path.join('img', 'Bullet.png'))
+        self.image = pygame.image.load(os.path.join('img', 'bomb-zap-explode.png'))
 
         self.rect = self.image.get_rect()
         self.rect.x = x
