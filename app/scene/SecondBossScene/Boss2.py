@@ -77,7 +77,7 @@ class Boss2(pygame.sprite.Sprite):
         self._state = IdleState()
         self.AI = Boss2AI(self, self.mapData)
 
-        self.invincibleCooldown = Cooldown(60)
+        self.invincibleCooldown = Cooldown(BOSS_INVINCIBILITY_COOLDOWN)
         self.flashduration = 8
 
         self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))

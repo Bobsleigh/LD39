@@ -26,9 +26,9 @@ class SecondBossSceneData(LevelSceneData):
         self.camera.add(self.chargePad)
 
         self.boss = Boss2(200, 200, self)
-        self.bossGroup.add(self.boss)
+        self.add(self.boss)
         self.enemyGroup.add(self.boss)
-        self.allSprites.add(self.boss)
+        self.allSprites.adbossGroupd(self.boss)
         self.camera.add(self.boss)
 
         # Hack to draw the player on top of the charge pad
