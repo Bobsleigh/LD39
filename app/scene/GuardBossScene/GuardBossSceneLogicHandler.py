@@ -9,7 +9,7 @@ import pygame
 
 
 
-class BombBossSceneLogicHandler(LogicHandler):
+class GuardBossSceneLogicHandler(LogicHandler):
     def __init__(self, gameData):
         super().__init__(gameData)
         self.physics = TopDownPhysics(gameData.sceneData)

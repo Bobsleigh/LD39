@@ -9,7 +9,7 @@ from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
 from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
 from ldLib.Sprites.Player.IdleState import IdleState
 from ldLib.tools.Cooldown import Cooldown
-from app.scene.BombBossScene.BombBossAI import BombBossAI
+from app.scene.GuardBossScene.GuardBossAI import GuardBossAI
 
 
 class GuardBoss(pygame.sprite.Sprite):
@@ -18,7 +18,7 @@ class GuardBoss(pygame.sprite.Sprite):
 
         self.name = "GuardBoss"
 
-        self.imageBase = pygame.image.load(os.path.join('img', 'lutecia-left.png'))
+        self.imageBase = pygame.image.load(os.path.join('img', 'guard.png'))
         self.imageBase.set_colorkey(COLORKEY)
 
         self.imageShapeLeft = None
@@ -158,73 +158,6 @@ class GuardBoss(pygame.sprite.Sprite):
     def dead(self):
         self.isAlive = False
         self.kill()
-
-    def Boom(self):
-        target_position = self.aim_for_player()
-        desiredX = target_position[0]
-        desiredY = target_position[1]
-
-        boom_bomb = BoomBomb(desiredX, desiredY, self.rect.x, self.rect.y, self.mapData)
-        self.mapData.allSprites.add(boom_bomb)
-        self.mapData.camera.add(boom_bomb)
-
-    def boomOnPlate(self):
-        boom_bomb = BoomBomb(390, 300, self.rect.x, self.rect.y, self.mapData)
-        self.mapData.allSprites.add(boom_bomb)
-        self.mapData.camera.add(boom_bomb)
-
-    def Zap(self):
-        zapBehaviors = ["aimForPlayer", "aimForPlates", "aimForEntrance"]
-        chosenAction = random.choice(zapBehaviors)
-
-        if chosenAction == "aimForPlayer":
-            target_position = self.aim_for_player()
-            desiredX = target_position[0] + random.randint(-32, 32)
-            desiredY = target_position[1] + random.randint(-32, 32)
-
-        elif chosenAction == "aimForPlates":
-            desiredX = 390
-            desiredY = 300
-
-        else:
-            desiredX = 390
-            desiredY = 532
-
-        zap_bomb = ZapBomb(desiredX, desiredY, self.rect.x, self.rect.y, self.mapData)
-        self.mapData.allSprites.add(zap_bomb)
-        self.mapData.camera.add(zap_bomb)
-
-    def prettyZap(self, pattern_id):
-        if pattern_id == 1:
-            zap_bomb_1 = ZapBomb(390, 120, self.rect.x, self.rect.y, self.mapData)
-            zap_bomb_2 = ZapBomb(201, 420, self.rect.x, self.rect.y, self.mapData)
-            zap_bomb_3 = ZapBomb(610, 420, self.rect.x, self.rect.y, self.mapData)
-        else:
-            zap_bomb_1 = ZapBomb(395, 420, self.rect.x, self.rect.y, self.mapData)
-            zap_bomb_2 = ZapBomb(201, 120, self.rect.x, self.rect.y, self.mapData)
-            zap_bomb_3 = ZapBomb(610, 120, self.rect.x, self.rect.y, self.mapData)
-        self.mapData.allSprites.add(zap_bomb_1)
-        self.mapData.camera.add(zap_bomb_1)
-        self.mapData.allSprites.add(zap_bomb_2)
-        self.mapData.camera.add(zap_bomb_2)
-        self.mapData.allSprites.add(zap_bomb_3)
-        self.mapData.camera.add(zap_bomb_3)
-
-    def smallDash(self):
-        x = self.mapData.player.rect.centerx - self.rect.centerx
-        y = self.mapData.player.rect.y - self.rect.centery
-        angle = math.atan2(y, x)
-
-        self.speedx = 2*math.cos(angle)
-        self.speedy = 2*math.sin(angle)
-
-    def Dash(self):
-        x = self.mapData.player.rect.centerx - self.rect.centerx
-        y = self.mapData.player.rect.y - self.rect.centery
-        angle = math.atan2(y, x)
-
-        self.speedx = 8*math.cos(angle)
-        self.speedy = 8*math.sin(angle)
 
     def aim_for_player(self):
         target_position = [0, 0]
