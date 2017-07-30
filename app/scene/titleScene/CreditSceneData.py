@@ -40,6 +40,8 @@ class CreditSceneData(SceneData):
         self.spritesHUD.add(self.backToTitleScreenButton)
         self.notifyGroup.add(self.backToTitleScreenButton)
 
+        self.musicName = "TitleScreen.wav"
+
     def createCreditBox(self,x,y,width,height):
         self.textGoal = MessageBox(x,y,width,height,fontSize=12)
         self.textGoal.textList.append('Game made for the Ludum Dare 39')
