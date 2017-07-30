@@ -9,6 +9,9 @@ class CorridorSceneLogicHandler(LogicHandler):
         super().__init__(gameData)
         self.physics = TopDownPhysics(gameData.sceneData)
 
+        # Set infinite energy
+        self.sceneData.player.energyConsume = 0
+
     def handle(self):
         super().handle()
         self.physics.update()
