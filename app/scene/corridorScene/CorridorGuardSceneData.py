@@ -16,3 +16,5 @@ class CorridorGuardSceneData(LevelSceneData):
         self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "I hope no one's guarding the door. It would be a shame. For them."),False])
 
         self.musicName = "BoxCat_Games_-_23_-_Trace_Route.wav"
+
+        self.addHUD()
