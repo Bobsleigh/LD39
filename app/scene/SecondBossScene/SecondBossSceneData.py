@@ -9,7 +9,7 @@ from app.sprites.PlayerPlateform import PlayerPlateform
 
 class SecondBossSceneData(LevelSceneData):
     def __init__(self):
-        super().__init__("TestTmxData", "InZone_01")
+        super().__init__("LaserBossRoom", "InZone_01")
 
         self.sceneName = LASER_BOSS_LEVEL
         self.nextLevel = INSTRUCTION_SCENE
