@@ -9,8 +9,8 @@ class BossDeadFadeOut():
         message2 = fontScreen.render("BUT THE WAR ISN'T OVER YET", True, (255, 255, 255))
         messagePos = [(SCREEN_WIDTH - message.get_width()) / 2,
                       (SCREEN_HEIGHT - message.get_height()) / 3]
-        messagePos2 = [(SCREEN_WIDTH - message.get_width() * 1.5),
-                      ((SCREEN_HEIGHT - message.get_height()) / 3) *2]
+        messagePos2 = [(SCREEN_WIDTH - message.get_width() * 1.4),
+                      ((SCREEN_HEIGHT - message.get_height()) / 3) * 2]
 
         for i in range(100):
             fadeInSurface = pygame.Surface([SCREEN_WIDTH, SCREEN_HEIGHT])
