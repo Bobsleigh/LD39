@@ -11,7 +11,7 @@ import weakref
 from ldLib.scene.SceneData import SceneData
 
 
-class InstructionSceneData(SceneData):
+class EndingSceneData(SceneData):
     def __init__(self):
         super().__init__()
 

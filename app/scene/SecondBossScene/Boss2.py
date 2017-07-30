@@ -163,6 +163,7 @@ class Boss2(pygame.sprite.Sprite):
         self.isAlive = False
         for laser in self.mapData.laserGroup:
             laser.kill()
+        self.mapData.LaserBossIsDead()
         self.kill()
 
     def onSpike(self):

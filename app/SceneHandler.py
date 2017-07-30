@@ -1,6 +1,7 @@
 from app.scene.corridorScene.CorridorBombSceneData import CorridorBombSceneData
 from app.scene.titleScene.CreditSceneData import CreditSceneData
 from app.scene.titleScene.InstructionSceneData import InstructionSceneData
+from app.scene.titleScene.EndingSceneData import EndingSceneData
 from app.scene.titleScene.TitleSceneData import TitleSceneData
 from app.scene.titleScene.TitleSceneLogicHandler import TitleSceneLogicHandler
 from app.settings import *
