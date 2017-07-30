@@ -6,7 +6,7 @@ from app.settings import *
 
 
 class Scene:
-    def __init__(self,screen,gameData,logicHandler):
+    def __init__(self,screen,gameData,logicHandler, musicHandler = None):
         # Screen
         self.gameData = gameData
         self.nextScene = None
@@ -29,6 +29,10 @@ class Scene:
         self.eventHandler = EventHandler()
         self.logicHandler = logicHandler
         self.drawer = Drawer()
+        self.musicHandler = musicHandler
+
+        if self.musicHandler != None:
+            self.musicHandler.play()
 
     def mainLoop(self):
         self.sceneRunning = True
@@ -42,8 +46,15 @@ class Scene:
             self.nextScene = self.sceneData.nextScene
 
             if self.nextScene != None:
-                self.sceneRunning = False
-        self.sceneData.beforeLeavingScene(self.screen)
+                self.beforeLeavingScene()
 
     def run(self):
         self.mainLoop()
+
+    def beforeLeavingScene(self):
+        self.sceneRunning = False
+        self.sceneData.beforeLeavingScene(self.screen)
+        if self.musicHandler != None:
+            self.musicHandler.stop()
+
+

@@ -21,7 +21,7 @@ from app.scene.GuardBossScene.GuardBossSceneData import GuardBossSceneData
 from app.scene.GuardBossScene.GuardBossSceneLogicHandler import GuardBossSceneLogicHandler
 
 from ldLib.scene.GameData import GameData
-
+from ldLib.scene.MusicHandler import MusicHandler
 from ldLib.scene.Scene import Scene
 from app.settings import *
 
@@ -44,7 +44,7 @@ class SceneHandler:
         elif TAG_PHIL == 1:
             self.gameData.sceneData = SecondBossSceneData()
             logicHandler = SecondBossSceneLogicHandler(self.gameData)
-            self.runningScene = Scene(self.screen, self.gameData, logicHandler)
+            self.runningScene = Scene(self.screen, self.gameData, logicHandler, MusicHandler(self.gameData))
 
         # elif TAG_MARIE == 1:
         #     self.gameData.sceneData = BombBossSceneData()

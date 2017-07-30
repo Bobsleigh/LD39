@@ -1,4 +1,4 @@
-import pygame
+import pygame, os
 from app.settings import *
 from app.sprites.LevelHUD import LevelHUD
 from app.scene.LevelSceneData import LevelSceneData
@@ -49,6 +49,9 @@ class SecondBossSceneData(LevelSceneData):
         self.camera.add(self.player)
 
         self.addHUD()
+
+        #self.musicName = "BoxCat_Games_-_25_-_Victory.mp3"
+        self.musicName = "Creo_-_Ahead_Of_The_Curve-TRIM.mp3"
 
     def LaserBossIsDead(self):
         self.nextScene = self.nextLevel
