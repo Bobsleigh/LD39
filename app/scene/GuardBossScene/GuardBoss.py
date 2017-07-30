@@ -11,6 +11,8 @@ from ldLib.Sprites.Player.IdleState import IdleState
 from ldLib.tools.Cooldown import Cooldown
 from app.scene.GuardBossScene.GuardBossAI import GuardBossAI
 
+from app.sprites.Bullet import Bullet
+
 
 class GuardBoss(pygame.sprite.Sprite):
     def __init__(self, x, y, sceneData, max_health=10):
@@ -159,9 +161,45 @@ class GuardBoss(pygame.sprite.Sprite):
         self.isAlive = False
         self.kill()
 
+    def shoot_at_player(self):
+        x = self.mapData.player.rect.centerx - self.rect.centerx
+        y = self.mapData.player.rect.centery - self.rect.centery
+        angle = math.atan2(y, x)
+        angle_2 = angle + 0.2
+        angle_3 = angle - 0.2
+        angles = [angle, angle_2, angle_3]
+
+        for i in angles:
+            speedx = 8 * math.cos(i)
+            speedy = 8 * math.sin(i)
+            bullet = Bullet(self.rect.centerx, self.rect.centery, speedx, speedy, self.mapData)
+            self.mapData.camera.add(bullet)
+            self.mapData.enemyProjectiles.add(bullet)
+            self.mapData.allSprites.add(bullet)
+
+    def prettyPattern(self, attack_id):
+        if(attack_id == 1):
+            x = self.mapData.player.rect.centerx - self.rect.centerx
+            y = self.mapData.player.rect.centery - self.rect.centery
+            angle = math.atan2(y, x)
+            angle_2 = angle + 0.1
+            angle_3 = angle - 0.1
+            angle_4 = angle + 0.3
+            angle_5 = angle - 0.3
+            angles = [angle, angle_2, angle_3, angle_4, angle_5]
+
+            for i in angles:
+                speedx = 8 * math.cos(i)
+                speedy = 8 * math.sin(i)
+                bullet = Bullet(self.rect.centerx, self.rect.centery, speedx, speedy, self.mapData)
+                self.mapData.camera.add(bullet)
+                self.mapData.enemyProjectiles.add(bullet)
+                self.mapData.allSprites.add(bullet)
+
+
     def aim_for_player(self):
         target_position = [0, 0]
-        target_position[0] = (self.mapData.player.rect.x + 16 + (20 * self.mapData.player.speedx))
+        target_position[0] = (self.mapData.player.rect.centerx + (20 * self.mapData.player.speedx))
         target_position[1] = (self.mapData.player.rect.y + 32 + (20 * self.mapData.player.speedy))
 
         if target_position[0] < 64:
