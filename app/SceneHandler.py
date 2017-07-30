@@ -1,3 +1,4 @@
+import pygame, os
 from app.scene.BombBossScene.BombBossSceneData import BombBossSceneData
 from app.scene.BombBossScene.BombBossSceneLogicHandler import BombBossSceneLogicHandler
 from app.scene.GuardBossScene.GuardBossSceneData import GuardBossSceneData
@@ -36,8 +37,12 @@ class SceneHandler:
             self.runningScene = Scene(self.screen, self.gameData, logic_handler)
 
         elif TAG_PHIL == 1:
-            self.gameData.sceneData = BombBossSceneData()
-            self.runningScene = Scene(self.screen, self.gameData, BombBossSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
+            self.gameData.sceneData = SecondBossSceneData()
+            self.runningScene = Scene(self.screen, self.gameData, SecondBossSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
+
+        # pygame.mixer.music.load(os.path.join('music', "TitleScreen.wav"))
+        # pygame.mixer.music.set_volume(1.0)
+        # pygame.mixer.music.play(-1)
 
         # elif TAG_MARIE == 1:
         #     self.gameData.sceneData = BombBossSceneData()

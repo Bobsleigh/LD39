@@ -54,7 +54,7 @@ class CreditSceneData(SceneData):
         self.textGoal.textList.append('Alexandre Moreau')
         # Music sources go here
         self.textGoal.textList.append('')
-        self.textGoal.textList.append('Featuring the following music:')
+        self.textGoal.textList.append('Featuring the following music tracks:')
         self.textGoal.textList.append('Trace Route by BoxCat Games')
         self.textGoal.textList.append('Victory by BoxCat Games')
         self.textGoal.textList.append("(freemusicarchive.org/music/BoxCat_Games/)")

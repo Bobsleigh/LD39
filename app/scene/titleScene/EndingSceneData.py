@@ -34,11 +34,11 @@ class EndingSceneData(SceneData):
 
     def createControlBox(self,x,y,width,height):
         self.textGoal = MessageBox(x,y,width,height,fontSize=15)
-        self.textGoal.textList.append('Congrats, you did it!')
+        self.textGoal.textList.append('Congratulations! You did it!')
         self.textGoal.textList.append("You beat Superadmiral Kleido and")
-        self.textGoal.textList.append("restored peace! Now it's time to")
-        self.textGoal.textList.append('go home and enjoy the fresh taste')
-        self.textGoal.textList.append('of unbranded cola.')
+        self.textGoal.textList.append("restored peace to your community!")
+        self.textGoal.textList.append("It's time to go home and enjoy")
+        self.textGoal.textList.append('the fresh taste of unbranded cola.')
         self.textGoal.textList.append('')
         self.textGoal.textList.append('Go ahead, you deserve it.')
         # self.textGoal.textList.append('')

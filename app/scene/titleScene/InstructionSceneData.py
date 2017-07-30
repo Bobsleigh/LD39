@@ -34,11 +34,13 @@ class InstructionSceneData(SceneData):
 
     def createControlBox(self,x,y,width,height):
         self.textGoal = MessageBox(x,y,width,height)
-        self.textGoal.textList.append('Free the world from the tyranny')
+        self.textGoal.textList.append('Play as the rebellious teen Lutecia')
+        self.textGoal.textList.append('and free the world from the tyranny')
         self.textGoal.textList.append('of Superadmiral Kleido and his goons.')
         self.textGoal.textList.append('Make your way through his Fortress')
         self.textGoal.textList.append('of Power and take them down.')
         self.textGoal.textList.append('')
+        self.textGoal.textList.append('CONTROLS:')
         self.textGoal.textList.append('Move with WASD.')
         self.textGoal.textList.append('Use your mouse to aim and shoot.')
         self.textGoal.textList.append('Stand on charging stations to charge.')

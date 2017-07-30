@@ -86,6 +86,7 @@ class Boss2AI:
     def chooseState(self):
         if self.counter.value == 1:
             self.state = MoveRandomState(60,20)
+            self.randomMoveTime = random.randint(60, 480)
         if self.counter.value == self.randomMoveTime:
             rnd = random.randint(0,1)
             if rnd == 0:
