@@ -8,6 +8,7 @@ from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
 from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
 from ldLib.Sprites.Player.IdleState import IdleState
+from ldLib.tools.Cooldown import Cooldown
 from app.scene.BombBossScene.BombBossAI import BombBossAI
 from app.scene.BombBossScene.BoomBomb import BoomBomb
 from app.scene.BombBossScene.ZapBomb import ZapBomb
@@ -25,6 +26,8 @@ class BombBoss(pygame.sprite.Sprite):
         self.imageShapeLeft = None
         self.imageShapeRight = None
 
+        self.invincibleCooldown = Cooldown(5)
+
         self.setShapeImage()
         self.image = self.imageShapeRight
 
@@ -41,9 +44,6 @@ class BombBoss(pygame.sprite.Sprite):
 
         self.speedx = 0
         self.speedy = 0
-        self.maxSpeedx = 600
-        self.maxSpeedyUp = 600
-        self.maxSpeedyDown = 600
         self.accx = 1
         self.accy = 1
         self.jumpSpeed = 15
@@ -53,6 +53,10 @@ class BombBoss(pygame.sprite.Sprite):
         self.isCollisionApplied = True
         self.facingSide = RIGHT
         self.friendly = True
+
+        # Life bar
+        self.maxHealth = 500
+        self.currentHealth = 500
 
         self.rightPressed = False
         self.leftPressed = False
@@ -82,7 +86,7 @@ class BombBoss(pygame.sprite.Sprite):
 
     def update(self):
         self.AI.update()
-        self.capSpeed()
+        self.updateCooldowns()
 
         self.previousX = self.x
         self.previousY = self.y
@@ -91,10 +95,6 @@ class BombBoss(pygame.sprite.Sprite):
         self.moveY()
         self.rect.x = self.x
         self.rect.y = self.y
-
-        # Life bar
-        self.maxHealth = 100
-        self.currentHealth = 100
 
         if self.speedx > 0:
             self.image = self.imageShapeRight
@@ -111,24 +111,31 @@ class BombBoss(pygame.sprite.Sprite):
         self.collisionMask.rect.x = self.x
         for rule in self.collisionRules:
             rule.onMoveX(self)
-        self.speedx -= 0.2
+        self.speedx *= 0.97
 
     def moveY(self):
         self.y += self.speedy
         self.collisionMask.rect.y = self.y
         for rule in self.collisionRules:
             rule.onMoveY(self)
-        self.speedy -= 0.2
+        self.speedy *= 0.97
 
-    def capSpeed(self):
-        if self.speedx > 0 and self.speedx > self.maxSpeedx:
-            self.speedx = self.maxSpeedx
-        if self.speedx < 0 and self.speedx < -self.maxSpeedx:
-            self.speedx = -self.maxSpeedx
-        if self.speedy > 0 and self.speedy > self.maxSpeedyDown:
-            self.speedy = self.maxSpeedyDown
-        if self.speedy < 0 and self.speedy < -self.maxSpeedyUp:
-            self.speedy = -self.maxSpeedyUp
+    def hurt(self, damage):
+        if self.invincibleCooldown.isZero:
+            self.currentHealth -= damage
+            self.checkIfIsAlive()
+            self.invincibleOnHit()
+
+    def checkIfIsAlive(self):
+        if self.currentHealth <= 0:
+            self.dead()
+
+    def invincibleOnHit(self):
+        self.invincibleCooldown.start()
+
+    def updateCooldowns(self):
+        # For invincibility
+        self.invincibleCooldown.update()
 
     def updateSpeedRight(self):
         self.speedx += self.accx
@@ -152,6 +159,7 @@ class BombBoss(pygame.sprite.Sprite):
 
     def dead(self):
         self.isAlive = False
+        self.kill()
 
     def Boom(self):
         target_position = self.aim_for_player()
@@ -159,6 +167,11 @@ class BombBoss(pygame.sprite.Sprite):
         desiredY = target_position[1]
 
         boom_bomb = BoomBomb(desiredX, desiredY, self.rect.x, self.rect.y, self.mapData)
+        self.mapData.allSprites.add(boom_bomb)
+        self.mapData.camera.add(boom_bomb)
+
+    def boomOnPlate(self):
+        boom_bomb = BoomBomb(390, 300, self.rect.x, self.rect.y, self.mapData)
         self.mapData.allSprites.add(boom_bomb)
         self.mapData.camera.add(boom_bomb)
 
@@ -182,16 +195,33 @@ class BombBoss(pygame.sprite.Sprite):
         zap_bomb = ZapBomb(desiredX, desiredY, self.rect.x, self.rect.y, self.mapData)
         self.mapData.allSprites.add(zap_bomb)
         self.mapData.camera.add(zap_bomb)
-        if TAG_MAGNAN == 1:
-            print("I want to throw a ZAP bomb to " + str(desiredX) + "/" + str(desiredY))
+
+    def prettyZap(self):
+        zap_bomb_1 = ZapBomb(390, 120, self.rect.x, self.rect.y, self.mapData)
+        zap_bomb_2 = ZapBomb(201, 420, self.rect.x, self.rect.y, self.mapData)
+        zap_bomb_3 = ZapBomb(610, 420, self.rect.x, self.rect.y, self.mapData)
+        self.mapData.allSprites.add(zap_bomb_1)
+        self.mapData.camera.add(zap_bomb_1)
+        self.mapData.allSprites.add(zap_bomb_2)
+        self.mapData.camera.add(zap_bomb_2)
+        self.mapData.allSprites.add(zap_bomb_3)
+        self.mapData.camera.add(zap_bomb_3)
+
+    def smallDash(self):
+        x = self.mapData.player.rect.centerx - self.rect.centerx
+        y = self.mapData.player.rect.y - self.rect.centery
+        angle = math.atan2(y, x)
+
+        self.speedx = 2*math.cos(angle)
+        self.speedy = 2*math.sin(angle)
 
     def Dash(self):
         x = self.mapData.player.rect.centerx - self.rect.centerx
         y = self.mapData.player.rect.y - self.rect.centery
         angle = math.atan2(y, x)
 
-        self.speedx = 10*math.cos(angle)
-        self.speedy = 10*math.sin(angle)
+        self.speedx = 8*math.cos(angle)
+        self.speedy = 8*math.sin(angle)
 
     def aim_for_player(self):
         target_position = [0, 0]
@@ -205,7 +235,7 @@ class BombBoss(pygame.sprite.Sprite):
         if target_position[1] < 64:
             target_position[1] = 64
         elif target_position[1] > 532:
-            target_position[1] = 53
+            target_position[1] = 532
 
         return target_position
 

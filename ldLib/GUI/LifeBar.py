@@ -27,9 +27,8 @@ class LifeBar(pygame.sprite.Sprite):
         currentHealth = self.sprite.currentHealth
 
         self.widthLife = int((self.width - 4 * self.sizeBorder) * currentHealth / maxHealth)
-        if currentHealth > 0:
-            dmgBar = pygame.Rect(2 * self.sizeBorder,
+        dmgBar = pygame.Rect(2 * self.sizeBorder,
                                  2 * self.sizeBorder,
                                  self.widthLife,
                                  self.height - 4 * self.sizeBorder)
-            pygame.draw.rect(self.image, self.barColor, dmgBar)
+        pygame.draw.rect(self.image, self.barColor, dmgBar)

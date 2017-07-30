@@ -4,7 +4,6 @@ from app.scene.titleScene.TitleSceneData import TitleSceneData
 from app.scene.titleScene.TitleSceneLogicHandler import TitleSceneLogicHandler
 from app.settings import *
 from app.scene.corridorScene.CorridorSceneData import CorridorSceneData
-from app.scene.corridorScene.CorridorLevel1SceneData import CorridorLevel1SceneData
 from app.scene.corridorScene.CorridorSceneLogicHandler import CorridorSceneLogicHandler
 
 from app.scene.SecondBossScene.SecondBossSceneData import SecondBossSceneData
@@ -26,26 +25,23 @@ class SceneHandler:
         self.screen = screen
         self.gameData = GameData()
 
+        self.gameData.sceneData = TitleSceneData()
+        self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData))
+
         if TAG_MAGNAN == 1:
             self.gameData.sceneData = BombBossSceneData()
             logic_handler = BombBossSceneLogicHandler(self.gameData)
-            bomb_boss_scene = Scene(self.screen, self.gameData, logic_handler)
-            bomb_boss_scene.run()
+            self.runningScene = Scene(self.screen, self.gameData, logic_handler)
 
         elif TAG_PHIL == 1:
             self.gameData.sceneData = SecondBossSceneData()
             logicHandler = SecondBossSceneLogicHandler(self.gameData)
-            secondBossScene = Scene(self.screen, self.gameData, logicHandler)
-            secondBossScene.run()
+            self.runningScene = Scene(self.screen, self.gameData, logicHandler)
 
-        # elif TAG_MARIE == 1:
-        #     self.gameData.sceneData = BombBossSceneData()
-        #     logic_handler = BombBossSceneLogicHandler(self.gameData)
-        #     bomb_boss_scene = Scene(self.screen, self.gameData, logic_handler)
-        #     bomb_boss_scene.run()
-
-        self.gameData.sceneData = TitleSceneData()
-        self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData))
+        elif TAG_MARIE == 1:
+            self.gameData.sceneData = CorridorSceneData()
+            logic_handler = CorridorSceneLogicHandler(self.gameData)
+            self.runningScene = Scene(self.screen, self.gameData, logic_handler)
 
     def mainLoop(self):
         self.handlerRunning = True

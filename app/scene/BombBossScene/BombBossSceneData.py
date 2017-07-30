@@ -21,12 +21,12 @@ class BombBossSceneData(SceneDataTMX):
         self.camera.add(self.player)
 
         # Spawn boss
-        self.boss = BombBoss(0, 0, self)
         for obj in self.tmxData.objects:
             if obj.name == "BossInZone":
                 self.boss = BombBoss(obj.x, obj.y, self)
         self.allSprites.add(self.boss)
         self.enemyProjectiles.add(self.boss)
+        self.allSprites.add(self.boss)
         self.camera.add(self.boss)
 
         LevelHUD(self, self.player)
