@@ -8,6 +8,7 @@ from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
 from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
 from ldLib.Sprites.Player.IdleState import IdleState
+from app.scene.BombBossScene.ExplodedBomb import ExplodedBomb
 from ldLib.tools.Counter import Counter
 
 
@@ -153,9 +154,11 @@ class BoomBomb(pygame.sprite.Sprite):
         self.kill()
 
     def Boom(self):
-        distance = math.hypot(self.x - self.mapData.player.x, self.y - self.mapData.player.y)
-        if distance < 64:
-            self.mapData.player.hurt(15)
+
+        exploded_bomb = ExplodedBomb(self.rect.centerx, self.rect.centery, self.mapData)
+        self.mapData.allSprites.add(exploded_bomb)
+        self.mapData.enemyProjectiles.add(exploded_bomb)
+        self.mapData.camera.add(exploded_bomb)
         self.dead()
 
     def onCollision(self, collidedWith, sideOfCollision,limit=0):

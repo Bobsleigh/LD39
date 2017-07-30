@@ -196,10 +196,15 @@ class BombBoss(pygame.sprite.Sprite):
         self.mapData.allSprites.add(zap_bomb)
         self.mapData.camera.add(zap_bomb)
 
-    def prettyZap(self):
-        zap_bomb_1 = ZapBomb(390, 120, self.rect.x, self.rect.y, self.mapData)
-        zap_bomb_2 = ZapBomb(201, 420, self.rect.x, self.rect.y, self.mapData)
-        zap_bomb_3 = ZapBomb(610, 420, self.rect.x, self.rect.y, self.mapData)
+    def prettyZap(self, pattern_id):
+        if pattern_id == 1:
+            zap_bomb_1 = ZapBomb(390, 120, self.rect.x, self.rect.y, self.mapData)
+            zap_bomb_2 = ZapBomb(201, 420, self.rect.x, self.rect.y, self.mapData)
+            zap_bomb_3 = ZapBomb(610, 420, self.rect.x, self.rect.y, self.mapData)
+        else:
+            zap_bomb_1 = ZapBomb(395, 420, self.rect.x, self.rect.y, self.mapData)
+            zap_bomb_2 = ZapBomb(201, 120, self.rect.x, self.rect.y, self.mapData)
+            zap_bomb_3 = ZapBomb(610, 120, self.rect.x, self.rect.y, self.mapData)
         self.mapData.allSprites.add(zap_bomb_1)
         self.mapData.camera.add(zap_bomb_1)
         self.mapData.allSprites.add(zap_bomb_2)
