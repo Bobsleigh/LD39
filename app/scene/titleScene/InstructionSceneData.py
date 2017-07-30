@@ -34,15 +34,16 @@ class InstructionSceneData(SceneData):
 
     def createControlBox(self,x,y,width,height):
         self.textGoal = MessageBox(x,y,width,height)
-        self.textGoal.textList.append('Dig down to find the garden treasures.')
-        self.textGoal.textList.append('Unlock items at the shop.')
+        self.textGoal.textList.append('Free the country from the tyranny')
+        self.textGoal.textList.append('of Superadmiral Kleido.')
+        self.textGoal.textList.append('Make your way through the Starred Fortress')
+        self.textGoal.textList.append('to take down the power.')
         self.textGoal.textList.append('')
-        self.textGoal.textList.append('Press 1, 2, 3, 4 or 5 to select your item.')
-        self.textGoal.textList.append('Use left and right mouse keys to use them.')
-        self.textGoal.textList.append('')
-        self.textGoal.textList.append('Press m to mute the game.')
-        self.textGoal.textList.append('')
-        self.textGoal.textList.append('Always buy some ladders so you won\'t get stuck!')
+        self.textGoal.textList.append('Move with WASD.')
+        self.textGoal.textList.append('Use your mouse to aim and shoot.')
+        self.textGoal.textList.append('Stand on charging stations to charge your gun.')
+        # self.textGoal.textList.append('')
+        # self.textGoal.textList.append('Press m to mute the game.')
 
 
         self.allSprites.add(self.textGoal)  # Add sprite

@@ -41,13 +41,14 @@ class CreditSceneData(SceneData):
 
     def createCreditBox(self,x,y,width,height):
         self.textGoal = MessageBox(x,y,width,height)
-        self.textGoal.textList.append('Game made for the Ludum Dare 38')
+        self.textGoal.textList.append('Game made for the Ludum Dare 39')
         # self.textGoal.textList.append('')
-        self.textGoal.textList.append('April 21st-24th')
+        self.textGoal.textList.append('July 28-30 2017')
         self.textGoal.textList.append('')
-        self.textGoal.textList.append('Gameplay, Design, Graphics and Music :')
+        self.textGoal.textList.append('Gameplay, Design, and Graphics by:')
+        # Removed reference to music because we didn't deal with that
         self.textGoal.textList.append('')
-        self.textGoal.textList.append('Bobsleigh\'s team')
+        self.textGoal.textList.append('The Bobsleigh team')
         self.textGoal.textList.append('')
 
         self.allSprites.add(self.textGoal)  # Add sprite

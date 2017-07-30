@@ -12,6 +12,6 @@ class CorridorBombSceneData(LevelSceneData):
         self.nextLevel = BOMB_BOSS_LEVEL
 
         self.messageBoxes = list()
-        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "Premier setting."),False])
-        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "Deuxieme setting."),False])
+        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "Next up is the chief of the army, General Dreetus. The last stand before Superadmiral Kleido."),False])
+        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "After all he's made us suffer through, let's hope he bites the dust."),False])
 

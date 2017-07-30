@@ -40,7 +40,7 @@ class TitleSceneData(SceneData):
         self.spritesHUD.add(self.instructionButton)
         self.notifyGroup.add(self.instructionButton)
 
-        self.creditButton = Button((SCREEN_WIDTH/2-buttonWidth/2, 14 * SCREEN_HEIGHT / 20), (buttonWidth, buttonHeight), 'Credit',
+        self.creditButton = Button((SCREEN_WIDTH/2-buttonWidth/2, 14 * SCREEN_HEIGHT / 20), (buttonWidth, buttonHeight), 'Credits',
                                       self.goToCredit)
         self.spritesHUD.add(self.creditButton)
         self.notifyGroup.add(self.creditButton)

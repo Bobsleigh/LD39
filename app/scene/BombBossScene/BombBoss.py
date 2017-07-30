@@ -25,6 +25,8 @@ class BombBoss(pygame.sprite.Sprite):
         self.frameAnimationSpeed = 10
         imageBase = pygame.image.load(os.path.join('img', 'canon-boss-closed.png'))
         imageOpen = pygame.image.load(os.path.join('img', 'canon-boss-open.png'))
+        imageDashAnim1 = pygame.image.load(os.path.join('img', 'canon-boss-dash1.png'))
+        imageDashAnim2 = pygame.image.load(os.path.join('img', 'canon-boss-dash2.png'))
 
         self.imageIdle = [imageBase, imageBase, imageBase, imageOpen, imageOpen, imageBase, imageOpen]
         self.animationIdle = Animation(self.imageIdle, self.frameAnimationSpeed, RIGHT, True)
@@ -55,8 +57,8 @@ class BombBoss(pygame.sprite.Sprite):
         self.friendly = True
 
         # Life bar
-        self.maxHealth = 1000
-        self.currentHealth = 1000
+        self.maxHealth = 200
+        self.currentHealth = 200
 
         self.rightPressed = False
         self.leftPressed = False
