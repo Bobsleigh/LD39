@@ -110,11 +110,12 @@ class LaserTurret(pygame.sprite.Sprite):
         self.image = self.animation.update(LEFT)
 
     def updateCooldowns(self):
-        if self.shootingCooldown.isZero:
-            self.state = ShootingAllLasersState(self, self.sceneData)
-            self.shootingCooldown.start()
-        if self.shootingCooldown.value == self.shootingSpeed - 60:
-            self.state = IdleState()
+        if self.isOpened:
+            if self.shootingCooldown.isZero:
+                self.state = ShootingAllLasersState(self, self.sceneData)
+                self.shootingCooldown.start()
+            if self.shootingCooldown.value == self.shootingSpeed - 60:
+                self.state = IdleState()
 
         self.shootingCooldown.update()
         self.openingCooldown.update()
