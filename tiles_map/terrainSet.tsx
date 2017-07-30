@@ -4,6 +4,12 @@
  <terraintypes>
   <terrain name="Plancher" tile="19"/>
  </terraintypes>
+ <tile id="0">
+  <animation>
+   <frame tileid="0" duration="100"/>
+   <frame tileid="48" duration="100"/>
+  </animation>
+ </tile>
  <tile id="5" terrain=",,,0"/>
  <tile id="6" terrain=",,0,0"/>
  <tile id="7" terrain=",,0,"/>
