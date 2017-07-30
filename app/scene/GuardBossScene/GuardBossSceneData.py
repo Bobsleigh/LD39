@@ -22,7 +22,7 @@ class GuardBossSceneData(LevelSceneData):
         self.camera.add(self.boss)
         self.addHUD()
 
-        self.musicName = "RoccoW_-_xyce_-_Quelle_Surprise_VRC6_Remix.wav"
+        self.musicName = "Covox_-_04_-_End_to_Joy.wav"
 
     def GuardBossIsDead(self):
         self.nextScene = self.nextLevel
