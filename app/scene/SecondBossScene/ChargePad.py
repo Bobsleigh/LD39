@@ -65,7 +65,7 @@ class ChargePad(pygame.sprite.Sprite):
             self.move()
             self.moveCounter.reset()
 
-        # This Boss shouldn't be flipped.
+        # This sprite shouldn't be flipped.
         self.image = self.animation.update(LEFT)
 
     def move(self):

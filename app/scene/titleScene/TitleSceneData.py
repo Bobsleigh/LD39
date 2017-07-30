@@ -50,7 +50,7 @@ class TitleSceneData(SceneData):
         self.notifyGroup.add(self.exitButton)
 
     def startGame(self):
-        self.nextScene = BOMB_CORRIDOR_LEVEL
+        self.nextScene = GUARD_CORRIDOR_LEVEL
 
         if TAG_MARIE ==1:
             self.nextScene = LASER_BOSS_LEVEL
