@@ -2,7 +2,7 @@ import pygame
 from app.settings import *
 
 
-class BossDeadFadeOut():
+class FinalBossDeadFadeOut():
     def __init__(self, screen):
 
         for i in range(100):
