@@ -1,3 +1,5 @@
+import sys
+import os
 # Define some colors
 BLACK = (0, 0, 0)
 WHITE = (255, 255, 255)
@@ -8,9 +10,15 @@ YELLOW = (160, 0, 160)
 GREY = (100, 100, 100)
 
 # Main font
-FONT_NAME = 'good_times.ttf'
-SECOND_FONT_NAME = 'hemi_head.ttf'
-THIRD_FONT_NAME = 'libel-suit-rg.ttf'
+if hasattr(sys, "_MEIPASS"):
+    FONT_NAME = os.path.join(sys._MEIPASS, 'fonts/good_times.ttf')
+    SECOND_FONT_NAME = os.path.join(sys._MEIPASS, 'fonts/hemi_head.ttf')
+    THIRD_FONT_NAME = os.path.join(sys._MEIPASS, 'fonts/libel-suit-rg.ttf')
+else:
+    FONT_NAME = 'fonts/good_times.ttf'
+    SECOND_FONT_NAME = 'fonts/hemi_head.ttf'
+    THIRD_FONT_NAME = 'fonts/libel-suit-rg.ttf'
+
 
 FPS = 60
 

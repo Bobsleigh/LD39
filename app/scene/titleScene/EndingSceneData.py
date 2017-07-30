@@ -18,7 +18,7 @@ class EndingSceneData(SceneData):
         # background
         self.background = pygame.sprite.Sprite()
         self.background.rect = pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.background.image = pygame.image.load(os.path.join('img', 'menu.png'))
+        self.background.image = pygame.image.load(os.path.join('img', 'menu-end.png'))
         self.background.rect = self.background.image.get_rect()
 
         self.spritesBackGround.add(self.background)
@@ -31,6 +31,8 @@ class EndingSceneData(SceneData):
                                               self.goToTitleScreen)
         self.spritesHUD.add(self.backToTitleScreenButton)
         self.notifyGroup.add(self.backToTitleScreenButton)
+
+        self.musicName = "TitleScreen.wav"
 
     def createControlBox(self,x,y,width,height):
         self.textGoal = MessageBox(x,y,width,height,fontSize=15)

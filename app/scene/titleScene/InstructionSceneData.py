@@ -32,6 +32,8 @@ class InstructionSceneData(SceneData):
         self.spritesHUD.add(self.backToTitleScreenButton)
         self.notifyGroup.add(self.backToTitleScreenButton)
 
+        self.musicName = "TitleScreen.wav"
+
     def createControlBox(self,x,y,width,height):
         self.textGoal = MessageBox(x,y,width,height)
         self.textGoal.textList.append('Play as the rebellious teen Lutecia')
