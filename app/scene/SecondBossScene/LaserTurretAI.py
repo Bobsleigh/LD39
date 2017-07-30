@@ -13,7 +13,7 @@ from ldLib.Sprites.SecondBoss.MoveToMapCenterState import MoveToMapCenterState
 from ldLib.Sprites.SecondBoss.ShootingLaserState import ShootingLaserState
 from ldLib.Sprites.SecondBoss.ShootingAllLasersState import ShootingAllLasersState
 
-class Boss2AI:
+class LaserTurretAI:
     def __init__(self, sprite, mapData):
         self.sprite = sprite
         self.mapData = mapData
