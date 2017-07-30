@@ -15,7 +15,7 @@ class Boss2(pygame.sprite.Sprite):
     def __init__(self, x, y, sceneData, max_health=10):
         super().__init__()
 
-        self.name = "Superadmiral Kleido"
+        self.name = "Kleido, the Superadmiral"
 
         # Animation
         self.frameAnimationSpeed = 10

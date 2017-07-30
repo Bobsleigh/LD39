@@ -5,7 +5,7 @@ from app.settings import *
 class BossDeadFadeOut():
     def __init__(self, screen):
         fontScreen = pygame.font.SysFont(FONT_NAME, 40)
-        message = fontScreen.render("Congratulations!", True, (0, 0, 0))
+        message = fontScreen.render("YOU WIN", True, (255, 255, 255))
         messagePos = [(SCREEN_WIDTH - message.get_width()) / 2,
                       (SCREEN_HEIGHT - message.get_height()) / 2]
 
@@ -16,6 +16,9 @@ class BossDeadFadeOut():
             screen.blit(fadeInSurface, (0, 0))
             if message != None:
                 screen.blit(message, messagePos)
-            pygame.time.wait(15)
+            if i < 50:
+                pygame.time.wait(60)
+            else:
+                pygame.time.wait(10)
             pygame.display.flip()
         pygame.time.wait(60)
