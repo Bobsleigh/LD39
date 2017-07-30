@@ -3,6 +3,7 @@ from app.scene.TopDownPhysics import TopDownPhysics
 from ldLib.collision.collisionNotifySprite import collisionNotifySprite
 from app.settings import *
 
+
 class CorridorSceneLogicHandler(LogicHandler):
     def __init__(self, gameData):
         super().__init__(gameData)
@@ -12,16 +13,22 @@ class CorridorSceneLogicHandler(LogicHandler):
         super().handle()
         self.physics.update()
         self.handleZoneCollision()
+        self.updateMessageBox()
 
     def handleZoneCollision(self):
         player = self.sceneData.player
+        for item in self.sceneData.messageBoxes:
+            item[1] = False
+
         for obj in self.sceneData.tmxData.objects:
             if self.isPlayerIsInZone(player, obj) == True:
                 if obj.name == "OutZone":
                     self.sceneData.nextScene = self.sceneData.nextLevel
-                elif TAG_MARIE==1:
+                elif obj.name == "MessageZone":
+                    self.sceneData.messageBoxes[int(obj.index)][1] = True
+                elif TAG_MARIE == 1:
                     if obj.name == "HurtZone":
-                        self.sceneData.player.hurt(int(obj.damage)*40)
+                        self.sceneData.player.hurt(int(obj.damage) * 40)
 
     def isPlayerIsInZone(self, player, zone):
         if player.rect.centerx >= zone.x and \
@@ -31,3 +38,14 @@ class CorridorSceneLogicHandler(LogicHandler):
             return True
         else:
             return False
+
+    def updateMessageBox(self):
+        for item in self.sceneData.messageBoxes:
+            sprite = item[0]
+            if item[1]== True:
+                self.sceneData.spritesHUD.add(sprite)
+            else:
+                if self.sceneData.spritesHUD.has(sprite):
+                    self.sceneData.spritesHUD.remove(sprite)
+
+

@@ -2,6 +2,7 @@ import pygame
 
 from app.scene.LevelSceneData import LevelSceneData
 from app.settings import *
+from ldLib.GUI.WrappedTextBox import WrappedTextBox
 
 
 class CorridorSceneData(LevelSceneData):

@@ -22,19 +22,53 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.name = "player"
 
         # Code for idle animation
-        frameAnimationSpeed=10
+        self.animationState = ANIMATION_NORMAL
+        self.frameAnimationSpeed=10
 
-        imageIdle = [pygame.image.load(os.path.join('img', 'lutecia-left.png'))]
+        self.imageIdle = [pygame.image.load(os.path.join('img', 'lutecia-left.png'))]
 
-        self.animationIdle = Animation(imageIdle, frameAnimationSpeed, LEFT, True)
+        self.animationIdle = Animation(self.imageIdle, self.frameAnimationSpeed, LEFT, True)
         self.animation = self.animationIdle
 
         # Code for walking animation
-        imageWalk = [pygame.image.load(os.path.join('img', 'lutecia-left-walk1.png')),
+        self.imageWalk = [pygame.image.load(os.path.join('img', 'lutecia-left-walk1.png')),
                          pygame.image.load(os.path.join('img', 'lutecia-left-walk2.png'))]
-        self.animationWalk = Animation(imageWalk, frameAnimationSpeed, True)
+        self.animationWalk = Animation(self.imageWalk, self.frameAnimationSpeed, True)
 
-        self.image = imageIdle[0]
+        # Code for healthless animation
+        self.imageIdleHealthless = [
+            pygame.image.load(os.path.join('img\weak-lutecia\healthless', 'lutecia-left-healthless.png')),
+            pygame.image.load(
+                os.path.join('img\weak-lutecia\healthless', 'lutecia-left-healthless2.png'))]
+
+        self.imageWalkHealthless = [
+            pygame.image.load(os.path.join('img\weak-lutecia\healthless', 'lutecia-left-walk1-healthless.png')),
+            pygame.image.load(
+                os.path.join('img\weak-lutecia\healthless', 'lutecia-left-walk2-healthless.png'))]
+
+        # Code for powerless animation
+        self.imageIdlePowerless = [
+            pygame.image.load(os.path.join('img\weak-lutecia', 'lutecia-left-powerless1.png')),
+            pygame.image.load(
+                os.path.join('img\weak-lutecia', 'lutecia-left-powerless2.png'))]
+
+        self.imageWalkPowerless = [
+            pygame.image.load(os.path.join('img\weak-lutecia', 'lutecia-left-walk-powerless1.png')),
+            pygame.image.load(
+                os.path.join('img\weak-lutecia', 'lutecia-left-walk-powerless2.png'))]
+
+        # Code for healthless/powerless animation
+        self.imageIdleHealthPowerless = [
+            pygame.image.load(os.path.join('img\weak-lutecia\healthless', 'lutecia-left-healthless.png')),
+            pygame.image.load(
+                os.path.join('img\weak-lutecia\healthless', 'lutecia-left-powerless-healthless.png'))]
+
+        self.imageWalkHealthPowerless = [
+            pygame.image.load(os.path.join('img\weak-lutecia\healthless', 'lutecia-left-walk1-healthless.png')),
+            pygame.image.load(
+                os.path.join('img\weak-lutecia\healthless', 'lutecia-left-walk2-healthless-powerless.png'))]
+
+        self.image = self.imageIdle[0]
         self.facingSide = RIGHT
 
         self.imageTransparent = pygame.Surface((1, 1),pygame.SRCALPHA)
@@ -97,8 +131,6 @@ class PlayerPlateform(pygame.sprite.Sprite):
 
         # Life bar
         self.maxHealth = PLAYER_MAX_LIFE
-        if TAG_MARIE == 1:
-            self.maxHealth = 1
         self.currentHealth = self.maxHealth
 
         self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
@@ -124,6 +156,8 @@ class PlayerPlateform(pygame.sprite.Sprite):
         elif self.speedx < 0:
             self.facingSide = LEFT
 
+        self.selectAnimation()
+
         if ((self.speedx!=0) or (self.speedy!=0)):
             self.animation = self.animationWalk
         else:
@@ -144,6 +178,28 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.updatePressedKeys()
         self.updateTarget()
         self.updateCooldowns()
+
+    def selectAnimation(self):
+        if self.currentHealth < self.maxHealth / 3 and self.currentEnergy < self.maxEnergy / 3:
+            if self.animationState is not ANIMATION_HEALTHLESS_POWERLESS:
+                self.animationIdle = Animation(self.imageIdleHealthPowerless, self.frameAnimationSpeed, LEFT, True)
+                self.animationWalk = Animation(self.imageWalkHealthPowerless, self.frameAnimationSpeed, LEFT, True)
+                self.animationState = ANIMATION_HEALTHLESS_POWERLESS
+        elif self.currentHealth < self.maxHealth/3:
+            if self.animationState is not ANIMATION_HEALTHLESS:
+                self.animationIdle = Animation(self.imageIdleHealthless, self.frameAnimationSpeed, LEFT, True)
+                self.animationWalk = Animation(self.imageWalkHealthless, self.frameAnimationSpeed, LEFT, True)
+                self.animationState = ANIMATION_HEALTHLESS
+        elif self.currentEnergy < self.maxEnergy / 3:
+            if self.animationState is not ANIMATION_POWERLESS:
+                self.animationIdle = Animation(self.imageIdlePowerless, self.frameAnimationSpeed, LEFT, True)
+                self.animationWalk = Animation(self.imageWalkPowerless, self.frameAnimationSpeed, LEFT, True)
+                self.animationState = ANIMATION_POWERLESS
+        else:
+            if self.animationState is not ANIMATION_NORMAL:
+                self.animationIdle = Animation(self.imageIdle, self.frameAnimationSpeed, LEFT, True)
+                self.animationWalk = Animation(self.imageWalk, self.frameAnimationSpeed, LEFT, True)
+                self.animationState = ANIMATION_NORMAL
 
     def moveX(self):
         self.x += self.speedx

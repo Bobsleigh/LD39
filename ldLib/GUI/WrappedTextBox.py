@@ -2,6 +2,7 @@ import pygame
 
 from app.settings import *
 from ldLib.GUI.Box import Box
+from ldLib.tools.ImageBox import ImageBox
 
 
 class WrappedTextBox(pygame.sprite.Sprite):
@@ -12,9 +13,9 @@ class WrappedTextBox(pygame.sprite.Sprite):
         self.marginY = margin[1]
         self.spaceBetweenLines = 20
 
-        self.box = Box(pos,size)
+        self.box = ImageBox().rectSurface(size,COLOR_MENU_1,4)
 
-        self.image = self.box.image
+        self.image = self.box
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
@@ -70,9 +71,9 @@ class WrappedTextBox(pygame.sprite.Sprite):
             renderSize = self.arial.size(lineList[i])
             render = self.arial.render(lineList[i], False, BLACK)
             if i == 0:
-                self.box.box.blit(render, (self.marginX,self.marginY))
+                self.box.blit(render, (self.marginX,self.marginY))
             else:
-                self.box.box.blit(render, (self.marginX,self.marginY + (self.spaceBetweenLines + renderSize[1]) * (i)))
+                self.box.blit(render, (self.marginX,self.marginY + (self.spaceBetweenLines + renderSize[1]) * (i)))
             i += 1
 
 
