@@ -55,8 +55,8 @@ class BombBoss(pygame.sprite.Sprite):
         self.friendly = True
 
         # Life bar
-        self.maxHealth = 500
-        self.currentHealth = 500
+        self.maxHealth = 1000
+        self.currentHealth = 1000
 
         self.rightPressed = False
         self.leftPressed = False
