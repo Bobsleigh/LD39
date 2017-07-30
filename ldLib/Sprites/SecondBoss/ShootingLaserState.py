@@ -18,8 +18,6 @@ class ShootingLaserState(EnemyState):
         else:
             self.laser1 = Laser(sprite.rect.centerx, sprite.rect.bottom, sceneData)
             self.laser2 = Laser(sprite.rect.centerx, sprite.rect.top, sceneData)
-            # self.laser1.image = pygame.transform.rotate(self.laser1.image, -90)
-            # self.laser2.image = pygame.transform.rotate(self.laser2.image, 90)
             self.laser1.rotate(90)
             self.laser2.rotate(90)
 

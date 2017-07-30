@@ -10,7 +10,7 @@ from ldLib.Sprites.Player.IdleState import IdleState
 from ldLib.tools.Cooldown import Cooldown
 
 
-class Boss2(pygame.sprite.Sprite):
+class LaserTurret(pygame.sprite.Sprite):
     def __init__(self, x, y, sceneData, max_health=10):
         super().__init__()
 
@@ -43,9 +43,6 @@ class Boss2(pygame.sprite.Sprite):
         self.accy = 2
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
-        # Life bar
-        self.maxHealth = 200
-        self.currentHealth = 200
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
@@ -69,11 +66,7 @@ class Boss2(pygame.sprite.Sprite):
         self.collisionRules = []
         self.collisionRules.append(CollisionWithSolid())
 
-        self._state = IdleState()
         self.AI = Boss2AI(self, self.mapData)
-
-        self.invincibleCooldown = Cooldown(60)
-        self.flashduration = 8
 
         self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
         self.hurtSound.set_volume(.25)
@@ -84,34 +77,13 @@ class Boss2(pygame.sprite.Sprite):
 
     def update(self):
         self.AI.update()
-        self.capSpeed()
-
-        self.previousX = self.x
-        self.previousY = self.y
-
-        self.moveX()
-        self.moveY()
-        self.rect.x = self.x
-        self.rect.y = self.y
-
-        if self.speedx > 0:
-            self.image = self.imageShapeRight
-            self.facingSide = RIGHT
-        if self.speedx < 0:
-            self.image = self.imageShapeLeft
-            self.facingSide = LEFT
-
-        # Replace make visual flash in invincible mode.
-        # if not self.invincibleCooldown.isZero:
-        #     if self.flashduration-3 <= self.invincibleCooldown.value % self.flashduration:
-        #         self.image = self.imageTransparent
 
         self.updateCollisionMask()
         self.updatePressedKeys()
         self.updateCooldowns()
 
     def updateCooldowns(self):
-        # For invincibitlity
+
         self.invincibleCooldown.update()
 
     def shootLaser(self):
