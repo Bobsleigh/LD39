@@ -22,8 +22,8 @@ if __name__ == '__main__':
     pygame.display.set_caption("TestTmXData")
 
     # Init
-    pygame.mixer.pre_init(22050, -16, 2, 4096)
-    # pygame.mixer.init()
+    pygame.mixer.pre_init(44100, -16, 2, 4096)
+    pygame.mixer.init()
     pygame.init()
     pygame.font.init()
 
