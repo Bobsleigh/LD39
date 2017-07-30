@@ -10,6 +10,8 @@ class CorridorSceneData(SceneDataTMX):
     def __init__(self):
         super().__init__("TestTmxData", "InZone_01")
 
+        self.sceneName = TEST_TMX_SCENE
+
         self.friendlyBullets = pygame.sprite.Group()
 
         playerInitx = 50
@@ -25,4 +27,20 @@ class CorridorSceneData(SceneDataTMX):
         self.player = PlayerPlateform(playerInitx, playerInity, self)
         self.camera.add(self.player)
 
-        LevelHUD(self,self.player)
+        LevelHUD(self, self.player)
+
+    def playerIsDead(self):
+        self.nextScene = self.sceneName
+        self.endSceneCause = PLAYER_DEAD
+
+    def beforeLeavingScene(self, screen):
+        if self.endSceneCause == PLAYER_DEAD:
+            fontScreen = pygame.font.SysFont(FONT_NAME, 40)
+            message = fontScreen.render('You died! Get your revenge on those creeps!', True, BLACK)
+            messagePos = [(SCREEN_WIDTH - message.get_width()) / 2,
+                          (SCREEN_HEIGHT) / 2]
+
+        screen.blit(message, messagePos)
+
+        pygame.display.flip()
+        pygame.time.wait(2000)
