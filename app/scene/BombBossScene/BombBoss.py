@@ -59,6 +59,8 @@ class BombBoss(pygame.sprite.Sprite):
         # Life bar
         self.maxHealth = 900
         self.currentHealth = 900
+        if TAG_ALEX:
+            self.currentHealth = 1
 
         self.rightPressed = False
         self.leftPressed = False
