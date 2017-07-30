@@ -9,7 +9,7 @@ class BombBossSceneData(LevelSceneData):
     def __init__(self):
         super().__init__("BossRoom1", "InZone_01")
         self.sceneName = BOMB_BOSS_LEVEL
-        self.nextLevel = LASER_BOSS_LEVEL
+        self.nextLevel = LASER_CORRIDOR_LEVEL
 
         self.boss = None
         # Spawn boss
