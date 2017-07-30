@@ -36,14 +36,14 @@ class BombBossAI:
                     self.counter.reset()
                 if self.counter.value != 0:
                     if self.counter.value % 600 == 0:
-                        if self.difficulty == 0:
-                            self.sprite.smallDash()
-                        elif self.difficulty == 2:
+                        if self.difficulty == 2:
                             self.sprite.prettyZap(3)
                             self.counter.value += 1
                             self.cooldown.start()
                     if self.counter.value % 300 == 0:
                         self.sprite.Boom()
+                    if self.counter.value % 400 == 0 and self.difficulty == 0:
+                        self.sprite.smallDash()
                     if self.difficulty != 0 and self.counter.value % 80 == 0:
                         self.sprite.Zap()
                     if self.counter.value % 140 == 0:
