@@ -14,7 +14,7 @@ class LevelHUD:
 
         energyBar = EnergyBar(player, PLAYER_ENERGY_X, PLAYER_ENERGY_Y, PLAYER_ENERGY_WIDTH, PLAYER_ENERGY_HEIGHT)
         scenedata.spritesHUD.add(energyBar)
-        energyLabel = TextSprite("Energy", PLAYER_ENERGY_X + PLAYER_ENERGY_WIDTH-80, PLAYER_ENERGY_Y + PLAYER_ENERGY_HEIGHT)
+        energyLabel = TextSprite("Energy", PLAYER_ENERGY_X + PLAYER_ENERGY_WIDTH-120, PLAYER_ENERGY_Y + PLAYER_ENERGY_HEIGHT)
         scenedata.spritesHUD.add(energyLabel)
 
         if boss is not None:
