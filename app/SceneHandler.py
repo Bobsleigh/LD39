@@ -36,9 +36,8 @@ class SceneHandler:
             self.runningScene = Scene(self.screen, self.gameData, logic_handler)
 
         elif TAG_PHIL == 1:
-            self.gameData.sceneData = SecondBossSceneData()
-            logicHandler = SecondBossSceneLogicHandler(self.gameData)
-            self.runningScene = Scene(self.screen, self.gameData, logicHandler, MusicHandler(self.gameData))
+            self.gameData.sceneData = BombBossSceneData()
+            self.runningScene = Scene(self.screen, self.gameData, BombBossSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
 
         # elif TAG_MARIE == 1:
         #     self.gameData.sceneData = BombBossSceneData()

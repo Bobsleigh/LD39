@@ -154,7 +154,7 @@ class BoomBomb(pygame.sprite.Sprite):
         self.kill()
 
     def Boom(self):
-
+        self.mapData.boomBombSound.play()
         exploded_bomb = ExplodedBomb(self.rect.centerx, self.rect.centery, self.mapData)
         self.mapData.allSprites.add(exploded_bomb)
         self.mapData.enemyProjectiles.add(exploded_bomb)
