@@ -1,4 +1,5 @@
 import math
+import random
 from app.settings import *
 from ldLib.tools.Counter import Counter
 import random
@@ -27,10 +28,14 @@ class BombBossAI:
         if self.difficulty != 3:
             if self.counter.value % 20 == 0:
                 if self.counter.value > 2400:
-                    self.counter.value = 480
+                    self.difficulty = max(1, self.difficulty)
+                    self.counter.reset()
                 if self.counter.value != 0:
-                    if self.counter.value % 600 == 0 and self.difficulty == 0:
-                        self.sprite.smallDash()
+                    if self.counter.value % 600 == 0:
+                        if self.difficulty == 0:
+                            self.sprite.smallDash()
+                        elif self.difficulty == 2:
+                            self.sprite.prettyZap(1)
                     if self.counter.value % 300 == 0:
                         self.sprite.Boom()
                     if self.difficulty != 0 and self.counter.value % 80 == 0:
@@ -40,9 +45,11 @@ class BombBossAI:
                             self.sprite.Zap()
                         else:
                             self.sprite.Dash()
+
         else:
             if self.counter.value % 200 == 0:
-                self.sprite.prettyZap()
+                pattern = random.randint(1, 2)
+                self.sprite.prettyZap(pattern)
             if self.counter.value % 300 == 0:
                 self.sprite.Dash()
             if self.counter.value % 400 == 0:

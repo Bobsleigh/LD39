@@ -1,31 +1,20 @@
 import pygame
+from app.settings import *
 
+from app.scene.LevelSceneData import LevelSceneData
 from app.scene.SecondBossScene.Boss2 import Boss2
 from app.scene.SecondBossScene.LaserTurret import LaserTurret
-from app.sprites.LevelHUD import LevelHUD
-from app.sprites.PlayerPlateform import PlayerPlateform
-from ldLib.scene.SceneDataTMX import SceneDataTMX
 
-
-class SecondBossSceneData(SceneDataTMX):
+class SecondBossSceneData(LevelSceneData):
     def __init__(self):
         super().__init__("TestTmxData", "InZone_01")
+        self.sceneName = LASER_BOSS_LEVEL
+        self.nextLevel = INSTRUCTION_SCENE
 
         self.laserGroup = pygame.sprite.Group()
         self.bossGroup = pygame.sprite.Group()
         self.enemyGroup = pygame.sprite.Group()
         self.turretGroup = pygame.sprite.Group()
-
-        playerInitx = 50
-        playerInity = 50
-        try:
-            playerInitx = self.spawmPointPlayerx
-            playerInity = self.spawmPointPlayery
-        except AttributeError:
-            pass
-
-        self.player = PlayerPlateform(playerInitx, playerInity, self)
-        self.camera.add(self.player)
 
         self.boss = Boss2(200, 200, self)
         self.bossGroup.add(self.boss)
@@ -41,5 +30,3 @@ class SecondBossSceneData(SceneDataTMX):
         # self.turretGroup.add(turret)
         # self.allSprites.add(turret)
         # self.camera.add(turret)
-
-        LevelHUD(self,self.player)

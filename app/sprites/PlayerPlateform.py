@@ -97,6 +97,8 @@ class PlayerPlateform(pygame.sprite.Sprite):
 
         # Life bar
         self.maxHealth = PLAYER_MAX_LIFE
+        if TAG_MARIE == 1:
+            self.maxHealth = 1
         self.currentHealth = self.maxHealth
 
         self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))

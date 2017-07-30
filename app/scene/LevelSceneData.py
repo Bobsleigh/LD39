@@ -11,7 +11,7 @@ class LevelSceneData(SceneDataTMX):
     def __init__(self,mapName, nameInZone):
         super().__init__(mapName, nameInZone )
         self.sceneName = None
-        self.nextLevel = TITLE_SCENE
+        self.nextLevel = None
 
         self.friendlyBullets = pygame.sprite.Group()
 

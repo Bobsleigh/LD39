@@ -39,8 +39,8 @@ class SceneHandler:
             self.runningScene = Scene(self.screen, self.gameData, logicHandler)
 
         elif TAG_MARIE == 1:
-            self.gameData.sceneData = CorridorSceneData()
-            logic_handler = CorridorSceneLogicHandler(self.gameData)
+            self.gameData.sceneData = BombBossSceneData()
+            logic_handler = BombBossSceneLogicHandler(self.gameData)
             self.runningScene = Scene(self.screen, self.gameData, logic_handler)
 
     def mainLoop(self):
@@ -63,3 +63,9 @@ class SceneHandler:
         elif self.runningScene.nextScene == TEST_TMX_SCENE:
             self.gameData.sceneData = CorridorSceneData()
             self.runningScene = Scene(self.screen, self.gameData, CorridorSceneLogicHandler(self.gameData))
+        elif self.runningScene.nextScene == LASER_BOSS_LEVEL:
+            self.gameData.sceneData = SecondBossSceneData()
+            self.runningScene = Scene(self.screen, self.gameData, SecondBossSceneLogicHandler(self.gameData))
+        elif self.runningScene.nextScene == BOMB_BOSS_LEVEL:
+            self.gameData.sceneData = BombBossSceneData()
+            self.runningScene = Scene(self.screen, self.gameData, BombBossSceneLogicHandler(self.gameData))
