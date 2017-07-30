@@ -1,6 +1,6 @@
 __author__ = 'Bobsleigh'
 
-import pygame, math
+import pygame, os
 from ldLib.Sprites.SecondBoss.EnemyState import EnemyState
 from app.scene.SecondBossScene.Laser import Laser
 from app.settings import *
@@ -8,6 +8,7 @@ from app.settings import *
 class ShootingLaserState(EnemyState):
     def __init__(self, sprite, isRightLeft, sceneData):
         super().__init__()
+
         self.sceneData = sceneData
         self.isRightLeft = isRightLeft
         if self.isRightLeft:
@@ -41,6 +42,7 @@ class ShootingLaserState(EnemyState):
             self.laser2.rect.y = sprite.rect.top - self.laser2.image.get_rect().height
 
     def enter(self, sprite):
+        sprite.soundLaser.play()
         self.sceneData.laserGroup.add(self.laser1)
         self.sceneData.allSprites.add(self.laser1)
         self.sceneData.camera.add(self.laser1)
@@ -52,3 +54,4 @@ class ShootingLaserState(EnemyState):
     def exit(self, sprite):
         self.laser1.kill()
         self.laser2.kill()
+        sprite.soundLaser.stop()
