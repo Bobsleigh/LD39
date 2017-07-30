@@ -3,6 +3,7 @@ import os
 import random
 import math
 from app.settings import *
+from ldLib.animation.Animation import Animation
 from ldLib.collision.collisionMask import CollisionMask
 from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
@@ -20,19 +21,19 @@ class GuardBoss(pygame.sprite.Sprite):
 
         self.name = "GuardBoss"
 
-        self.imageBase = pygame.image.load(os.path.join('img', 'guard.png'))
-        self.imageBase.set_colorkey(COLORKEY)
+        # Animation
+        self.frameAnimationSpeed = 10
+        imageBase = pygame.image.load(os.path.join('img', 'guard.png'))
+        imageDistracted = pygame.image.load(os.path.join('img', 'guard-distracted.png'))
+        self.imageIdle = [imageBase, imageBase, imageBase, imageDistracted]
 
-        self.imageShapeLeft = None
-        self.imageShapeRight = None
+        self.animationIdle = Animation(self.imageIdle, self.frameAnimationSpeed, RIGHT, True)
+        self.animation = self.animationIdle
 
-        self.invincibleCooldown = Cooldown(5)
+        self.image = self.imageIdle[0]
+        self.facingSide = RIGHT
 
-        self.setShapeImage()
-        self.image = self.imageShapeRight
-
-        self.imageTransparent = ImageBox().rectSurface((32, 32), WHITE, 3)
-        self.imageTransparent.set_colorkey(COLORKEY)
+        self.imageTransparent = pygame.Surface((1, 1), pygame.SRCALPHA)
 
         self.rect = self.image.get_rect()  # Position centrée du player
         self.x = x
@@ -51,7 +52,6 @@ class GuardBoss(pygame.sprite.Sprite):
 
         self.isFrictionApplied = False
         self.isCollisionApplied = True
-        self.facingSide = RIGHT
         self.friendly = True
 
         # Life bar
@@ -80,13 +80,19 @@ class GuardBoss(pygame.sprite.Sprite):
         self.AI = GuardBossAI(self, self.mapData)
         # self.nextState = None
 
+        # Invincibility
+        self.invincibleCooldown = Cooldown(60)
+        self.flashduration = 8
+
+        self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
+        self.hurtSound.set_volume(.25)
+
     def setShapeImage(self):
         self.imageShapeLeft = pygame.transform.flip(self.imageBase, True, False)
         self.imageShapeRight = self.imageBase
 
     def update(self):
         self.AI.update()
-        self.updateCooldowns()
 
         self.previousX = self.x
         self.previousY = self.y
@@ -97,13 +103,20 @@ class GuardBoss(pygame.sprite.Sprite):
         self.rect.y = self.y
 
         if self.speedx > 0:
-            self.image = self.imageShapeRight
             self.facingSide = RIGHT
-        if self.speedx < 0:
-            self.image = self.imageShapeLeft
+        elif self.speedx < 0:
             self.facingSide = LEFT
 
+        # This Boss shouldn't be flipped.
+        self.image = self.animation.update(RIGHT)
+
+        # Replace to make visual flash in invincible mode.
+        if not self.invincibleCooldown.isZero:
+            if self.flashduration - 3 <= self.invincibleCooldown.value % self.flashduration:
+                self.image = self.imageTransparent
+
         self.updateCollisionMask()
+        self.updateCooldowns()
         self.updatePressedKeys()
 
     def moveX(self):
@@ -178,7 +191,7 @@ class GuardBoss(pygame.sprite.Sprite):
             self.mapData.allSprites.add(bullet)
 
     def prettyPattern(self, attack_id):
-        if(attack_id == 1):
+        if (attack_id == 1):
             x = self.mapData.player.rect.centerx - self.rect.centerx
             y = self.mapData.player.rect.centery - self.rect.centery
             angle = math.atan2(y, x)
@@ -195,7 +208,6 @@ class GuardBoss(pygame.sprite.Sprite):
                 self.mapData.camera.add(bullet)
                 self.mapData.enemyProjectiles.add(bullet)
                 self.mapData.allSprites.add(bullet)
-
 
     def aim_for_player(self):
         target_position = [0, 0]
