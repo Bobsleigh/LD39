@@ -35,35 +35,18 @@ class GuardBossAI:
                     self.difficulty = max(1, self.difficulty)
                     self.counter.reset()
                 if self.counter.value != 0:
-                    if self.counter.value % 6 == 0:
+                    if self.counter.value % 80 == 0 and self.counter.value < 2240:
                         if self.difficulty == 2:
                             self.sprite.prettyPattern(1)
                             self.counter.value += 1
                             self.cooldown.start()
-                        elif self.difficulty == 0:
-                            if TAG_MAGNAN == 1:
-                                print("hello")
+                        else:
                             self.sprite.shoot_at_player()
-                    #if self_difficulty == 0:
-                        #if self.counter.value % 120:
-                    #if self.counter.value % 300 == 0:
-                        #self.sprite.Boom()
-                    #if self.difficulty != 0 and self.counter.value % 80 == 0:
-                        #self.sprite.Zap()
-                    #if self.counter.value % 140 == 0:
-                        #if self.difficulty == 0:
-                            #self.sprite.Zap()
-                        #else:
-                            #self.sprite.Dash()
 
         else:
             if self.counter.value % 200 == 0:
                 pattern = random.randint(1, 2)
                 self.sprite.prettyPattern(pattern)
-            #if self.counter.value % 300 == 0:
-                #self.sprite.Dash()
-            #if self.counter.value % 400 == 0:
-                #self.sprite.boomOnPlate()
 
     def vectorNorm(self,x,y):
         result = math.sqrt(x**2+y**2)
