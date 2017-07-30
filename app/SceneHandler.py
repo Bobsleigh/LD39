@@ -76,16 +76,16 @@ class SceneHandler:
             self.runningScene = Scene(self.screen, self.gameData, GuardBossSceneLogicHandler(self.gameData))
         elif self.runningScene.nextScene == BOMB_CORRIDOR_LEVEL:
             self.gameData.sceneData = CorridorBombSceneData()
-            self.runningScene = Scene(self.screen, self.gameData, CorridorSceneLogicHandler(self.gameData))
+            self.runningScene = Scene(self.screen, self.gameData, CorridorSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
         elif self.runningScene.nextScene == BOMB_BOSS_LEVEL:
             self.gameData.sceneData = BombBossSceneData()
-            self.runningScene = Scene(self.screen, self.gameData, BombBossSceneLogicHandler(self.gameData))
+            self.runningScene = Scene(self.screen, self.gameData, BombBossSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
         elif self.runningScene.nextScene == LASER_CORRIDOR_LEVEL:
             self.gameData.sceneData = CorridorLaserSceneData()
-            self.runningScene = Scene(self.screen, self.gameData, CorridorLaserSceneLogicHandler(self.gameData))
+            self.runningScene = Scene(self.screen, self.gameData, CorridorLaserSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
         elif self.runningScene.nextScene == LASER_BOSS_LEVEL:
             self.gameData.sceneData = SecondBossSceneData()
-            self.runningScene = Scene(self.screen, self.gameData, SecondBossSceneLogicHandler(self.gameData))
+            self.runningScene = Scene(self.screen, self.gameData, SecondBossSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
         elif self.runningScene.nextScene == ENDING_SCENE:
             self.gameData.sceneData = EndingSceneData()
             self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData))
