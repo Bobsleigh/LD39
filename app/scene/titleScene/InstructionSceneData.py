@@ -23,11 +23,11 @@ class InstructionSceneData(SceneData):
 
         self.spritesBackGround.add(self.background)
 
-        boxWidth = 0.55 * SCREEN_WIDTH
-        self.createControlBox(SCREEN_WIDTH/2-boxWidth/2, 3*SCREEN_HEIGHT / 7, boxWidth,3 * SCREEN_HEIGHT / 7)
+        boxWidth = 0.7 * SCREEN_WIDTH
+        self.createControlBox(SCREEN_WIDTH/2-boxWidth/2, 1*SCREEN_HEIGHT / 7, boxWidth,4 * SCREEN_HEIGHT / 7)
 
         buttonWidth = 0.55 * SCREEN_WIDTH-100
-        self.backToTitleScreenButton = Button((SCREEN_WIDTH/2-buttonWidth/2, 17 * SCREEN_HEIGHT / 20+20), (buttonWidth, 50), 'Back to main menu',
+        self.backToTitleScreenButton = Button((SCREEN_WIDTH/2-buttonWidth/2, 16 * SCREEN_HEIGHT / 20), (buttonWidth, 50), 'Back to main menu',
                                               self.goToTitleScreen)
         self.spritesHUD.add(self.backToTitleScreenButton)
         self.notifyGroup.add(self.backToTitleScreenButton)

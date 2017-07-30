@@ -28,14 +28,15 @@ class CreditSceneData(SceneData):
         self.camera = None
 
         widthCreditBox = 0.5*SCREEN_WIDTH
-        heightCreditBox = 0.4*SCREEN_HEIGHT
+        heightCreditBox = 0.6*SCREEN_HEIGHT
 
-        self.createCreditBox(SCREEN_WIDTH/2-widthCreditBox/2, 3*SCREEN_HEIGHT / 7, widthCreditBox, heightCreditBox)
+        self.createCreditBox(SCREEN_WIDTH/2-widthCreditBox/2, 1*SCREEN_HEIGHT / 7, widthCreditBox, heightCreditBox)
 
         buttonWidth = 0.55 * SCREEN_WIDTH - 100
-        self.backToTitleScreenButton = Button((SCREEN_WIDTH / 2 - buttonWidth / 2, 17 * SCREEN_HEIGHT / 20),
+        self.backToTitleScreenButton = Button((SCREEN_WIDTH / 2 - buttonWidth / 2, 16 * SCREEN_HEIGHT / 20),
                                               (buttonWidth, 50), 'Back to main menu',
                                               self.goToTitleScreen)
+
         self.spritesHUD.add(self.backToTitleScreenButton)
         self.notifyGroup.add(self.backToTitleScreenButton)
 

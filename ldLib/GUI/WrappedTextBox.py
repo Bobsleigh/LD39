@@ -13,14 +13,14 @@ class WrappedTextBox(pygame.sprite.Sprite):
         self.marginY = margin[1]
         self.spaceBetweenLines = 20
 
-        self.box = ImageBox().rectSurface(size,COLOR_MENU_1,4)
+        self.box = ImageBox().rectSurface(size,COLOR_MENU_1,4,borderColor=COLOR_MENU_2)
 
         self.image = self.box
         self.rect = self.image.get_rect()
         self.rect.x = pos[0]
         self.rect.y = pos[1]
 
-        self.arial = pygame.font.SysFont("Arial", DIALOG_TEXT_SIZE)
+        self.arial = pygame.font.Font(FONT_NAME,DIALOG_TEXT_SIZE)
         self.text = self.renderWrappedText(text)
 
     def isTextLongerThanBox(self, renderedTxt):
@@ -43,12 +43,12 @@ class WrappedTextBox(pygame.sprite.Sprite):
         lineList = []
         renderList = []
 
-        if self.isTextLongerThanBox(self.arial.render(text, False, BLACK)):
+        if self.isTextLongerThanBox(self.arial.render(text, False, COLOR_MENU_FONTS)):
             wordList = text.split(" ")
             for word in wordList:
                 lastLine = line
                 line += (" " + word)
-                render = self.arial.render(line, False, BLACK)
+                render = self.arial.render(line, False, COLOR_MENU_FONTS)
 
                 if self.isTextLongerThanBox(render):
                     lineList.append(lastLine.lstrip())
@@ -69,7 +69,7 @@ class WrappedTextBox(pygame.sprite.Sprite):
 
         while i < len(lineList):
             renderSize = self.arial.size(lineList[i])
-            render = self.arial.render(lineList[i], False, BLACK)
+            render = self.arial.render(lineList[i], False, COLOR_MENU_FONTS)
             if i == 0:
                 self.box.blit(render, (self.marginX,self.marginY))
             else:
