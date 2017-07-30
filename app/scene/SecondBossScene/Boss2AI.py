@@ -72,14 +72,20 @@ class Boss2AI:
                 self.state = MoveYTowardPlayer(self.mapData)
                 self.laserState = ShootingLaserState(self.sprite , True, self.mapData)
 
-        if self.counter.value > self.randomMoveTime and not isinstance(self.state, MoveToMapCenterState):
-            if self.wasHurt:
-                self.wasHurt = False
-                self.state = MoveToMapCenterState()
-                self.laserState = IdleState()
-        elif self.counter.value > self.randomMoveTime and self.returnCenterCounter.value > 120:
-            self.counter.reset()
-            self.returnCenterCounter.reset()
+        if self.counter.value > self.randomMoveTime:
+            if not isinstance(self.state, MoveToMapCenterState):
+                if self.wasHurt:
+                    self.wasHurt = False
+                    self.state = MoveToMapCenterState()
+                    self.laserState = IdleState()
+            else:
+                if self.sprite.rect.centerx < (self.mapData.tmxData.width * self.mapData.tmxData.tilewidth)/2 + 5 and self.sprite.rect.centerx > (self.mapData.tmxData.width * self.mapData.tmxData.tilewidth)/2 - 5 and self.sprite.rect.centery > (self.mapData.tmxData.height * self.mapData.tmxData.tileheight)/2 - 5 and self.sprite.rect.centery < (self.mapData.tmxData.height * self.mapData.tmxData.tileheight)/2 + 5:
+                    self.counter.reset()
+                    self.returnCenterCounter.reset()
+
+            if self.returnCenterCounter.value > 120:
+                self.counter.reset()
+                self.returnCenterCounter.reset()
         else:
             if self.wasHurt:
                 self.wasHurt = False
