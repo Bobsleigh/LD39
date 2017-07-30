@@ -183,8 +183,8 @@ class GuardBoss(pygame.sprite.Sprite):
         angles = [angle, angle_2, angle_3]
 
         for i in angles:
-            speedx = 8 * math.cos(i)
-            speedy = 8 * math.sin(i)
+            speedx = 4 * math.cos(i)
+            speedy = 4 * math.sin(i)
             bullet = Bullet(self.rect.centerx, self.rect.centery, speedx, speedy, self.mapData)
             self.mapData.camera.add(bullet)
             self.mapData.enemyProjectiles.add(bullet)
@@ -202,8 +202,8 @@ class GuardBoss(pygame.sprite.Sprite):
             angles = [angle, angle_2, angle_3, angle_4, angle_5]
 
             for i in angles:
-                speedx = 8 * math.cos(i)
-                speedy = 8 * math.sin(i)
+                speedx = 4 * math.cos(i)
+                speedy = 4 * math.sin(i)
                 bullet = Bullet(self.rect.centerx, self.rect.centery, speedx, speedy, self.mapData)
                 self.mapData.camera.add(bullet)
                 self.mapData.enemyProjectiles.add(bullet)
