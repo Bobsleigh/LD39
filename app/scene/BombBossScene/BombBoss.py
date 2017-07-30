@@ -219,7 +219,7 @@ class BombBoss(pygame.sprite.Sprite):
 
     def smallDash(self):
         x = self.mapData.player.rect.centerx - self.rect.centerx
-        y = self.mapData.player.rect.y - self.rect.centery
+        y = self.mapData.player.rect.centery - self.rect.centery
         angle = math.atan2(y, x)
 
         self.speedx = 2*math.cos(angle)
@@ -227,7 +227,7 @@ class BombBoss(pygame.sprite.Sprite):
 
     def Dash(self):
         x = self.mapData.player.rect.centerx - self.rect.centerx
-        y = self.mapData.player.rect.y - self.rect.centery
+        y = self.mapData.player.rect.centery - self.rect.centery
         angle = math.atan2(y, x)
 
         self.speedx = 8*math.cos(angle)
