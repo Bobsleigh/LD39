@@ -1,6 +1,7 @@
 import pygame, os, random
 
 from app.settings import *
+from ldLib.animation.Animation import Animation
 from ldLib.collision.collisionMask import CollisionMask
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
 from ldLib.Sprites.SecondBoss.IdleState import IdleState
@@ -14,16 +15,27 @@ class LaserTurret(pygame.sprite.Sprite):
 
         self.name = "Turret"
 
-        self.imageBase = pygame.image.load(os.path.join('img', 'turret.png'))
-        self.imageBase.set_colorkey(COLORKEY)
+        self.mapData = sceneData
 
-        self.imageShapeLeft = None
-        self.imageShapeRight = None
+        # Opening animation
+        self.frameAnimationSpeed = 20
+        self.isOpened = False
+        self.needToOpen = False
+
+        imageClosed = pygame.image.load(os.path.join('img', 'turret-tile1.png'))
+        imageOpening1 = pygame.image.load(os.path.join('img', 'turret-tile2.png'))
+        imageOpening2 = pygame.image.load(os.path.join('img', 'turret-tile3.png'))
+        imageBase = pygame.image.load(os.path.join('img', 'turret.png'))
+        openingFrames = [imageClosed,imageOpening1,imageOpening2,imageBase]
+        self.closedAnimation = Animation([imageClosed], self.frameAnimationSpeed, LEFT)
+        self.openingAnimation = Animation(openingFrames,self.frameAnimationSpeed,LEFT)
+        self.outAnimation = Animation([imageBase], self.frameAnimationSpeed, LEFT)
+        self.openingCooldown = Cooldown(self.frameAnimationSpeed*len(openingFrames))
+
+        self.animation = self.closedAnimation
+        self.image = imageBase
 
         self.imageTransparent = pygame.Surface((1, 1),pygame.SRCALPHA)
-
-        self.setShapeImage()
-        self.image = pygame.transform.scale(self.imageBase, (50,50))
 
         self.rect = self.image.get_rect()  # Position centrée du player
         self.x = x
@@ -86,13 +98,13 @@ class LaserTurret(pygame.sprite.Sprite):
         self._state = value
         self._state.enter(self)
 
-
-    def setShapeImage(self):
-        self.imageShapeLeft = pygame.transform.flip(self.imageBase, True, False)
-        self.imageShapeRight = self.imageBase
-
     def update(self):
         self.updateCooldowns()
+
+        self.checkOpeningAnimation()
+
+        # This Boss shouldn't be flipped.
+        self.image = self.animation.update(LEFT)
 
     def updateCooldowns(self):
         if self.shootingCooldown.isZero:
@@ -102,6 +114,7 @@ class LaserTurret(pygame.sprite.Sprite):
             self.state = IdleState()
 
         self.shootingCooldown.update()
+        self.openingCooldown.update()
         self.state.update(self, self.sceneData)
 
     def shootLaser(self):
@@ -112,3 +125,15 @@ class LaserTurret(pygame.sprite.Sprite):
         for laser in self.mapData.laserGroup:
             laser.kill()
         self.kill()
+
+    def checkOpeningAnimation(self):
+        if self.needToOpen and not self.isOpened:
+            if self.openingCooldown.isZero:
+                self.animation = self.openingAnimation
+                self.animation.start()
+                self.shootingCooldown.start()
+                self.isOpened = True
+        elif self.needToOpen and self.isOpened:
+            if self.openingCooldown.isZero:
+                self.needToOpen = False
+                self.animation = self.outAnimation
