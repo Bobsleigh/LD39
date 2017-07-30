@@ -1,4 +1,4 @@
-import pygame
+import pygame, os
 
 from app.scene.SecondBossScene import Boss2AI
 from app.settings import *
@@ -15,7 +15,8 @@ class Laser(pygame.sprite.Sprite):
 
         self.name = "Laser"
 
-        self.imageBase = ImageBox().rectSurface((800, 20), RED, 3)
+        tempImage = pygame.image.load(os.path.join('img', 'laser.png'))
+        self.imageBase = pygame.transform.scale(tempImage, (600, 30))
         self.imageBase.set_colorkey(COLORKEY)
 
         self.imageShapeLeft = None
@@ -50,7 +51,7 @@ class Laser(pygame.sprite.Sprite):
         self.accy = 1
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
-        self.damage = 1
+        self.damage = 10
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True

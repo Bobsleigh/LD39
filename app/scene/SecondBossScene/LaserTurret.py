@@ -1,4 +1,4 @@
-import pygame, os
+import pygame, os, random
 
 from app.settings import *
 from ldLib.collision.collisionMask import CollisionMask
@@ -67,7 +67,8 @@ class LaserTurret(pygame.sprite.Sprite):
         self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
         self.hurtSound.set_volume(.25)
 
-        self.shootingCooldown = Cooldown(500)
+        self.shootingSpeed = 400 + random.randint(0, 50)
+        self.shootingCooldown = Cooldown(self.shootingSpeed)
         self.shootingCooldown.start()
 
         self._state = IdleState()
@@ -97,7 +98,7 @@ class LaserTurret(pygame.sprite.Sprite):
         if self.shootingCooldown.isZero:
             self.state = ShootingAllLasersState(self, self.sceneData)
             self.shootingCooldown.start()
-        if self.shootingCooldown.value == 430:
+        if self.shootingCooldown.value == self.shootingSpeed - 60:
             self.state = IdleState()
 
         self.shootingCooldown.update()

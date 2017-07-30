@@ -32,7 +32,7 @@ class MoveRandomState(EnemyState):
             sprite.updateSpeedRight()
 
     def enter(self, sprite):
-        print("MoveRandomState")
+        pass
 
     def exit(self, sprite):
         pass

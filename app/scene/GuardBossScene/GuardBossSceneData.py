@@ -1,32 +1,21 @@
-from app.scene.BombBossScene.BombBoss import BombBoss
 from app.sprites.LevelHUD import LevelHUD
 from app.sprites.PlayerPlateform import PlayerPlateform
-from ldLib.scene.SceneDataTMX import SceneDataTMX
+from app.scene.GuardBossScene.GuardBoss import GuardBoss
+from app.scene.LevelSceneData import LevelSceneData
+from app.settings import *
 
 
-class BombBossSceneData(SceneDataTMX):
+class GuardBossSceneData(LevelSceneData):
     def __init__(self):
-        super().__init__("BossRoom1", "InZone_01")
-        # super().cameraPlayer.
-
-        playerInitx = 50
-        playerInity = 50
-        try:
-            playerInitx = self.spawmPointPlayerx
-            playerInity = self.spawmPointPlayery
-        except AttributeError:
-            pass
-
-        self.player = PlayerPlateform(playerInitx, playerInity, self)
-        self.camera.add(self.player)
+        super().__init__("GuardBossRoom", "InZone_01")
+        self.sceneName = GUARD_BOSS_LEVEL
+        self.nextLevel = INSTRUCTION_SCENE
 
         # Spawn boss
         for obj in self.tmxData.objects:
             if obj.name == "BossInZone":
-                self.boss = BombBoss(obj.x, obj.y, self)
+                self.boss = GuardBoss(obj.x, obj.y, self)
         self.allSprites.add(self.boss)
         self.enemyProjectiles.add(self.boss)
         self.allSprites.add(self.boss)
         self.camera.add(self.boss)
-
-        LevelHUD(self, self.player)

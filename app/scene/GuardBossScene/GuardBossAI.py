@@ -30,30 +30,30 @@ class GuardBossAI:
                 if self.counter.value > 2400:
                     self.difficulty = max(1, self.difficulty)
                     self.counter.reset()
-                if self.counter.value != 0:
-                    if self.counter.value % 600 == 0:
-                        if self.difficulty == 0:
-                            self.sprite.smallDash()
-                        elif self.difficulty == 2:
-                            self.sprite.prettyZap(1)
-                    if self.counter.value % 300 == 0:
-                        self.sprite.Boom()
-                    if self.difficulty != 0 and self.counter.value % 80 == 0:
-                        self.sprite.Zap()
-                    if self.counter.value % 140 == 0:
-                        if self.difficulty == 0:
-                            self.sprite.Zap()
-                        else:
-                            self.sprite.Dash()
+                #if self.counter.value != 0:
+                    #if self.counter.value % 600 == 0:
+                        #if self.difficulty == 0:
+                            #self.sprite.smallDash()
+                        #elif self.difficulty == 2:
+                            #self.sprite.prettyZap(1)
+                    #if self.counter.value % 300 == 0:
+                        #self.sprite.Boom()
+                    #if self.difficulty != 0 and self.counter.value % 80 == 0:
+                        #self.sprite.Zap()
+                    #if self.counter.value % 140 == 0:
+                        #if self.difficulty == 0:
+                            #self.sprite.Zap()
+                        #else:
+                            #self.sprite.Dash()
 
         else:
             if self.counter.value % 200 == 0:
                 pattern = random.randint(1, 2)
-                self.sprite.prettyZap(pattern)
-            if self.counter.value % 300 == 0:
-                self.sprite.Dash()
-            if self.counter.value % 400 == 0:
-                self.sprite.boomOnPlate()
+                #self.sprite.prettyZap(pattern)
+            #if self.counter.value % 300 == 0:
+                #self.sprite.Dash()
+            #if self.counter.value % 400 == 0:
+                #self.sprite.boomOnPlate()
 
     def vectorNorm(self,x,y):
         result = math.sqrt(x**2+y**2)

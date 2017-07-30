@@ -18,7 +18,7 @@ class MoveToMapCenterState(EnemyState):
         if sprite.rect.centerx < (mapData.tmxData.width * mapData.tmxData.tilewidth)/2:
             sprite.updateSpeedRight()
     def enter(self, sprite):
-        print("MoveToMapCenterState")
+        pass
 
     def exit(self, sprite):
         pass
