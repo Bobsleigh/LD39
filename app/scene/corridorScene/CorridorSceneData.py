@@ -13,4 +13,4 @@ class CorridorSceneData(LevelSceneData):
 
         self.addHUD()
 
-        self.musicName = "BoxCat_Games_-_23_-_Trace_Route.mp3"
+        self.musicName = "BoxCat_Games_-_23_-_Trace_Route.wav"
