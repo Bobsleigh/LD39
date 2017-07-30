@@ -55,7 +55,7 @@ class TitleSceneData(SceneData):
         self.nextScene = GUARD_CORRIDOR_LEVEL
 
         if TAG_MARIE ==1:
-            self.nextScene = GUARD_CORRIDOR_LEVEL
+            self.nextScene = BOMB_CORRIDOR_LEVEL
 
     def goToInstruction(self):
         self.nextScene = INSTRUCTION_SCENE

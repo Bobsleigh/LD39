@@ -129,6 +129,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.maxEnergy = PLAYER_MAX_ENERGY
         self.currentEnergy = self.maxEnergy
         self.rechargeCooldown = Cooldown(PLAYER_RECHARGE_COOLDOWN)
+        self.energyConsume = 1
 
         # Life bar
         self.maxHealth = PLAYER_MAX_LIFE
@@ -321,7 +322,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
             self.mapData.allSprites.add(bullet)
             self.mapData.friendlyBullets.add(bullet)
             self.gunCooldown.start()
-            self.currentEnergy -= 1
+            self.currentEnergy -= self.energyConsume
 
     def hurt(self, damage):
         if self.invincibleCooldown.isZero:
