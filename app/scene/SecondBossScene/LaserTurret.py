@@ -1,12 +1,10 @@
-import pygame, os
+import pygame, os, random
 
-from app.scene.SecondBossScene.Boss2AI import Boss2AI
 from app.settings import *
 from ldLib.collision.collisionMask import CollisionMask
-from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
-from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNothing
-from ldLib.Sprites.Player.IdleState import IdleState
+from ldLib.Sprites.SecondBoss.IdleState import IdleState
+from ldLib.Sprites.SecondBoss.ShootingAllLasersState import ShootingAllLasersState
 from ldLib.tools.Cooldown import Cooldown
 
 
@@ -58,7 +56,7 @@ class LaserTurret(pygame.sprite.Sprite):
         self.leftMousePressed = False
         self.rightMousePressed = False
 
-        self.mapData = sceneData
+        self.sceneData = sceneData
 
         self.isAlive = True
 
@@ -66,109 +64,51 @@ class LaserTurret(pygame.sprite.Sprite):
         self.collisionRules = []
         self.collisionRules.append(CollisionWithSolid())
 
-        self.AI = Boss2AI(self, self.mapData)
-
         self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
         self.hurtSound.set_volume(.25)
+
+        self.shootingSpeed = 400 + random.randint(0, 50)
+        self.shootingCooldown = Cooldown(self.shootingSpeed)
+        self.shootingCooldown.start()
+
+        self._state = IdleState()
+        self.state = IdleState()
+
+        self.touchDamage = 10
+
+    @property
+    def state(self):
+        return self._state
+
+    @state.setter
+    def state(self, value):
+        self._state.exit(self)
+        self._state = value
+        self._state.enter(self)
+
 
     def setShapeImage(self):
         self.imageShapeLeft = pygame.transform.flip(self.imageBase, True, False)
         self.imageShapeRight = self.imageBase
 
     def update(self):
-        self.AI.update()
-
-        self.updateCollisionMask()
-        self.updatePressedKeys()
         self.updateCooldowns()
 
     def updateCooldowns(self):
+        if self.shootingCooldown.isZero:
+            self.state = ShootingAllLasersState(self, self.sceneData)
+            self.shootingCooldown.start()
+        if self.shootingCooldown.value == self.shootingSpeed - 60:
+            self.state = IdleState()
 
-        self.invincibleCooldown.update()
+        self.shootingCooldown.update()
+        self.state.update(self, self.sceneData)
 
     def shootLaser(self):
         self.mapData.camera.add()
-
-    def moveX(self):
-        self.x += self.speedx
-        self.collisionMask.rect.x = self.x
-        for rule in self.collisionRules:
-            rule.onMoveX(self)
-
-    def moveY(self):
-        self.y += self.speedy
-        self.collisionMask.rect.y = self.y
-        for rule in self.collisionRules:
-            rule.onMoveY(self)
-
-    def capSpeed(self):
-        if self.speedx > 0 and self.speedx > self.maxSpeedx:
-            self.speedx = self.maxSpeedx
-        if self.speedx < 0 and self.speedx < -self.maxSpeedx:
-            self.speedx = -self.maxSpeedx
-        if self.speedy > 0 and self.speedy > self.maxSpeedy:
-            self.speedy = self.maxSpeedy
-        if self.speedy < 0 and self.speedy < -self.maxSpeedy:
-            self.speedy = -self.maxSpeedy
-
-    def updateSpeedRight(self):
-        self.speedx += self.accx
-
-    def updateSpeedLeft(self):
-        self.speedx -= self.accx
-
-    def updateSpeedUp(self):
-        self.speedy -= self.accy
-
-    def updateSpeedDown(self):
-        self.speedy += self.accy
-
-    def updateCollisionMask(self):
-        self.collisionMask.rect.x = self.rect.x
-        self.collisionMask.rect.y = self.rect.y
 
     def dead(self):
         self.isAlive = False
         for laser in self.mapData.laserGroup:
             laser.kill()
         self.kill()
-
-    def onSpike(self):
-        self.kill()
-
-    def hurt(self, damage):
-        if self.invincibleCooldown.isZero:
-            self.currentHealth -= damage
-            self.AI.wasHurt = True
-            self.hurtSound.play()
-
-            self.checkIfIsAlive()
-            self.invincibleOnHit()
-
-    def updatePressedKeys(self):
-        if self.rightPressed:
-            self.updateSpeedRight()
-        if self.leftPressed:
-            self.updateSpeedLeft()
-        if self.upPressed:
-            self.updateSpeedUp()
-        if self.downPressed:
-            self.updateSpeedDown()
-        if self.leftMousePressed:
-            pass
-        if self.rightMousePressed:
-            pass
-        if self.leftShiftPressed:
-            pass
-        if self.spacePressed:
-            pass
-
-    def jump(self):
-        self.speedy = -self.jumpSpeed
-
-    def invincibleOnHit(self):
-        self.invincibleCooldown.start()
-
-    def checkIfIsAlive(self):
-        if self.currentHealth <= 0:
-            self.dead()

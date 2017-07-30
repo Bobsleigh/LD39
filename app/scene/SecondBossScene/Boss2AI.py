@@ -1,6 +1,7 @@
 import math, random
 from app.settings import *
 from ldLib.tools.Counter import Counter
+from app.scene.SecondBossScene.LaserTurret import LaserTurret
 from ldLib.Sprites.SecondBoss.IdleState import IdleState
 from ldLib.Sprites.SecondBoss.MoveUpState import MoveUpState
 from ldLib.Sprites.SecondBoss.MoveDownState import MoveDownState
@@ -30,6 +31,7 @@ class Boss2AI:
         self.difficulty = 0
 
         self.wasHurt = False
+        self.numberOfTurretsDown = 0
 
     @property
     def state(self):
@@ -65,9 +67,33 @@ class Boss2AI:
 
     def updateDifficulty(self):
         if (self.sprite.currentHealth/self.sprite.maxHealth) < 0.3:
+            self.difficulty = 3
+            if self.numberOfTurretsDown == 2:
+                turret = LaserTurret(70, 600, self.mapData)
+                self.mapData.turretGroup.add(turret)
+                self.mapData.allSprites.add(turret)
+                self.mapData.enemyGroup.add(turret)
+                self.mapData.camera.add(turret)
+                self.numberOfTurretsDown += 1
+        if (self.sprite.currentHealth/self.sprite.maxHealth) < 0.5:
             self.difficulty = 2
-        elif (self.sprite.currentHealth/self.sprite.maxHealth) < 0.6:
+            if self.numberOfTurretsDown == 1:
+                turret = LaserTurret(370, 400, self.mapData)
+                self.mapData.turretGroup.add(turret)
+                self.mapData.allSprites.add(turret)
+                self.mapData.enemyGroup.add(turret)
+                self.mapData.camera.add(turret)
+                self.numberOfTurretsDown += 1
+
+        elif (self.sprite.currentHealth/self.sprite.maxHealth) < 0.7:
             self.difficulty = 1
+            if self.numberOfTurretsDown == 0:
+                turret = LaserTurret(100, 200, self.mapData)
+                self.mapData.turretGroup.add(turret)
+                self.mapData.allSprites.add(turret)
+                self.mapData.enemyGroup.add(turret)
+                self.mapData.camera.add(turret)
+                self.numberOfTurretsDown += 1
 
     def chooseState(self):
         if self.counter.value == 1:
@@ -77,12 +103,12 @@ class Boss2AI:
             if rnd == 0:
                 self.state = MoveXTowardPlayer(self.mapData)
                 self.laserState = ShootingLaserState(self.sprite , False, self.mapData)
-                if self.difficulty == 1:
+                if self.difficulty >= 1:
                     self.laserState = ShootingAllLasersState(self.sprite , self.mapData)
             else:
                 self.state = MoveYTowardPlayer(self.mapData)
                 self.laserState = ShootingLaserState(self.sprite , True, self.mapData)
-                if self.difficulty == 1:
+                if self.difficulty >= 1:
                     self.laserState = ShootingAllLasersState(self.sprite , self.mapData)
 
         if self.counter.value > self.randomMoveTime:

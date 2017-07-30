@@ -78,6 +78,8 @@ class Boss2(pygame.sprite.Sprite):
         self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
         self.hurtSound.set_volume(.25)
 
+        self.touchDamage = 10
+
     def setShapeImage(self):
         self.imageShapeLeft = pygame.transform.flip(self.imageBase, True, False)
         self.imageShapeRight = self.imageBase
