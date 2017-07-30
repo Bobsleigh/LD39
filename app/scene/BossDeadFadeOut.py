@@ -4,7 +4,7 @@ from app.settings import *
 
 class BossDeadFadeOut():
     def __init__(self, screen):
-        fontScreen = pygame.font.SysFont(FONT_NAME, 40)
+        fontScreen = pygame.font.Font(FONT_NAME, 40)
         message = fontScreen.render("YOU WON THE BATTLE", True, (255, 255, 255))
         message2 = fontScreen.render("BUT THE WAR ISN'T OVER YET", True, (255, 255, 255))
         messagePos = [(SCREEN_WIDTH - message.get_width()) / 2,

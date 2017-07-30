@@ -8,7 +8,7 @@ YELLOW = (160, 0, 160)
 GREY = (100, 100, 100)
 
 # Main font
-FONT_NAME = 'verdana'
+FONT_NAME = 'good_times.ttf'
 
 FPS = 60
 

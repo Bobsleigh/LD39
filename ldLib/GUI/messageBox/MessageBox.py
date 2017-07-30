@@ -12,7 +12,7 @@ class MessageBox(pygame.sprite.Sprite):
 
         self.textList = []
 
-        self.msgFont = pygame.font.SysFont(FONT_NAME,fontSize)
+        self.msgFont = pygame.font.Font(FONT_NAME,fontSize)
 
         self.image = pygame.Surface([width, height])
         self.rect = self.image.get_rect()
