@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="25" height="70" tilewidth="32" tileheight="32" nextobjectid="13">
+<map version="1.0" tiledversion="1.0.2" orientation="orthogonal" renderorder="right-down" width="25" height="70" tilewidth="32" tileheight="32" nextobjectid="14">
  <tileset firstgid="1" source="terrainSet.tsx"/>
  <tileset firstgid="56" source="CollisionMap.tsx"/>
  <tileset firstgid="106" source="outsideSet.tsx"/>
@@ -649,9 +649,14 @@
    </properties>
   </object>
   <object id="10" name="OutZone" x="371" y="108" width="50" height="55"/>
-  <object id="11" name="MessageZone" x="263" y="1689" width="276" height="321">
+  <object id="11" name="MessageZone" x="260" y="1514" width="276" height="321">
    <properties>
     <property name="index" value="0"/>
+   </properties>
+  </object>
+  <object id="13" name="MessageZone" x="261" y="438.5" width="276" height="321">
+   <properties>
+    <property name="index" value="1"/>
    </properties>
   </object>
  </objectgroup>

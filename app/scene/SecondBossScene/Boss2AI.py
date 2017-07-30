@@ -69,30 +69,18 @@ class Boss2AI:
         if (self.sprite.currentHealth/self.sprite.maxHealth) < 0.3:
             self.difficulty = 3
             if self.numberOfTurretsDown == 2:
-                turret = LaserTurret(600, 70, self.mapData)
-                self.mapData.turretGroup.add(turret)
-                self.mapData.allSprites.add(turret)
-                self.mapData.enemyGroup.add(turret)
-                self.mapData.camera.add(turret)
+                self.mapData.turret1.needToOpen = True
                 self.numberOfTurretsDown += 1
         if (self.sprite.currentHealth/self.sprite.maxHealth) < 0.5:
             self.difficulty = 2
             if self.numberOfTurretsDown == 1:
-                turret = LaserTurret(370, 400, self.mapData)
-                self.mapData.turretGroup.add(turret)
-                self.mapData.allSprites.add(turret)
-                self.mapData.enemyGroup.add(turret)
-                self.mapData.camera.add(turret)
+                self.mapData.turret2.needToOpen = True
                 self.numberOfTurretsDown += 1
 
         elif (self.sprite.currentHealth/self.sprite.maxHealth) < 0.7:
             self.difficulty = 1
             if self.numberOfTurretsDown == 0:
-                turret = LaserTurret(100, 200, self.mapData)
-                self.mapData.turretGroup.add(turret)
-                self.mapData.allSprites.add(turret)
-                self.mapData.enemyGroup.add(turret)
-                self.mapData.camera.add(turret)
+                self.mapData.turret3.needToOpen = True
                 self.numberOfTurretsDown += 1
 
     def chooseState(self):

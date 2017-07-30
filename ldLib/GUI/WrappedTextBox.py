@@ -20,7 +20,7 @@ class WrappedTextBox(pygame.sprite.Sprite):
         self.rect.x = pos[0]
         self.rect.y = pos[1]
 
-        self.arial = pygame.font.Font(FONT_NAME,DIALOG_TEXT_SIZE)
+        self.arial = pygame.font.Font(FONT_NAME, DIALOG_TEXT_SIZE)
         self.text = self.renderWrappedText(text)
 
     def isTextLongerThanBox(self, renderedTxt):
