@@ -28,7 +28,7 @@ class SceneHandler:
         self.gameData = GameData()
 
         self.gameData.sceneData = TitleSceneData()
-        self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData))
+        self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
 
         if TAG_MAGNAN == 1:
             self.gameData.sceneData = GuardBossSceneData()
@@ -55,7 +55,7 @@ class SceneHandler:
         # When we exit the scene, this code executes
         if self.runningScene.nextScene == TITLE_SCENE:
             self.gameData.sceneData = TitleSceneData()
-            self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData))
+            self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
         elif self.runningScene.nextScene == INSTRUCTION_SCENE:
             self.gameData.sceneData = InstructionSceneData()
             self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData))

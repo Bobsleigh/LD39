@@ -41,7 +41,7 @@ class CreditSceneData(SceneData):
         self.notifyGroup.add(self.backToTitleScreenButton)
 
     def createCreditBox(self,x,y,width,height):
-        self.textGoal = MessageBox(x,y,width,height)
+        self.textGoal = MessageBox(x,y,width,height,fontSize=12)
         self.textGoal.textList.append('Game made for the Ludum Dare 39')
         # self.textGoal.textList.append('')
         self.textGoal.textList.append('July 28-30 2017')

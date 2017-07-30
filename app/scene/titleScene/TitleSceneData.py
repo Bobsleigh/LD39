@@ -27,6 +27,8 @@ class TitleSceneData(SceneData):
 
         self.createStartMenu()
 
+        self.musicName = "TitleScreen.wav"
+
     def createStartMenu(self):
         buttonWidth = 300
         buttonHeight = 50
