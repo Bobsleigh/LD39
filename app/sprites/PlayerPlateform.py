@@ -25,7 +25,8 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.animationState = ANIMATION_NORMAL
         self.frameAnimationSpeed=10
 
-        self.imageIdle = [pygame.image.load(os.path.join('img', 'lutecia-left.png'))]
+        self.imageIdle = [pygame.image.load(os.path.join('img', 'lutecia-left.png')),
+                          pygame.image.load(os.path.join('img', 'lutecia-left-idle.png'))]
 
         self.animationIdle = Animation(self.imageIdle, self.frameAnimationSpeed, LEFT, True)
         self.animation = self.animationIdle
