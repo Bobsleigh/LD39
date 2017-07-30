@@ -11,7 +11,7 @@ import weakref
 from ldLib.scene.SceneData import SceneData
 
 
-class InstructionSceneData(SceneData):
+class EndingSceneData(SceneData):
     def __init__(self):
         super().__init__()
 
@@ -34,14 +34,13 @@ class InstructionSceneData(SceneData):
 
     def createControlBox(self,x,y,width,height):
         self.textGoal = MessageBox(x,y,width,height)
-        self.textGoal.textList.append('Free the world from the tyranny')
-        self.textGoal.textList.append('of Superadmiral Kleido and his goons.')
-        self.textGoal.textList.append('Make your way through his Fortress')
-        self.textGoal.textList.append('of Power and take them down.')
+        self.textGoal.textList.append('Congrats, you did it!')
+        self.textGoal.textList.append("You beat Superadmiral Kleido and")
+        self.textGoal.textList.append("restored peace! Now it's time to")
+        self.textGoal.textList.append('go home and enjoy the fresh taste')
+        self.textGoal.textList.append('of unbranded cola.')
         self.textGoal.textList.append('')
-        self.textGoal.textList.append('Move with WASD.')
-        self.textGoal.textList.append('Use your mouse to aim and shoot.')
-        self.textGoal.textList.append('Stand on charging stations to charge.')
+        self.textGoal.textList.append('Go ahead, you deserve it.')
         # self.textGoal.textList.append('')
         # self.textGoal.textList.append('Press m to mute the game.')
 

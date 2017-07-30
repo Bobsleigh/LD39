@@ -1,11 +1,14 @@
 from app.scene.corridorScene.CorridorBombSceneData import CorridorBombSceneData
 from app.scene.titleScene.CreditSceneData import CreditSceneData
 from app.scene.titleScene.InstructionSceneData import InstructionSceneData
+from app.scene.titleScene.EndingSceneData import EndingSceneData
 from app.scene.titleScene.TitleSceneData import TitleSceneData
 from app.scene.titleScene.TitleSceneLogicHandler import TitleSceneLogicHandler
 from app.settings import *
 from app.scene.corridorScene.CorridorSceneData import CorridorSceneData
 from app.scene.corridorScene.CorridorSceneLogicHandler import CorridorSceneLogicHandler
+from app.scene.secondCorridorScene.CorridorLaserSceneData import CorridorLaserSceneData
+from app.scene.secondCorridorScene.CorridorLaserSceneLogicHandler import CorridorLaserSceneLogicHandler
 
 from app.scene.SecondBossScene.SecondBossSceneData import SecondBossSceneData
 from app.scene.SecondBossScene.SecondBossSceneLogicHandler import SecondBossSceneLogicHandler
@@ -77,6 +80,12 @@ class SceneHandler:
         elif self.runningScene.nextScene == BOMB_BOSS_LEVEL:
             self.gameData.sceneData = BombBossSceneData()
             self.runningScene = Scene(self.screen, self.gameData, BombBossSceneLogicHandler(self.gameData))
+        elif self.runningScene.nextScene == LASER_CORRIDOR_LEVEL:
+            self.gameData.sceneData = CorridorLaserSceneData()
+            self.runningScene = Scene(self.screen, self.gameData, CorridorLaserSceneLogicHandler(self.gameData))
         elif self.runningScene.nextScene == LASER_BOSS_LEVEL:
             self.gameData.sceneData = SecondBossSceneData()
             self.runningScene = Scene(self.screen, self.gameData, SecondBossSceneLogicHandler(self.gameData))
+        elif self.runningScene.nextScene == ENDING_SCENE:
+            self.gameData.sceneData = EndingSceneData()
+            self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData))
