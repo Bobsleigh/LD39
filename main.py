@@ -19,7 +19,7 @@ if __name__ == '__main__':
     screenSize = (SCREEN_WIDTH, SCREEN_HEIGHT)
     screen = pygame.display.set_mode(screenSize)
 
-    pygame.display.set_caption("TestTmXData")
+    pygame.display.set_caption("A Thirst For Power")
 
     # Init
     pygame.mixer.pre_init(44100, -16, 2, 4096)
