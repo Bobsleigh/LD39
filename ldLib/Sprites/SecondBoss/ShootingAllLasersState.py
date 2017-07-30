@@ -38,6 +38,7 @@ class ShootingAllLasersState(EnemyState):
         self.laser4.rect.y = sprite.rect.top - self.laser4.image.get_rect().height
 
     def enter(self, sprite):
+        sprite.soundLaser.play()
         self.sceneData.laserGroup.add(self.laser1)
         self.sceneData.allSprites.add(self.laser1)
         self.sceneData.camera.add(self.laser1)
@@ -55,6 +56,7 @@ class ShootingAllLasersState(EnemyState):
         self.sceneData.camera.add(self.laser4)
 
     def exit(self, sprite):
+        sprite.soundLaser.stop()
         self.laser1.kill()
         self.laser2.kill()
         self.laser3.kill()
