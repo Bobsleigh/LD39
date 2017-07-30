@@ -12,8 +12,8 @@ class CorridorLaserSceneData(LevelSceneData):
         self.nextLevel = LASER_BOSS_LEVEL
 
         self.messageBoxes = list()
-        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "That guy was tough, but not as tough as me!"),False])
-        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "The Superadmiral doesn't know what's coming."),False])
+        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "That guy was tough! Let's take down the superadmiral now, who's with me?"),False])
+        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "Oh right, I'm doing this alone..."),False])
 
         self.musicName = "BoxCat_Games_-_23_-_Trace_Route.wav"
 
