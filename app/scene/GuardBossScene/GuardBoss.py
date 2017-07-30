@@ -10,8 +10,6 @@ from ldLib.collision.CollisionRules.CollisionWithNothing import CollisionWithNot
 from ldLib.Sprites.Player.IdleState import IdleState
 from ldLib.tools.Cooldown import Cooldown
 from app.scene.BombBossScene.BombBossAI import BombBossAI
-from app.scene.BombBossScene.BoomBomb import BoomBomb
-from app.scene.BombBossScene.ZapBomb import ZapBomb
 
 
 class GuardBoss(pygame.sprite.Sprite):
@@ -77,7 +75,7 @@ class GuardBoss(pygame.sprite.Sprite):
         self.collisionRules.append(CollisionWithSolid())
 
         self._state = IdleState()
-        self.AI = BombBossAI(self, self.mapData)
+        self.AI = GuardBossAI(self, self.mapData)
         # self.nextState = None
 
     def setShapeImage(self):
