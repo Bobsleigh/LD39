@@ -28,8 +28,16 @@ class BombBoss(pygame.sprite.Sprite):
         imageDashAnim1 = pygame.image.load(os.path.join('img', 'canon-boss-dash1.png'))
         imageDashAnim2 = pygame.image.load(os.path.join('img', 'canon-boss-dash2.png'))
 
-        self.imageIdle = [imageBase, imageBase, imageBase, imageOpen, imageOpen, imageBase, imageOpen]
+        self.imageIdle = [imageBase, imageBase,
+                          imageBase, imageBase,
+                          imageBase, imageBase,
+                          imageOpen, imageOpen,
+                          imageBase, imageBase,
+                          imageBase, imageBase,
+                          imageOpen, imageOpen]
         self.animationIdle = Animation(self.imageIdle, self.frameAnimationSpeed, RIGHT, True)
+        imageDash = [imageDashAnim1,imageDashAnim2]
+        self.animationDash = Animation(imageDash, self.frameAnimationSpeed, RIGHT, True)
         self.animation = self.animationIdle
         self.image = self.imageIdle[0]
         self.facingSide = RIGHT

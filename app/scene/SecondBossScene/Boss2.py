@@ -22,7 +22,8 @@ class Boss2(pygame.sprite.Sprite):
 
         imageBase = pygame.image.load(os.path.join('img', 'laser-boss.png'))
         imageLaugh = pygame.image.load(os.path.join('img', 'laser-boss-laugh.png'))
-        self.imageIdle = [imageBase, imageBase, imageBase, imageLaugh, imageBase, imageLaugh]
+        imageLaugh2 = pygame.image.load(os.path.join('img', 'laser-boss-laugh2.png'))
+        self.imageIdle = [imageBase, imageBase, imageLaugh, imageBase, imageLaugh, imageBase, imageLaugh2]
 
         self.animationIdle = Animation(self.imageIdle, self.frameAnimationSpeed, RIGHT, True)
         self.animation = self.animationIdle

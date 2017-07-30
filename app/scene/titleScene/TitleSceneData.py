@@ -53,7 +53,7 @@ class TitleSceneData(SceneData):
         self.nextScene = GUARD_CORRIDOR_LEVEL
 
         if TAG_MARIE ==1:
-            self.nextScene = LASER_BOSS_LEVEL
+            self.nextScene = BOMB_BOSS_LEVEL
 
         if TAG_ALEX ==1:
             self.nextScene = GUARD_BOSS_LEVEL
