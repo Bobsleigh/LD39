@@ -381,12 +381,12 @@
    </properties>
   </object>
   <object id="6" name="OutZone" x="159.667" y="32" width="95" height="71.3333"/>
-  <object id="10" name="MessageZone" type="MessageZone" x="102.667" y="941.333" width="748" height="58.6667">
+  <object id="10" name="MessageZone" type="MessageZone" x="97.667" y="931.333" width="764" height="92.6667">
    <properties>
     <property name="index" value="0"/>
    </properties>
   </object>
-  <object id="12" name="MessageZone" type="MessageZone" x="106" y="558.667" width="748" height="58.6667">
+  <object id="12" name="MessageZone" type="MessageZone" x="98" y="546.667" width="762" height="91.6667">
    <properties>
     <property name="index" value="1"/>
    </properties>
