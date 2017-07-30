@@ -50,7 +50,7 @@ class TitleSceneData(SceneData):
         self.notifyGroup.add(self.exitButton)
 
     def startGame(self):
-        self.nextScene = TEST_TMX_SCENE
+        self.nextScene = BOMB_CORRIDOR_LEVEL
 
     def goToInstruction(self):
         self.nextScene = INSTRUCTION_SCENE
