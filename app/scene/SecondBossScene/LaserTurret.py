@@ -12,9 +12,9 @@ class LaserTurret(pygame.sprite.Sprite):
     def __init__(self, x, y, sceneData, max_health=10):
         super().__init__()
 
-        self.name = "Boss2"
+        self.name = "Turret"
 
-        self.imageBase = pygame.image.load(os.path.join('img', 'laser-boss.png'))
+        self.imageBase = pygame.image.load(os.path.join('img', 'turret.png'))
         self.imageBase.set_colorkey(COLORKEY)
 
         self.imageShapeLeft = None
@@ -23,7 +23,7 @@ class LaserTurret(pygame.sprite.Sprite):
         self.imageTransparent = pygame.Surface((1, 1),pygame.SRCALPHA)
 
         self.setShapeImage()
-        self.image = self.imageShapeRight
+        self.image = pygame.transform.scale(self.imageBase, (50,50))
 
         self.rect = self.image.get_rect()  # Position centrée du player
         self.x = x
