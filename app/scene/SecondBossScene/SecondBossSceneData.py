@@ -51,7 +51,7 @@ class SecondBossSceneData(LevelSceneData):
         self.addHUD()
 
         #self.musicName = "BoxCat_Games_-_25_-_Victory.mp3"
-        self.musicName = "Creo_-_Ahead_Of_The_Curve-TRIM.mp3"
+        self.musicName = "Creo_-_Ahead_Of_The_Curve-TRIM.wav"
 
     def LaserBossIsDead(self):
         self.nextScene = self.nextLevel

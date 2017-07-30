@@ -15,4 +15,4 @@ class CorridorBombSceneData(LevelSceneData):
         self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "I'm in! But I bet Dreetus won't let me reach Superadmiral Kleido this easily..."),False])
         self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "After all they've done, I should serve them both shocking justice."),False])
 
-        self.musicName = "BoxCat_Games_-_23_-_Trace_Route.mp3"
+        self.musicName = "BoxCat_Games_-_23_-_Trace_Route.wav"
