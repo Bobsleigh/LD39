@@ -41,7 +41,8 @@ class GuardBossAI:
                             self.counter.value += 1
                             self.cooldown.start()
                         elif self.difficulty == 0:
-                            print("hello")
+                            if TAG_MAGNAN == 1:
+                                print("hello")
                             self.sprite.shoot_at_player()
                     #if self_difficulty == 0:
                         #if self.counter.value % 120:
