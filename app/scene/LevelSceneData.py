@@ -28,7 +28,8 @@ class LevelSceneData(SceneDataTMX):
 
         self.boss = None
 
-        LevelHUD(self, self.player,self.boss)
+    def addHUD(self):
+        LevelHUD(self, self.player, self.boss)
 
     def playerIsDead(self):
         self.nextScene = self.sceneName

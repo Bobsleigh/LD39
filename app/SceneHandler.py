@@ -42,10 +42,9 @@ class SceneHandler:
             self.gameData.sceneData = SecondBossSceneData()
             logicHandler = SecondBossSceneLogicHandler(self.gameData)
             self.runningScene = Scene(self.screen, self.gameData, logicHandler)
-
         elif TAG_MARIE == 1:
-            self.gameData.sceneData = CorridorBombSceneData()
-            logic_handler = CorridorSceneLogicHandler(self.gameData)
+            self.gameData.sceneData = BombBossSceneData()
+            logic_handler = BombBossSceneLogicHandler(self.gameData)
             self.runningScene = Scene(self.screen, self.gameData, logic_handler)
 
     def mainLoop(self):
