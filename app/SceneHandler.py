@@ -1,29 +1,23 @@
+from app.scene.BombBossScene.BombBossSceneData import BombBossSceneData
+from app.scene.BombBossScene.BombBossSceneLogicHandler import BombBossSceneLogicHandler
+from app.scene.GuardBossScene.GuardBossSceneData import GuardBossSceneData
+from app.scene.GuardBossScene.GuardBossSceneLogicHandler import GuardBossSceneLogicHandler
+from app.scene.SecondBossScene.SecondBossSceneData import SecondBossSceneData
+from app.scene.SecondBossScene.SecondBossSceneLogicHandler import SecondBossSceneLogicHandler
+from app.scene.corridorScene.CorridorGuardSceneData import CorridorGuardSceneData
 from app.scene.corridorScene.CorridorBombSceneData import CorridorBombSceneData
+from app.scene.corridorScene.CorridorLaserSceneData import CorridorLaserSceneData
+from app.scene.corridorScene.CorridorSceneData import CorridorSceneData
+from app.scene.corridorScene.CorridorSceneLogicHandler import CorridorSceneLogicHandler
 from app.scene.titleScene.CreditSceneData import CreditSceneData
-from app.scene.titleScene.InstructionSceneData import InstructionSceneData
 from app.scene.titleScene.EndingSceneData import EndingSceneData
+from app.scene.titleScene.InstructionSceneData import InstructionSceneData
 from app.scene.titleScene.TitleSceneData import TitleSceneData
 from app.scene.titleScene.TitleSceneLogicHandler import TitleSceneLogicHandler
 from app.settings import *
-from app.scene.corridorScene.CorridorSceneData import CorridorSceneData
-from app.scene.corridorScene.CorridorSceneLogicHandler import CorridorSceneLogicHandler
-from app.scene.secondCorridorScene.CorridorLaserSceneData import CorridorLaserSceneData
-from app.scene.secondCorridorScene.CorridorLaserSceneLogicHandler import CorridorLaserSceneLogicHandler
-
-from app.scene.SecondBossScene.SecondBossSceneData import SecondBossSceneData
-from app.scene.SecondBossScene.SecondBossSceneLogicHandler import SecondBossSceneLogicHandler
-
-from app.scene.BombBossScene.BombBossSceneData import BombBossSceneData
-from app.scene.BombBossScene.BombBossSceneLogicHandler import BombBossSceneLogicHandler
-
-
-from app.scene.GuardBossScene.GuardBossSceneData import GuardBossSceneData
-from app.scene.GuardBossScene.GuardBossSceneLogicHandler import GuardBossSceneLogicHandler
-
 from ldLib.scene.GameData import GameData
 from ldLib.scene.MusicHandler import MusicHandler
 from ldLib.scene.Scene import Scene
-from app.settings import *
 
 
 class SceneHandler:
@@ -71,6 +65,9 @@ class SceneHandler:
         elif self.runningScene.nextScene == TEST_TMX_SCENE:
             self.gameData.sceneData = CorridorSceneData()
             self.runningScene = Scene(self.screen, self.gameData, CorridorSceneLogicHandler(self.gameData))
+        elif self.runningScene.nextScene == GUARD_CORRIDOR_LEVEL:
+            self.gameData.sceneData = CorridorGuardSceneData()
+            self.runningScene = Scene(self.screen, self.gameData, CorridorSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
         elif self.runningScene.nextScene == GUARD_BOSS_LEVEL:
             self.gameData.sceneData = GuardBossSceneData()
             self.runningScene = Scene(self.screen, self.gameData, GuardBossSceneLogicHandler(self.gameData))
@@ -82,7 +79,7 @@ class SceneHandler:
             self.runningScene = Scene(self.screen, self.gameData, BombBossSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
         elif self.runningScene.nextScene == LASER_CORRIDOR_LEVEL:
             self.gameData.sceneData = CorridorLaserSceneData()
-            self.runningScene = Scene(self.screen, self.gameData, CorridorLaserSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
+            self.runningScene = Scene(self.screen, self.gameData, CorridorSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
         elif self.runningScene.nextScene == LASER_BOSS_LEVEL:
             self.gameData.sceneData = SecondBossSceneData()
             self.runningScene = Scene(self.screen, self.gameData, SecondBossSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
