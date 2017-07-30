@@ -392,7 +392,7 @@
     <property name="StartPoint" value="InZone_01"/>
    </properties>
   </object>
-  <object id="10" name="OutZone" x="371" y="108" width="50" height="55"/>
+  <object id="10" name="OutZone" x="357.667" y="38.6667" width="79.3333" height="72.3333"/>
   <object id="11" name="MessageZone" x="260" y="688.667" width="276" height="301">
    <properties>
     <property name="index" value="0"/>
