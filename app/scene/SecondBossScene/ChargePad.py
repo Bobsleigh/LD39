@@ -61,31 +61,37 @@ class ChargePad(pygame.sprite.Sprite):
     def update(self):
         self.moveCounter.count()
 
-        if self.moveCounter.value == 500:
+        if self.moveCounter.value == 300:
             self.move()
             self.moveCounter.reset()
 
         # This sprite shouldn't be flipped.
         self.image = self.animation.update(LEFT)
+        if TAG_PHIL == 1:
+            print(self.moveCounter.value)
 
     def move(self):
         rnd = random.randint(0, 5)
-        if rnd != self.currentPosition:
-            if rnd == 0:
-                self.rect.x = 400
-                self.rect.y = 250
-            elif rnd == 1:
-                self.rect.x = 100
-                self.rect.y = 100
-            elif rnd == 2:
-                self.rect.x = 700
-                self.rect.y = 100
-            elif rnd == 3:
-                self.rect.x = 600
-                self.rect.y = 400
-            elif rnd == 4:
-                self.rect.x = 100
-                self.rect.y = 500
+        while rnd == self.currentPosition:
+            rnd = random.randint(0, 5)
+
+        if rnd == 0:
+            self.rect.x = 400
+            self.rect.y = 250
+        elif rnd == 1:
+            self.rect.x = 100
+            self.rect.y = 100
+        elif rnd == 2:
+            self.rect.x = 700
+            self.rect.y = 100
+        elif rnd == 3:
+            self.rect.x = 600
+            self.rect.y = 400
+        elif rnd == 4:
+            self.rect.x = 100
+            self.rect.y = 500
+
+        self.currentPosition = rnd
 
 
 
