@@ -31,42 +31,41 @@ class BombBossAI:
     def choose_state(self):
         dashAnimationDuration = 60
         if self.difficulty != 3 and self.cooldown.isZero:
-            if self.counter.value % 20 == 0:
-                if self.counter.value > 2400:
-                    self.difficulty = max(1, self.difficulty)
-                    self.counter.reset()
-                if self.counter.value != 0:
-                    if self.counter.value % 600 == 0:
-                        if self.difficulty == 2:
-                            self.sprite.prettyZap(3)
-                            self.counter.value += 1
-                            self.cooldown.start()
-                    if self.counter.value % 300 == 0:
-                        self.sprite.Boom()
+            if self.counter.value > 3600:
+                self.difficulty = max(1, self.difficulty)
+                self.counter.reset()
+            if self.counter.value != 0:
+                if self.counter.value % 600 == 0:
+                    if self.difficulty == 2:
+                        self.sprite.prettyZap(3)
+                        self.counter.value += 1
+                        self.cooldown.start()
+                if self.counter.value % 400 == 0:
+                    self.sprite.Boom()
 
-                    # EasyDash
-                    easyDashCounter=400
-                    if self.counter.value % easyDashCounter == easyDashCounter-dashAnimationDuration and self.difficulty == 0:
+                # EasyDash
+                easyDashCounter=400
+                if self.counter.value % easyDashCounter == easyDashCounter-dashAnimationDuration and self.difficulty == 0:
+                    self.sprite.animation = self.sprite.animationDash
+                if self.counter.value % easyDashCounter == 0 and self.difficulty == 0:
+                    self.sprite.animation = self.sprite.animationIdle
+                    self.sprite.smallDash()
+                if self.difficulty != 0 and self.counter.value % 120 == 0:
+                    self.sprite.Zap()
+
+                # Dash: animation and dash
+                normalDashCounter = 140
+                if self.counter.value % normalDashCounter == normalDashCounter-dashAnimationDuration:
+                    if self.difficulty == 0:
+                        pass
+                    else:
                         self.sprite.animation = self.sprite.animationDash
-                    if self.counter.value % easyDashCounter == 0 and self.difficulty == 0:
-                        self.sprite.animation = self.sprite.animationIdle
-                        self.sprite.smallDash()
-                    if self.difficulty != 0 and self.counter.value % 80 == 0:
+                if self.counter.value % normalDashCounter == 0:
+                    if self.difficulty == 0:
                         self.sprite.Zap()
-
-                    # Dash: animation and dash
-                    normalDashCounter = 140
-                    if self.counter.value % normalDashCounter == normalDashCounter-dashAnimationDuration:
-                        if self.difficulty == 0:
-                            pass
-                        else:
-                            self.sprite.animation = self.sprite.animationDash
-                    if self.counter.value % normalDashCounter == 0:
-                        if self.difficulty == 0:
-                            self.sprite.Zap()
-                        else:
-                            self.sprite.animation = self.sprite.animationIdle
-                            self.sprite.Dash()
+                    else:
+                        self.sprite.animation = self.sprite.animationIdle
+                        self.sprite.Dash()
 
         else:
             if self.counter.value != 0:
