@@ -10,6 +10,7 @@ GREY = (100, 100, 100)
 # Main font
 FONT_NAME = 'good_times.ttf'
 SECOND_FONT_NAME = 'hemi_head.ttf'
+THIRD_FONT_NAME = 'libel-suit-rg.ttf'
 
 FPS = 60
 
