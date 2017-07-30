@@ -129,7 +129,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.maxEnergy = PLAYER_MAX_ENERGY
         self.currentEnergy = self.maxEnergy
         self.rechargeCooldown = Cooldown(PLAYER_RECHARGE_COOLDOWN)
-        self.energyConsume = 1
+        self.energyConsume = 2
 
         # Life bar
         self.maxHealth = PLAYER_MAX_LIFE
@@ -344,5 +344,5 @@ class PlayerPlateform(pygame.sprite.Sprite):
 
     def charge(self):
         if self.rechargeCooldown.isZero and self.currentEnergy < self.maxEnergy:
-            self.currentEnergy += 1
+            self.currentEnergy += 4
             self.rechargeCooldown.start()
