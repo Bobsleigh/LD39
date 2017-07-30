@@ -83,7 +83,7 @@ class BombBoss(pygame.sprite.Sprite):
         # self.nextState = None
 
         # For invincibility
-        self.invincibleCooldown = Cooldown(60)
+        self.invincibleCooldown = Cooldown(BOSS_INVINCIBILITY_COOLDOWN)
         self.flashduration = 8
 
         self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
