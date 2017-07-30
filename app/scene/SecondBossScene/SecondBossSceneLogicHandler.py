@@ -16,12 +16,19 @@ class SecondBossSceneLogicHandler(LogicHandler):
         super().handle()
         self.handleLaserCollision()
         self.handleFriendlyBulletCollision()
+        self.handleEnemyCollision()
         self.physics.update()
 
     def handleLaserCollision(self):
         collisionList = pygame.sprite.spritecollide(self.sceneData.player, self.sceneData.laserGroup, False)
         for laser in collisionList:
             self.sceneData.player.hurt(laser.damage)
+            self.sceneData.boss.AI.wasHurt = True   # Hack to make the state change from ShootingLaser to MoveToCenterMap
+
+    def handleEnemyCollision(self):
+        collisionList = pygame.sprite.spritecollide(self.sceneData.player, self.sceneData.enemyGroup, False)
+        for enemy in collisionList:
+            self.sceneData.player.hurt(enemy.touchDamage)
             self.sceneData.boss.AI.wasHurt = True   # Hack to make the state change from ShootingLaser to MoveToCenterMap
 
     def handleFriendlyBulletCollision(self):
