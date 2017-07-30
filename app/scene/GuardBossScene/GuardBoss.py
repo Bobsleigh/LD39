@@ -171,6 +171,7 @@ class GuardBoss(pygame.sprite.Sprite):
         self.speedy = 0
 
     def dead(self):
+        self.mapData.GuardBossIsDead()
         self.isAlive = False
         self.kill()
 
@@ -183,15 +184,15 @@ class GuardBoss(pygame.sprite.Sprite):
         angles = [angle, angle_2, angle_3]
 
         for i in angles:
-            speedx = 4 * math.cos(i)
-            speedy = 4 * math.sin(i)
+            speedx = 2 * math.cos(i)
+            speedy = 2 * math.sin(i)
             bullet = Bullet(self.rect.centerx, self.rect.centery, speedx, speedy, self.mapData)
             self.mapData.camera.add(bullet)
             self.mapData.enemyProjectiles.add(bullet)
             self.mapData.allSprites.add(bullet)
 
     def prettyPattern(self, attack_id):
-        if (attack_id == 1):
+        #if (attack_id == 1):
             x = self.mapData.player.rect.centerx - self.rect.centerx
             y = self.mapData.player.rect.centery - self.rect.centery
             angle = math.atan2(y, x)

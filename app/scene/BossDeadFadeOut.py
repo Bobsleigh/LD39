@@ -2,10 +2,10 @@ import pygame
 from app.settings import *
 
 
-class PlayerDeadFadeOut():
+class BossDeadFadeOut():
     def __init__(self, screen):
         fontScreen = pygame.font.SysFont(FONT_NAME, 40)
-        message = fontScreen.render("You're down, but don't give up!", True, LIFE_BAR_COLOR)
+        message = fontScreen.render("Congratulations!", True, (0, 0, 0))
         messagePos = [(SCREEN_WIDTH - message.get_width()) / 2,
                       (SCREEN_HEIGHT - message.get_height()) / 2]
 

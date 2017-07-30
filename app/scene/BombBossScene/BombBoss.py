@@ -57,8 +57,8 @@ class BombBoss(pygame.sprite.Sprite):
         self.friendly = True
 
         # Life bar
-        self.maxHealth = 200
-        self.currentHealth = 200
+        self.maxHealth = 900
+        self.currentHealth = 900
 
         self.rightPressed = False
         self.leftPressed = False
@@ -168,6 +168,7 @@ class BombBoss(pygame.sprite.Sprite):
         self.speedy = 0
 
     def dead(self):
+        self.mapData.BombBossIsDead()
         self.isAlive = False
         self.kill()
 
@@ -186,7 +187,7 @@ class BombBoss(pygame.sprite.Sprite):
         self.mapData.camera.add(boom_bomb)
 
     def Zap(self):
-        zapBehaviors = ["aimForPlayer", "aimForPlates", "aimForEntrance"]
+        zapBehaviors = ["aimForPlayer"] * 5 + ["aimForPlates"] * 2 + ["aimForEntrance"]*3
         chosenAction = random.choice(zapBehaviors)
 
         if chosenAction == "aimForPlayer":
@@ -232,16 +233,16 @@ class BombBoss(pygame.sprite.Sprite):
         y = self.mapData.player.rect.centery - self.rect.centery
         angle = math.atan2(y, x)
 
-        self.speedx = 2 * math.cos(angle)
-        self.speedy = 2 * math.sin(angle)
+        self.speedx = 3 * math.cos(angle)
+        self.speedy = 3 * math.sin(angle)
 
     def Dash(self):
         x = self.mapData.player.rect.centerx - self.rect.centerx
         y = self.mapData.player.rect.centery - self.rect.centery
         angle = math.atan2(y, x)
 
-        self.speedx = 8 * math.cos(angle)
-        self.speedy = 8 * math.sin(angle)
+        self.speedx = 7 * math.cos(angle)
+        self.speedy = 7 * math.sin(angle)
 
     def aim_for_player(self):
         target_position = [0, 0]
