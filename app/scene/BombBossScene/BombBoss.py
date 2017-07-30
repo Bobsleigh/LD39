@@ -19,7 +19,7 @@ class BombBoss(pygame.sprite.Sprite):
     def __init__(self, x, y, sceneData, max_health=10):
         super().__init__()
 
-        self.name = "BombBoss"
+        self.name = "General Dreetus"
 
         # Animation
         self.frameAnimationSpeed = 10
