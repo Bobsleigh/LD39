@@ -54,8 +54,6 @@ class ShootingAllLasersState(EnemyState):
         self.sceneData.allSprites.add(self.laser4)
         self.sceneData.camera.add(self.laser4)
 
-        print("ShootAllLasers")
-
     def exit(self, sprite):
         self.laser1.kill()
         self.laser2.kill()

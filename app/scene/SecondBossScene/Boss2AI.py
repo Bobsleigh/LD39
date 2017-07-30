@@ -69,7 +69,7 @@ class Boss2AI:
         if (self.sprite.currentHealth/self.sprite.maxHealth) < 0.3:
             self.difficulty = 3
             if self.numberOfTurretsDown == 2:
-                turret = LaserTurret(70, 600, self.mapData)
+                turret = LaserTurret(600, 70, self.mapData)
                 self.mapData.turretGroup.add(turret)
                 self.mapData.allSprites.add(turret)
                 self.mapData.enemyGroup.add(turret)

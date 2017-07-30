@@ -17,6 +17,7 @@ class SecondBossSceneLogicHandler(LogicHandler):
         self.handleLaserCollision()
         self.handleFriendlyBulletCollision()
         self.handleEnemyCollision()
+        self.handleChargePadCollision()
         self.physics.update()
 
     def handleLaserCollision(self):
@@ -36,3 +37,7 @@ class SecondBossSceneLogicHandler(LogicHandler):
         for boss in collisionDict:
             for bullet in collisionDict[boss]:
                 boss.hurt(bullet.attackDMG)
+
+    def handleChargePadCollision(self):
+        if pygame.sprite.collide_rect(self.sceneData.player, self.sceneData.chargePad):
+            self.sceneData.player.charge()

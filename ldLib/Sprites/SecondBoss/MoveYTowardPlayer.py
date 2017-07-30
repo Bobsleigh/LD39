@@ -23,7 +23,5 @@ class MoveYTowardPlayer(EnemyState):
         else:
             self.direction = DOWN
 
-        print("MoveYTowardPlayer")
-
     def exit(self, ai):
         ai.sprite.maxSpeedy = ai.sprite.maxSpeedy / 4
