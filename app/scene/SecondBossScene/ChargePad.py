@@ -1,6 +1,7 @@
 import pygame, os, random
 
 from app.settings import *
+from ldLib.animation.Animation import Animation
 from ldLib.tools.Counter import Counter
 
 
@@ -10,15 +11,14 @@ class ChargePad(pygame.sprite.Sprite):
 
         self.name = "ChargePad"
 
-        self.imageBase = pygame.image.load(os.path.join('img', 'charge-pad.png'))
-        self.imageBase.set_colorkey(COLORKEY)
-
-        self.imageShapeLeft = None
-        self.imageShapeRight = None
+        self.frameAnimationSpeed = 20
+        imageBase = pygame.image.load(os.path.join('img', 'charge-pad.png'))
+        imageFlash = pygame.image.load(os.path.join('img', 'charge-pad-flash.png'))
+        frames = [imageBase, imageFlash]
+        self.animation = Animation(frames, self.frameAnimationSpeed, True)
+        self.image = frames[0]
 
         self.imageTransparent = pygame.Surface((1, 1),pygame.SRCALPHA)
-
-        self.image = self.imageBase
 
         self.rect = self.image.get_rect()  # Position centrée du player
         self.x = x
@@ -64,6 +64,9 @@ class ChargePad(pygame.sprite.Sprite):
         if self.moveCounter.value == 500:
             self.move()
             self.moveCounter.reset()
+
+        # This Boss shouldn't be flipped.
+        self.image = self.animation.update(LEFT)
 
     def move(self):
         rnd = random.randint(0, 5)
