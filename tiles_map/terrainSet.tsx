@@ -6,8 +6,8 @@
  </terraintypes>
  <tile id="0">
   <animation>
-   <frame tileid="0" duration="100"/>
-   <frame tileid="48" duration="100"/>
+   <frame tileid="0" duration="350"/>
+   <frame tileid="48" duration="350"/>
   </animation>
  </tile>
  <tile id="5" terrain=",,,0"/>
