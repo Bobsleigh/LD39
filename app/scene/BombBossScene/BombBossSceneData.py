@@ -1,3 +1,5 @@
+import pygame, os
+
 from app.scene.BombBossScene.BombBoss import BombBoss
 from app.scene.LevelSceneData import LevelSceneData
 from app.settings import *
@@ -23,6 +25,9 @@ class BombBossSceneData(LevelSceneData):
         self.addHUD()
 
         self.musicName = "BoxCat_Games_-_25_-_Victory.wav"
+
+        self.boomBombSound = pygame.mixer.Sound(os.path.join('music', 'BoomBombExplosion.wav'))
+        self.boomBombSound.set_volume(.8)
 
     def BombBossIsDead(self):
         self.nextScene = self.nextLevel

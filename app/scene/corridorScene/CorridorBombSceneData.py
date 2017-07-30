@@ -12,8 +12,8 @@ class CorridorBombSceneData(LevelSceneData):
         self.nextLevel = BOMB_BOSS_LEVEL
 
         self.messageBoxes = list()
-        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "I'm in! Next stop: General Dreetus, the last stand before Kleido."),False])
-        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "After all they've done, I should serve them both shocking justice."),False])
+        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "Next stop: General Dreetus, the last stand before Kleido."),False])
+        self.messageBoxes.append([WrappedTextBox(MESSAGE_BOX_POSITION, MESSAGE_BOX_DIMENSION, "After all they've done, I'll serve them both shocking justice."),False])
 
         self.musicName = "BoxCat_Games_-_23_-_Trace_Route.wav"
 

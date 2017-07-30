@@ -33,7 +33,7 @@ class EndingSceneData(SceneData):
         self.notifyGroup.add(self.backToTitleScreenButton)
 
     def createControlBox(self,x,y,width,height):
-        self.textGoal = MessageBox(x,y,width,height,fontSize=12)
+        self.textGoal = MessageBox(x,y,width,height,fontSize=15)
         self.textGoal.textList.append('Congrats, you did it!')
         self.textGoal.textList.append("You beat Superadmiral Kleido and")
         self.textGoal.textList.append("restored peace! Now it's time to")

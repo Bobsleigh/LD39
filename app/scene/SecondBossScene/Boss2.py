@@ -51,8 +51,8 @@ class Boss2(pygame.sprite.Sprite):
         self.springJumpSpeed = 25
 
         # Life bar
-        self.maxHealth = 2000
-        self.currentHealth = 2000
+        self.maxHealth = 3000
+        self.currentHealth = 3000
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
