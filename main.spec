@@ -1,23 +1,18 @@
-# To generate .exe and .app
-#
-# To generate, do :
-#    Windows : pyinstaller --onefile main_local.spec
-#
-# Other options : --windowed
-#
-# Check pyinstaller for full documentation
-#
-# https://stackoverflow.com/questions/28033003/pyinstaller-with-pygame/36456473#36456473
-#
+# -*- mode: python -*-
 
 block_cipher = None
 
-addedFiles = [ ('tiles_map', 'tiles_map'), ('music_pcm','music_pcm'), ('img', 'img'), ('fonts', 'fonts') ]
+added_files = [
+     ( 'img', 'img' ),
+	 ('fonts', 'fonts'),
+	 ('music', 'music'),
+	 ('tiles_map', 'tiles_map')
+     ]
 
 a = Analysis(['main.py'],
-             pathex=['LDEngine'],
-             binaries=None,
-             datas=addedFiles,
+             pathex=['C:\\Users\\comagnan\\Documents\\LD39'],
+             binaries=[],
+             datas=added_files,
              hiddenimports=[],
              hookspath=[],
              runtime_hooks=[],
@@ -32,8 +27,8 @@ exe = EXE(pyz,
           a.binaries,
           a.zipfiles,
           a.datas,
-          name='mainWindows.exe',
+          name='main',
           debug=False,
           strip=False,
           upx=True,
-          console=False )
+          console=True )
