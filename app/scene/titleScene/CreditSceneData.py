@@ -47,10 +47,21 @@ class CreditSceneData(SceneData):
         self.textGoal.textList.append('July 28-30 2017')
         self.textGoal.textList.append('')
         self.textGoal.textList.append('Gameplay, Design, and Graphics by:')
-        # Removed reference to music because we didn't deal with that
+        # Team members go here
+        self.textGoal.textList.append('Marie Beaulieu')
+        self.textGoal.textList.append('Philippe Gendreau')
+        self.textGoal.textList.append('Charles-Olivier Magnan')
+        self.textGoal.textList.append('Alexandre Moreau')
+        # Music sources go here
         self.textGoal.textList.append('')
-        self.textGoal.textList.append('The Bobsleigh team')
-        self.textGoal.textList.append('')
+        self.textGoal.textList.append('Featuring the following music:')
+        self.textGoal.textList.append('Trace Route by BoxCat Games')
+        self.textGoal.textList.append('Victory by BoxCat Games')
+        self.textGoal.textList.append("(freemusicarchive.org/music/BoxCat_Games/)")
+        self.textGoal.textList.append('End to Joy by Covox')
+        self.textGoal.textList.append("(freemusicarchive.org/music/Covox/)")
+        self.textGoal.textList.append('Ahead Of The Curve by Creo')
+        self.textGoal.textList.append("(freemusicarchive.org/music/Creo/)")
 
         self.allSprites.add(self.textGoal)  # Add sprite
 
