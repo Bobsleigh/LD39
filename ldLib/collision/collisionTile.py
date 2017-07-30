@@ -84,10 +84,12 @@ def collisionWithTile(sprite, tileType, map):
 
     upLeftTileGid = map.tmxData.get_tile_gid((sprite.collisionMask.rect.left)/tileWidth, (sprite.collisionMask.rect.top)/tileHeight, COLLISION_LAYER)
     upRightTileGid = map.tmxData.get_tile_gid((sprite.collisionMask.rect.right - 1)/tileWidth, (sprite.collisionMask.rect.top)/tileHeight, COLLISION_LAYER)
+    middleRightTileGid = map.tmxData.get_tile_gid((sprite.collisionMask.rect.right - 1)/tileWidth, (sprite.collisionMask.rect.centery)/tileHeight, COLLISION_LAYER)
+    middleLeftTileGid = map.tmxData.get_tile_gid((sprite.collisionMask.rect.left)/tileWidth, (sprite.collisionMask.rect.centery)/tileHeight, COLLISION_LAYER)
     downLeftTileGid = map.tmxData.get_tile_gid((sprite.collisionMask.rect.left)/tileWidth, (sprite.collisionMask.rect.bottom - 1)/tileHeight, COLLISION_LAYER)
     downRightTileGid = map.tmxData.get_tile_gid((sprite.collisionMask.rect.right - 1)/tileWidth, (sprite.collisionMask.rect.bottom - 1)/tileHeight, COLLISION_LAYER)
 
-    if upLeftTileGid == tileType or upRightTileGid == tileType or downLeftTileGid == tileType or downRightTileGid == tileType:
+    if upLeftTileGid == tileType or upRightTileGid == tileType or downLeftTileGid == tileType or downRightTileGid == tileType or middleLeftTileGid == tileType or middleRightTileGid == tileType:
         return True
     else:
         return False
