@@ -36,9 +36,9 @@ class SceneHandler:
             logic_handler = GuardBossSceneLogicHandler(self.gameData)
             self.runningScene = Scene(self.screen, self.gameData, logic_handler)
 
-        elif TAG_PHIL == 1:
-            self.gameData.sceneData = SecondBossSceneData()
-            self.runningScene = Scene(self.screen, self.gameData, SecondBossSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
+        # elif TAG_PHIL == 1:
+        #     self.gameData.sceneData = SecondBossSceneData()
+        #     self.runningScene = Scene(self.screen, self.gameData, SecondBossSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
 
         # pygame.mixer.music.load(os.path.join('music', "TitleScreen.wav"))
         # pygame.mixer.music.set_volume(1.0)

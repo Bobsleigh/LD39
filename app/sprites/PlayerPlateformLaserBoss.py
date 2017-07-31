@@ -353,7 +353,7 @@ class PlayerPlateformLaserBoss(pygame.sprite.Sprite):
             if self.soundChargingPlaying == False:
                 self.soundCharging.play()
                 self.soundChargingPlaying = True
-                print("PLAY")
+
 
                 # Can't overcharge
         if self.currentEnergy > self.maxEnergy:
@@ -364,10 +364,9 @@ class PlayerPlateformLaserBoss(pygame.sprite.Sprite):
             if self.soundChargingPlaying == True:
                 self.soundCharging.stop()
                 self.soundChargingPlaying = False
-                print("CHARGESTOP")
+
 
     def notOnCharge(self):
         if self.soundChargingPlaying == True:
             self.soundCharging.stop()
             self.soundChargingPlaying = False
-            print("STOP")

@@ -96,8 +96,8 @@ class BombBoss(pygame.sprite.Sprite):
         self.invincibleCooldown = Cooldown(BOSS_INVINCIBILITY_COOLDOWN)
         self.flashduration = 8
 
-        self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
-        self.hurtSound.set_volume(.25)
+        self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'BossHurt.wav'))
+        self.hurtSound.set_volume(.9)
 
     def update(self):
         self.AI.update()
@@ -145,6 +145,7 @@ class BombBoss(pygame.sprite.Sprite):
             self.currentHealth -= damage
             self.checkIfIsAlive()
             self.invincibleOnHit()
+            self.hurtSound.play()
 
     def checkIfIsAlive(self):
         if self.currentHealth <= 0:

@@ -82,8 +82,8 @@ class Boss2(pygame.sprite.Sprite):
         self.invincibleCooldown = Cooldown(BOSS_INVINCIBILITY_COOLDOWN)
         self.flashduration = 8
 
-        self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
-        self.hurtSound.set_volume(.25)
+        self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'BossHurt.wav'))
+        self.hurtSound.set_volume(.9)
 
         self.soundLaser = pygame.mixer.Sound(os.path.join('music', 'LaserBoss.wav'))
         self.soundLaser.set_volume(.8)
