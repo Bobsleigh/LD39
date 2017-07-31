@@ -89,4 +89,4 @@ class SceneHandler:
             self.runningScene = Scene(self.screen, self.gameData, SecondBossSceneLogicHandler(self.gameData), MusicHandler(self.gameData))
         elif self.runningScene.nextScene == ENDING_SCENE:
             self.gameData.sceneData = EndingSceneData()
-            self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData))
+            self.runningScene = Scene(self.screen, self.gameData, TitleSceneLogicHandler(self.gameData), MusicHandler(self.gameData))

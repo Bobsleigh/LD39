@@ -48,6 +48,7 @@ class EndingSceneData(SceneData):
 
 
         self.allSprites.add(self.textGoal)  # Add sprite
+        self.musicName = "TitleScreen.wav"
 
     def goToTitleScreen(self):
         self.nextScene = TITLE_SCENE
