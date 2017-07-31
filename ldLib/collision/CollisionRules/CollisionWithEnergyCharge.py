@@ -11,7 +11,11 @@ class CollisionWithEnergyCharge(CollisionRule):
     def onMoveX(self, sprite):
         if collisionWithTile(sprite, ENERGY_CHARGE, sprite.mapData):
             sprite.charge()
+        else:
+            sprite.notOnCharge()
 
     def onMoveY(self, sprite):
         if collisionWithTile(sprite, ENERGY_CHARGE, sprite.mapData):
             sprite.charge()
+        else:
+            sprite.notOnCharge()

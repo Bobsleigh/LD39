@@ -8,7 +8,7 @@ class MusicHandler:
 
     def play(self):
         pygame.mixer.music.load(os.path.join('music', self.musicName))
-        pygame.mixer.music.set_volume(1.0)
+        pygame.mixer.music.set_volume(0.80)
         pygame.mixer.music.play(-1)
 
     def stop(self):
