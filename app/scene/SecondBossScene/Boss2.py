@@ -53,7 +53,7 @@ class Boss2(pygame.sprite.Sprite):
 
         # Life bar
         self.maxHealth = 3250
-        self.currentHealth = 3250
+        self.currentHealth = self.maxHealth
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
