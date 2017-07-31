@@ -1,6 +1,7 @@
 import pygame
 import os
 
+from app.sprites.InoffensiveChargePad import InnofensiveChargePad
 from ldLib.GUI.Button import Button
 from ldLib.GUI.messageBox.MessageBox import MessageBox
 
@@ -24,15 +25,20 @@ class InstructionSceneData(SceneData):
         self.spritesBackGround.add(self.background)
 
         boxWidth = 0.7 * SCREEN_WIDTH
-        self.createControlBox(SCREEN_WIDTH/2-boxWidth/2, 1*SCREEN_HEIGHT / 7, boxWidth,4 * SCREEN_HEIGHT / 7)
+        boxHeight = 5 * SCREEN_HEIGHT / 7
+        boxY = 1*SCREEN_HEIGHT / 8
+        self.createControlBox(SCREEN_WIDTH/2-boxWidth/2, boxY, boxWidth,boxHeight)
 
         buttonWidth = 0.55 * SCREEN_WIDTH-100
-        self.backToTitleScreenButton = Button((SCREEN_WIDTH/2-buttonWidth/2, 16 * SCREEN_HEIGHT / 20), (buttonWidth, 50), 'Back to main menu',
+        self.backToTitleScreenButton = Button((SCREEN_WIDTH/2-buttonWidth/2, 17 * SCREEN_HEIGHT / 20), (buttonWidth, 50), 'Back to main menu',
                                               self.goToTitleScreen)
         self.spritesHUD.add(self.backToTitleScreenButton)
         self.notifyGroup.add(self.backToTitleScreenButton)
 
         self.musicName = "TitleScreen.wav"
+
+        self.chargePad = InnofensiveChargePad(SCREEN_WIDTH/2-32, boxY+boxHeight-80, self)
+        self.spritesHUD.add(self.chargePad)
 
     def createControlBox(self,x,y,width,height):
         self.textGoal = MessageBox(x,y,width,height)
