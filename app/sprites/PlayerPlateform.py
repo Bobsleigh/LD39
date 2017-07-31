@@ -139,7 +139,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.currentHealth = self.maxHealth
 
         self.hurtSound = pygame.mixer.Sound(os.path.join('music', 'Hit_Hurt.wav'))
-        self.hurtSound.set_volume(.25)
+        self.hurtSound.set_volume(.90)
 
         self.invincibleCooldown = Cooldown(PLAYER_INVINCIBILITY_COOLDOWN)
         self.flashduration = 8
