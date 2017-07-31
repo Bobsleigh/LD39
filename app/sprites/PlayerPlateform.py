@@ -353,6 +353,15 @@ class PlayerPlateform(pygame.sprite.Sprite):
             if self.soundCharging.get_num_channels() == 0:
                 self.soundCharging.play()
 
+                # Can't overcharge
+        if self.currentEnergy > self.maxEnergy:
+            self.currentEnergy = self.maxEnergy
+
+        # Stop if full.
+        if self.currentEnergy == self.maxEnergy:
+            if self.soundCharging.get_num_channels() > 0:
+                self.soundCharging.stop()
+
     def notOnCharge(self):
         if self.soundCharging.get_num_channels() > 0:
             self.soundCharging.stop()
