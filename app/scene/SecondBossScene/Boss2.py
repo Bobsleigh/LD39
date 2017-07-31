@@ -51,8 +51,8 @@ class Boss2(pygame.sprite.Sprite):
         self.springJumpSpeed = 25
 
         # Life bar
-        self.maxHealth = 3000
-        self.currentHealth = 3000
+        self.maxHealth = 3250
+        self.currentHealth = 3250
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
@@ -87,7 +87,7 @@ class Boss2(pygame.sprite.Sprite):
         self.soundLaser = pygame.mixer.Sound(os.path.join('music', 'LaserBoss.wav'))
         self.soundLaser.set_volume(.8)
 
-        self.touchDamage = 10
+        self.touchDamage = 12
 
     def update(self):
         self.AI.update()

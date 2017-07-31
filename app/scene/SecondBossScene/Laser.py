@@ -51,7 +51,7 @@ class Laser(pygame.sprite.Sprite):
         self.accy = 1
         self.jumpSpeed = 15
         self.springJumpSpeed = 25
-        self.damage = 8
+        self.damage = 10
 
         self.isFrictionApplied = True
         self.isCollisionApplied = True
