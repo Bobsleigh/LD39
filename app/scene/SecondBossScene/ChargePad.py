@@ -18,7 +18,7 @@ class ChargePad(pygame.sprite.Sprite):
         self.animation = Animation(frames, self.frameAnimationSpeed, True)
         self.image = frames[0]
 
-        self.imageTransparent = pygame.Surface((1, 1),pygame.SRCALPHA)
+        self.imageTransparent = pygame.Surface((1, 1), pygame.SRCALPHA)
 
         self.rect = self.image.get_rect()  # Position centrée du player
         self.x = x
@@ -73,23 +73,22 @@ class ChargePad(pygame.sprite.Sprite):
         while rnd == self.currentPosition:
             rnd = random.randint(0, 5)
 
+        correction = 32
+
         if rnd == 0:
             self.rect.x = 400
-            self.rect.y = 250
+            self.rect.y = 250 + correction
         elif rnd == 1:
             self.rect.x = 100
-            self.rect.y = 100
+            self.rect.y = 100 + correction
         elif rnd == 2:
             self.rect.x = 700
-            self.rect.y = 100
+            self.rect.y = 100 + correction
         elif rnd == 3:
             self.rect.x = 600
-            self.rect.y = 400
+            self.rect.y = 400 + correction
         elif rnd == 4:
             self.rect.x = 100
-            self.rect.y = 500
+            self.rect.y = 500 + correction
 
         self.currentPosition = rnd
-
-
-

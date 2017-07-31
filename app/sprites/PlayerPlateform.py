@@ -346,3 +346,7 @@ class PlayerPlateform(pygame.sprite.Sprite):
         if self.rechargeCooldown.isZero and self.currentEnergy < self.maxEnergy:
             self.currentEnergy += 4
             self.rechargeCooldown.start()
+
+        # Can't overcharge
+        if self.currentEnergy > self.maxEnergy:
+            self.currentEnergy = self.maxEnergy
