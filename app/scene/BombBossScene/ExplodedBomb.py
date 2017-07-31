@@ -26,9 +26,6 @@ class ExplodedBomb(pygame.sprite.Sprite):
         self.setShapeImage()
         self.image = self.imageShapeRight
 
-        self.imageTransparent = ImageBox().rectSurface((32, 32), WHITE, 3)
-        self.imageTransparent.set_colorkey(COLORKEY)
-
         self.rect = self.image.get_rect()  # Position centrée du player
         self.x = x_center
         self.y = y_center

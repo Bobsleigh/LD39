@@ -66,7 +66,9 @@ class BombBoss(pygame.sprite.Sprite):
 
         # Life bar
         self.maxHealth = 2500
-        self.currentHealth = 2500
+        if TAG_MARIE==1:
+            self.maxHealth = 800
+        self.currentHealth = self.maxHealth
 
         self.rightPressed = False
         self.leftPressed = False
@@ -190,11 +192,12 @@ class BombBoss(pygame.sprite.Sprite):
         self.mapData.camera.add(boom_bomb)
 
     def boomOnPlate(self):
-        boom_bomb = BoomBomb(390, 300, self.rect.x, self.rect.y, self.mapData)
+        boom_bomb = BoomBomb(390, 332, self.rect.x, self.rect.y, self.mapData)
         self.mapData.allSprites.add(boom_bomb)
         self.mapData.camera.add(boom_bomb)
 
     def Zap(self):
+        correction = 32
         zapBehaviors = ["aimForPlayer"] * 5 + ["aimForPlates"] * 2 + ["aimForEntrance"]*3
         chosenAction = random.choice(zapBehaviors)
 
@@ -205,32 +208,33 @@ class BombBoss(pygame.sprite.Sprite):
 
         elif chosenAction == "aimForPlates":
             desiredX = 390
-            desiredY = 300
+            desiredY = 300 +correction
 
         else:
             desiredX = 390
-            desiredY = 532
+            desiredY = 532 +correction
 
         zap_bomb = ZapBomb(desiredX, desiredY, self.rect.x, self.rect.y, self.mapData)
         self.mapData.allSprites.add(zap_bomb)
         self.mapData.camera.add(zap_bomb)
 
     def prettyZap(self, pattern_id):
+        correction = 32
         if pattern_id == 1:
-            zap_bomb_1 = ZapBomb(390, 120, self.rect.x, self.rect.y, self.mapData)
-            zap_bomb_2 = ZapBomb(201, 420, self.rect.x, self.rect.y, self.mapData)
-            zap_bomb_3 = ZapBomb(610, 420, self.rect.x, self.rect.y, self.mapData)
+            zap_bomb_1 = ZapBomb(390, 120+correction, self.rect.x, self.rect.y, self.mapData)
+            zap_bomb_2 = ZapBomb(201, 420+correction, self.rect.x, self.rect.y, self.mapData)
+            zap_bomb_3 = ZapBomb(610, 420+correction, self.rect.x, self.rect.y, self.mapData)
             self.mapData.allSprites.add(zap_bomb_3)
             self.mapData.camera.add(zap_bomb_3)
         elif pattern_id == 2:
-            zap_bomb_1 = ZapBomb(395, 420, self.rect.x, self.rect.y, self.mapData)
-            zap_bomb_2 = ZapBomb(201, 120, self.rect.x, self.rect.y, self.mapData)
-            zap_bomb_3 = ZapBomb(610, 120, self.rect.x, self.rect.y, self.mapData)
+            zap_bomb_1 = ZapBomb(395, 420+correction, self.rect.x, self.rect.y, self.mapData)
+            zap_bomb_2 = ZapBomb(201, 120+correction, self.rect.x, self.rect.y, self.mapData)
+            zap_bomb_3 = ZapBomb(610, 120+correction, self.rect.x, self.rect.y, self.mapData)
             self.mapData.allSprites.add(zap_bomb_3)
             self.mapData.camera.add(zap_bomb_3)
         else:
-            zap_bomb_1 = ZapBomb(600, 300, self.rect.x, self.rect.y, self.mapData)
-            zap_bomb_2 = ZapBomb(200, 300, self.rect.x, self.rect.y, self.mapData)
+            zap_bomb_1 = ZapBomb(600, 300+correction, self.rect.x, self.rect.y, self.mapData)
+            zap_bomb_2 = ZapBomb(200, 300+correction, self.rect.x, self.rect.y, self.mapData)
         self.mapData.allSprites.add(zap_bomb_1)
         self.mapData.camera.add(zap_bomb_1)
         self.mapData.allSprites.add(zap_bomb_2)
@@ -259,12 +263,12 @@ class BombBoss(pygame.sprite.Sprite):
 
         if target_position[0] < 64:
             target_position[0] = 64
-        elif target_position[0] > 732:
-            target_position[0] = 732
-        if target_position[1] < 64:
-            target_position[1] = 64
-        elif target_position[1] > 532:
-            target_position[1] = 532
+        elif target_position[0] > 720:
+            target_position[0] = 720
+        if target_position[1] < 100:
+            target_position[1] = 100
+        elif target_position[1] > 590:
+            target_position[1] = 590
 
         return target_position
 

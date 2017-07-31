@@ -3,6 +3,7 @@ import os
 import random
 import math
 from app.settings import *
+from ldLib.animation.Animation import Animation
 from ldLib.collision.collisionMask import CollisionMask
 from ldLib.tools.ImageBox import ImageBox
 from ldLib.collision.CollisionRules.CollisionWithSolid import CollisionWithSolid
@@ -18,17 +19,14 @@ class BoomBomb(pygame.sprite.Sprite):
 
         self.name = "BoomBomb"
 
-        self.imageBase = pygame.image.load(os.path.join('img', 'bomb.png'))
-        self.imageBase.set_colorkey(COLORKEY)
+        self.frameAnimationSpeed = 5
 
-        self.imageShapeLeft = None
-        self.imageShapeRight = None
+        imageBase = pygame.image.load(os.path.join('img', 'bomb.png'))
+        imageAnim = pygame.image.load(os.path.join('img', 'bomb-anim.png'))
+        frames = [imageBase, imageBase,imageAnim]
+        self.animation = Animation(frames, self.frameAnimationSpeed, True)
+        self.image = frames[0]
 
-        self.setShapeImage()
-        self.image = self.imageShapeRight
-
-        self.imageTransparent = ImageBox().rectSurface((32, 32), WHITE, 3)
-        self.imageTransparent.set_colorkey(COLORKEY)
 
         self.rect = self.image.get_rect()  # Position centrée du player
         self.x = initial_x
@@ -78,10 +76,6 @@ class BoomBomb(pygame.sprite.Sprite):
         self.counter = Counter()
         # self.nextState = None
 
-    def setShapeImage(self):
-        self.imageShapeLeft = pygame.transform.flip(self.imageBase, True, False)
-        self.imageShapeRight = self.imageBase
-
     def update(self):
         self.capSpeed()
 
@@ -94,11 +88,12 @@ class BoomBomb(pygame.sprite.Sprite):
         self.rect.y = self.y
 
         if self.speedx > 0:
-            self.image = self.imageShapeRight
             self.facingSide = RIGHT
         if self.speedx < 0:
-            self.image = self.imageShapeLeft
             self.facingSide = LEFT
+
+        # This sprite shouldn't be flipped.
+        self.image = self.animation.update(LEFT)
 
         self.updateCollisionMask()
         self.updatePressedKeys()

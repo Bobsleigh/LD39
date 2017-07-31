@@ -1,6 +1,7 @@
 import pygame
 import os
 
+from app.sprites.Cola import ColaCan
 from ldLib.GUI.Button import Button
 from ldLib.GUI.messageBox.MessageBox import MessageBox
 
@@ -18,7 +19,7 @@ class EndingSceneData(SceneData):
         # background
         self.background = pygame.sprite.Sprite()
         self.background.rect = pygame.Rect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT)
-        self.background.image = pygame.image.load(os.path.join('img', 'menu-end.png'))
+        self.background.image = pygame.image.load(os.path.join('img', 'menu.png'))
         self.background.rect = self.background.image.get_rect()
 
         self.spritesBackGround.add(self.background)
@@ -31,6 +32,9 @@ class EndingSceneData(SceneData):
                                               self.goToTitleScreen)
         self.spritesHUD.add(self.backToTitleScreenButton)
         self.notifyGroup.add(self.backToTitleScreenButton)
+
+        self.chargePad = ColaCan(150, 40, self)
+        self.spritesHUD.add(self.chargePad)
 
         self.musicName = "TitleScreen.wav"
 
