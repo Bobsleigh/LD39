@@ -21,9 +21,10 @@ class Boss2(pygame.sprite.Sprite):
         self.frameAnimationSpeed = 10
 
         imageBase = pygame.image.load(os.path.join('img', 'laser-boss.png'))
+        imageBaseNoShield = pygame.image.load(os.path.join('img', 'laser-boss2.png'))
         imageLaugh = pygame.image.load(os.path.join('img', 'laser-boss-laugh.png'))
         imageLaugh2 = pygame.image.load(os.path.join('img', 'laser-boss-laugh2.png'))
-        self.imageIdle = [imageBase, imageBase, imageLaugh, imageBase, imageLaugh, imageBase, imageLaugh2]
+        self.imageIdle = [imageBase, imageBaseNoShield, imageLaugh, imageBase, imageLaugh, imageBaseNoShield, imageLaugh2]
 
         self.animationIdle = Animation(self.imageIdle, self.frameAnimationSpeed, RIGHT, True)
         self.animation = self.animationIdle
