@@ -47,3 +47,5 @@ class SecondBossSceneLogicHandler(LogicHandler):
     def handleChargePadCollision(self):
         if pygame.sprite.collide_rect(self.sceneData.player, self.sceneData.chargePad):
             self.sceneData.player.charge()
+        else:
+            self.sceneData.player.notOnCharge()

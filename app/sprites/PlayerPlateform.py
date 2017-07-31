@@ -124,7 +124,10 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.gunCooldown = Cooldown(PLAYER_BULLET_COOLDOWN)
 
         self.soundShootGun = pygame.mixer.Sound(os.path.join('music', 'Laser_Shoot.wav'))
-        self.soundShootGun.set_volume(.15)
+        self.soundShootGun.set_volume(.45)
+
+        self.soundCharging = pygame.mixer.Sound(os.path.join('music', 'ChargingPad.wav'))
+        self.soundCharging.set_volume(.35)
 
         self.maxEnergy = PLAYER_MAX_ENERGY
         self.currentEnergy = self.maxEnergy
@@ -347,6 +350,18 @@ class PlayerPlateform(pygame.sprite.Sprite):
             self.currentEnergy += 4
             self.rechargeCooldown.start()
 
-        # Can't overcharge
+            if self.soundCharging.get_num_channels() == 0:
+                self.soundCharging.play()
+
+                # Can't overcharge
         if self.currentEnergy > self.maxEnergy:
             self.currentEnergy = self.maxEnergy
+
+        # Stop if full.
+        if self.currentEnergy == self.maxEnergy:
+            if self.soundCharging.get_num_channels() > 0:
+                self.soundCharging.stop()
+
+    def notOnCharge(self):
+        if self.soundCharging.get_num_channels() > 0:
+            self.soundCharging.stop()
