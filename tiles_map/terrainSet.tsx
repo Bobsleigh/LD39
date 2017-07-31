@@ -23,4 +23,16 @@
  <tile id="17" terrain="0,,,"/>
  <tile id="18" terrain="0,,0,0"/>
  <tile id="19" terrain=",0,0,0"/>
+ <tile id="50">
+  <animation>
+   <frame tileid="50" duration="100"/>
+   <frame tileid="51" duration="100"/>
+  </animation>
+ </tile>
+ <tile id="52">
+  <animation>
+   <frame tileid="52" duration="200"/>
+   <frame tileid="53" duration="100"/>
+  </animation>
+ </tile>
 </tileset>
