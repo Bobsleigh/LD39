@@ -45,6 +45,7 @@ class SecondBossSceneLogicHandler(LogicHandler):
                 boss.hurt(bullet.attackDMG)
 
     def handleChargePadCollision(self):
+        a = pygame.sprite.collide_rect(self.sceneData.player, self.sceneData.chargePad)
         if pygame.sprite.collide_rect(self.sceneData.player, self.sceneData.chargePad):
             self.sceneData.player.charge()
         else:

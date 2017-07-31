@@ -15,7 +15,7 @@ from ldLib.Sprites.Player.IdleState import IdleState
 from ldLib.tools.Cooldown import Cooldown
 
 
-class PlayerPlateform(pygame.sprite.Sprite):
+class PlayerPlateformLaserBoss(pygame.sprite.Sprite):
     def __init__(self, x, y, sceneData):
         super().__init__()
 
@@ -113,7 +113,6 @@ class PlayerPlateform(pygame.sprite.Sprite):
         self.collisionRules = []
         self.collisionRules.append(CollisionWithNothing())  # Gotta be first in the list to work properly
         self.collisionRules.append(CollisionWithSolid())
-        self.collisionRules.append(CollisionWithEnergyCharge())
 
         self._state = IdleState()
         # self.nextState = None
